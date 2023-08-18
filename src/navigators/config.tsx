@@ -1,20 +1,19 @@
-import {createStackNavigator} from '@react-navigation/stack';
-
 /**
  * All configurations will be put in this file to avoid circular importing
  */
 
-export const RootStack = createStackNavigator();
-
-export type StackType = typeof RootStack;
+const VISION_TEST_PREFIX = '/vision-test';
 
 export const SCREEN_PATHS = {
+  SPLASH: '/',
+  HOME: '/home',
   VISION_TEST: {
-    HOME: '/vision-test',
-    ADJUST_SOUND: '/vision-test/adjust-sound',
-    ILLUSTRATION: '/vision-test/illustration',
-    CHECK_CONDITION: '/vision-test/check-condition',
-    START_TEST: '/vision-test/start-test',
-    TEST_RESULT: '/vision-test/test-result',
+    DEFAULT: VISION_TEST_PREFIX,
+    HOME: `${VISION_TEST_PREFIX}/home`,
+    ADJUST_SOUND: `${VISION_TEST_PREFIX}/adjust-sound`,
+    ILLUSTRATION: `${VISION_TEST_PREFIX}/illustration`,
+    CHECK_CONDITION: `${VISION_TEST_PREFIX}/check-condition`,
+    START_TEST: `${VISION_TEST_PREFIX}/start-test`,
+    TEST_RESULT: `${VISION_TEST_PREFIX}/test-result`,
   },
-};
+} as const;

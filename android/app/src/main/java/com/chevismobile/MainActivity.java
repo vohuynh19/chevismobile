@@ -5,6 +5,9 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
+import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -14,6 +17,16 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "chevismobile";
+  }
+
+  /**
+    * React Navigation
+    * This change is required to avoid crashes related to View state being not persisted consistently across Activity restarts.
+    */
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    RNBootSplash.init(this); // initialize the splash screen
+    super.onCreate(savedInstanceState);
   }
 
   /**
