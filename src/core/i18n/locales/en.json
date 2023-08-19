@@ -1,4 +1,52 @@
 {
+  "components": {
+    "spinner": {
+      "a11y": {
+        "spinnerLabel": "Spinner Label"
+      }
+    },
+    "button": {
+      "a11y": {
+        "continueButtonLabel": "Continue Button"
+      }
+    }
+  },
+  "label": {
+    "currencies": "Currencies",
+    "documentInfo": "Document info",
+    "invoice": "Invoice",
+    "paymentMethod": "Payment method",
+    "previewDocument": "Preview the document in another app",
+    "required": "Required",
+    "selected": "selected"
+  },
+  "navigation": {
+    "a11y": {
+      "navButtonBackHint": "Double tap to go back",
+      "navButtonCloseHint": "Double tap to close"
+    },
+    "accounting": "Accounting",
+    "accounts": "Accounts",
+    "documents": "Documents",
+    "home": "Home",
+    "more": "More",
+    "network": "Network",
+    "wallet": "Wallet"
+  },
+  "validation": {
+    "dueDateFrom": "This date must be less than due date until",
+    "dueDateUntil": "This date must be greater than due date from",
+    "email": "This email is not valid",
+    "invalidCharacter": "The value contains an invalid character",
+    "maxLength": "The value exceeds the max length ({{length}})",
+    "phone": "This phone is not valid",
+    "required": "This field is required",
+    "requiredFields": "Please complete all required fields",
+    "smsCode": "This SMS code requires 5 digits",
+    "totalFrom": "The value must be less than total until",
+    "totalUntil": "The value must be greater than total from",
+    "whitespace": "The value contains leading whitespace"
+  },
   "error": {
     "403": "403: You don't have permission to access this.",
     "404": "404: Not found",

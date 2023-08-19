@@ -3,9 +3,9 @@ import {ReactNode} from 'react';
 import {StatusBar} from 'react-native';
 import {Host} from 'react-native-portalize';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {theme} from '~core/theme';
 
 import NavContainer from '~navigators/NavContainer';
-import theme from '~core/config/theme';
 
 const AppProviders = ({children}: {children: ReactNode}) => (
   <SafeAreaProvider>

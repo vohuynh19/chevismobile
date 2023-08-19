@@ -8,7 +8,7 @@ import IllustrationScreen from '~screens/vision-test/Illustration';
 import StartTestScreen from '~screens/vision-test/StartTest';
 import TestResultScreen from '~screens/vision-test/TestResult';
 
-import {SCREEN_PATHS} from './config';
+import {SCREEN_PATHS} from './paths';
 import {VisionStackParams} from './RootStack.type';
 
 export const VisionTestStack = createStackNavigator<VisionStackParams>();

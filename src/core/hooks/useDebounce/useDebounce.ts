@@ -34,6 +34,7 @@ export default function useDebounce<T>(
 
   const [state, dispatch] = useStateIgnoreCallback(value);
   const debounced = useDebouncedCallback(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     useCallback((value: T) => dispatch(value), [dispatch]),
     delay,
     options,

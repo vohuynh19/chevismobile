@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/native';
 import {StackScreenProps} from '@react-navigation/stack';
 
-import {SCREEN_PATHS} from './config';
+import {SCREEN_PATHS} from './paths';
 
 /**
  * ROOT NAVIGATION LAYER

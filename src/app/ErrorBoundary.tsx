@@ -2,9 +2,8 @@ import type {ReactNode} from 'react';
 import {Component} from 'react';
 import {setJSExceptionHandler} from 'react-native-exception-handler';
 
-import {ErrorScreen} from '~components/screens/ErrorScreen';
-
 import {log} from '~core/logger';
+import {ErrorScreen} from '~core/ui';
 
 type Props = {
   children: ReactNode;
