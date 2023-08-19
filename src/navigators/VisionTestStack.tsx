@@ -1,12 +1,12 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import TestHomeScreen from '~screens/VisionTest/Home';
-import AdjustSoundScreen from '~screens/VisionTest/AdjustSound';
-import CheckConditionScreen from '~screens/VisionTest/CheckCondition';
-import IllustrationScreen from '~screens/VisionTest/Illustration';
-import StartTestScreen from '~screens/VisionTest/StartTest';
-import TestResultScreen from '~screens/VisionTest/TestResult';
+import TestHomeScreen from '~screens/vision-test/Home';
+import AdjustSoundScreen from '~screens/vision-test/AdjustSound';
+import CheckConditionScreen from '~screens/vision-test/CheckCondition';
+import IllustrationScreen from '~screens/vision-test/Illustration';
+import StartTestScreen from '~screens/vision-test/StartTest';
+import TestResultScreen from '~screens/vision-test/TestResult';
 
 import {SCREEN_PATHS} from './config';
 import {VisionStackParams} from './RootStack.type';

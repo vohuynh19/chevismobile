@@ -1,0 +1,222 @@
+diff --git a/node_modules/@shopify/restyle/dist/filterRestyleProps.d.ts b/node_modules/@shopify/restyle/dist/filterRestyleProps.d.ts
+new file mode 100644
+index 0000000..a7d9941
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/filterRestyleProps.d.ts
+@@ -0,0 +1,6 @@
++declare const filterRestyleProps: <TRestyleProps, TProps extends Record<string, unknown> & TRestyleProps>(componentProps: TProps, omitPropertiesMap: Record<keyof TProps, boolean>) => {
++    cleanProps: TProps;
++    restyleProps: TRestyleProps;
++    serializedRestyleProps: string;
++};
++export default filterRestyleProps;
+diff --git a/node_modules/@shopify/restyle/dist/filterRestyleProps.js b/node_modules/@shopify/restyle/dist/filterRestyleProps.js
+new file mode 100644
+index 0000000..59c6d74
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/filterRestyleProps.js
+@@ -0,0 +1,37 @@
++"use strict";
++var __assign = (this && this.__assign) || function () {
++    __assign = Object.assign || function(t) {
++        for (var s, i = 1, n = arguments.length; i < n; i++) {
++            s = arguments[i];
++            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
++                t[p] = s[p];
++        }
++        return t;
++    };
++    return __assign.apply(this, arguments);
++};
++Object.defineProperty(exports, "__esModule", { value: true });
++var typeHelpers_1 = require("./typeHelpers");
++var filterRestyleProps = function (componentProps, omitPropertiesMap) {
++    var props = omitPropertiesMap.variant
++        ? __assign({ variant: 'defaults' }, componentProps) : componentProps;
++    return typeHelpers_1.getKeys(props).reduce(function (_a, key) {
++        var _b, _c;
++        var cleanProps = _a.cleanProps, restyleProps = _a.restyleProps, serializedRestyleProps = _a.serializedRestyleProps;
++        if (omitPropertiesMap[key]) {
++            return {
++                cleanProps: cleanProps,
++                restyleProps: __assign(__assign({}, restyleProps), (_b = {}, _b[key] = props[key], _b)),
++                serializedRestyleProps: "" + serializedRestyleProps + key + ":" + props[key] + ";",
++            };
++        }
++        else {
++            return {
++                cleanProps: __assign(__assign({}, cleanProps), (_c = {}, _c[key] = props[key], _c)),
++                restyleProps: restyleProps,
++                serializedRestyleProps: serializedRestyleProps,
++            };
++        }
++    }, { cleanProps: {}, restyleProps: {}, serializedRestyleProps: '' });
++};
++exports.default = filterRestyleProps;
+diff --git a/node_modules/@shopify/restyle/dist/hooks/useRestyle.js b/node_modules/@shopify/restyle/dist/hooks/useRestyle.js
+index 786893b..93f8e72 100644
+--- a/node_modules/@shopify/restyle/dist/hooks/useRestyle.js
++++ b/node_modules/@shopify/restyle/dist/hooks/useRestyle.js
+@@ -15,35 +15,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+ var react_1 = require("react");
+-var typeHelpers_1 = require("../typeHelpers");
++var filterRestyleProps_1 = __importDefault(require("../filterRestyleProps"));
+ var useDimensions_1 = __importDefault(require("./useDimensions"));
+ var useTheme_1 = __importDefault(require("./useTheme"));
+-var filterRestyleProps = function (componentProps, omitPropertiesMap) {
+-    var props = omitPropertiesMap.variant
+-        ? __assign({ variant: 'defaults' }, componentProps) : componentProps;
+-    return typeHelpers_1.getKeys(props).reduce(function (_a, key) {
+-        var _b, _c;
+-        var cleanProps = _a.cleanProps, restyleProps = _a.restyleProps, serializedRestyleProps = _a.serializedRestyleProps;
+-        if (omitPropertiesMap[key]) {
+-            return {
+-                cleanProps: cleanProps,
+-                restyleProps: __assign(__assign({}, restyleProps), (_b = {}, _b[key] = props[key], _b)),
+-                serializedRestyleProps: "" + serializedRestyleProps + key + ":" + props[key] + ";",
+-            };
+-        }
+-        else {
+-            return {
+-                cleanProps: __assign(__assign({}, cleanProps), (_c = {}, _c[key] = props[key], _c)),
+-                restyleProps: restyleProps,
+-                serializedRestyleProps: serializedRestyleProps,
+-            };
+-        }
+-    }, { cleanProps: {}, restyleProps: {}, serializedRestyleProps: '' });
+-};
+ var useRestyle = function (composedRestyleFunction, props) {
+     var theme = useTheme_1.default();
+     var dimensions = useDimensions_1.default();
+-    var _a = filterRestyleProps(props, composedRestyleFunction.propertiesMap), cleanProps = _a.cleanProps, restyleProps = _a.restyleProps, serializedRestyleProps = _a.serializedRestyleProps;
++    var _a = filterRestyleProps_1.default(props, composedRestyleFunction.propertiesMap), cleanProps = _a.cleanProps, restyleProps = _a.restyleProps, serializedRestyleProps = _a.serializedRestyleProps;
+     var calculatedStyle = react_1.useMemo(function () {
+         var style = composedRestyleFunction.buildStyle(restyleProps, {
+             theme: theme,
+diff --git a/node_modules/@shopify/restyle/dist/hooks/useRestyles.d.ts b/node_modules/@shopify/restyle/dist/hooks/useRestyles.d.ts
+new file mode 100644
+index 0000000..4ebaacd
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/hooks/useRestyles.d.ts
+@@ -0,0 +1,18 @@
++import { BaseTheme, RNStyle, Dimensions } from '../types';
++declare function useRestyles<Theme extends BaseTheme, TRestyleProps extends Record<string, any>, TProps extends TRestyleProps>(composedRestyleFunction: {
++    buildStyle: <TInputProps extends TProps>(props: TInputProps, { theme, dimensions, }: {
++        theme: Theme;
++        dimensions: Dimensions;
++    }) => RNStyle;
++    properties: (keyof TProps)[];
++    propertiesMap: Record<keyof TProps, boolean>;
++}, props: TProps | undefined): RNStyle | undefined;
++declare function useRestyles<Theme extends BaseTheme, TRestyleProps extends Record<string, any>, TProps extends TRestyleProps>(composedRestyleFunction: {
++    buildStyle: <TInputProps extends TProps>(props: TInputProps, { theme, dimensions, }: {
++        theme: Theme;
++        dimensions: Dimensions;
++    }) => RNStyle;
++    properties: (keyof TProps)[];
++    propertiesMap: Record<keyof TProps, boolean>;
++}, props: (TProps | undefined)[]): RNStyle[];
++export default useRestyles;
+diff --git a/node_modules/@shopify/restyle/dist/hooks/useRestyles.js b/node_modules/@shopify/restyle/dist/hooks/useRestyles.js
+new file mode 100644
+index 0000000..037b000
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/hooks/useRestyles.js
+@@ -0,0 +1,33 @@
++"use strict";
++var __importDefault = (this && this.__importDefault) || function (mod) {
++    return (mod && mod.__esModule) ? mod : { "default": mod };
++};
++Object.defineProperty(exports, "__esModule", { value: true });
++var react_1 = require("react");
++var filterRestyleProps_1 = __importDefault(require("../filterRestyleProps"));
++var useDimensions_1 = __importDefault(require("./useDimensions"));
++var useTheme_1 = __importDefault(require("./useTheme"));
++function useRestyles(composedRestyleFunction, props) {
++    var theme = useTheme_1.default();
++    var dimensions = useDimensions_1.default();
++    var getCalculatedStyle = react_1.useCallback(function (props) {
++        var restyleProps = filterRestyleProps_1.default(props, composedRestyleFunction.propertiesMap).restyleProps;
++        var style = composedRestyleFunction.buildStyle(restyleProps, {
++            theme: theme,
++            dimensions: dimensions,
++        });
++        return style;
++    }, [composedRestyleFunction, theme, dimensions]);
++    if (!props) {
++        return undefined;
++    }
++    if (Array.isArray(props)) {
++        var cleanProps = props.filter(Boolean);
++        if (cleanProps.length) {
++            return cleanProps.map(getCalculatedStyle);
++        }
++        return [];
++    }
++    return getCalculatedStyle(props);
++}
++exports.default = useRestyles;
+diff --git a/node_modules/@shopify/restyle/dist/index.d.ts b/node_modules/@shopify/restyle/dist/index.d.ts
+index b461ae7..8c3d07b 100644
+--- a/node_modules/@shopify/restyle/dist/index.d.ts
++++ b/node_modules/@shopify/restyle/dist/index.d.ts
+@@ -9,6 +9,7 @@ export { default as createText } from './createText';
+ export { ThemeProvider, ThemeContext } from './context';
+ export { default as useTheme } from './hooks/useTheme';
+ export { default as useRestyle } from './hooks/useRestyle';
++export { default as useRestyles } from './hooks/useRestyles';
+ export { default as useResponsiveProp } from './hooks/useResponsiveProp';
+ export { default as createTheme } from './createTheme';
+ export { default as createRestyleFunction } from './createRestyleFunction';
+diff --git a/node_modules/@shopify/restyle/dist/index.js b/node_modules/@shopify/restyle/dist/index.js
+index 788651f..8ac66fd 100644
+--- a/node_modules/@shopify/restyle/dist/index.js
++++ b/node_modules/@shopify/restyle/dist/index.js
+@@ -20,6 +20,8 @@ var useTheme_1 = require("./hooks/useTheme");
+ exports.useTheme = useTheme_1.default;
+ var useRestyle_1 = require("./hooks/useRestyle");
+ exports.useRestyle = useRestyle_1.default;
++var useRestyles_1 = require("./hooks/useRestyles");
++exports.useRestyles = useRestyles_1.default;
+ var useResponsiveProp_1 = require("./hooks/useResponsiveProp");
+ exports.useResponsiveProp = useResponsiveProp_1.default;
+ var createTheme_1 = require("./createTheme");
+diff --git a/node_modules/@shopify/restyle/dist/makeStyles.d.ts b/node_modules/@shopify/restyle/dist/makeStyles.d.ts
+new file mode 100644
+index 0000000..f054aef
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/makeStyles.d.ts
+@@ -0,0 +1,3 @@
++import { BaseTheme, CreateStyleFn, RNStyleSheetType } from './types';
++declare function makeStyles<U extends BaseTheme, T extends RNStyleSheetType<T>>(stylesOrCreator: CreateStyleFn<T, U>): () => T;
++export default makeStyles;
+diff --git a/node_modules/@shopify/restyle/dist/makeStyles.js b/node_modules/@shopify/restyle/dist/makeStyles.js
+new file mode 100644
+index 0000000..438904a
+--- /dev/null
++++ b/node_modules/@shopify/restyle/dist/makeStyles.js
+@@ -0,0 +1,22 @@
++"use strict";
++var __importDefault = (this && this.__importDefault) || function (mod) {
++    return (mod && mod.__esModule) ? mod : { "default": mod };
++};
++Object.defineProperty(exports, "__esModule", { value: true });
++var react_native_1 = require("react-native");
++var useTheme_1 = __importDefault(require("./hooks/useTheme"));
++function styleCreator(stylesOrCreator) {
++    return function (appTheme) {
++        return typeof stylesOrCreator === 'function'
++            ? react_native_1.StyleSheet.create(stylesOrCreator(appTheme))
++            : react_native_1.StyleSheet.create(stylesOrCreator);
++    };
++}
++function makeStyles(stylesOrCreator) {
++    var useStyles = function () {
++        var appTheme = useTheme_1.default();
++        return styleCreator(stylesOrCreator)(appTheme);
++    };
++    return useStyles;
++}
++exports.default = makeStyles;
