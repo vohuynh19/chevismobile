@@ -1,13 +1,13 @@
-import {useFocusEffect} from '@react-navigation/native';
 import {useCallback, useEffect, useState} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {VolumeManager} from 'react-native-volume-manager';
 
-const useVolume = onChangeVolume => {
+const useVolume = (onChangeVolume: (volume: number) => void) => {
   const [volumeLevel, setVolumeLevel] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
-      VolumeManager.getVolume('music').then(volume => {
+      VolumeManager.getVolume().then(({volume}) => {
         setVolumeLevel(volume);
       });
 
@@ -25,7 +25,7 @@ const useVolume = onChangeVolume => {
     onChangeVolume?.(volumeLevel);
   }, [volumeLevel, onChangeVolume]);
 
-  const handleChangeVolume = useCallback(value => {
+  const handleChangeVolume = useCallback((value: number) => {
     VolumeManager.setVolume(value);
     setVolumeLevel(value);
   }, []);
