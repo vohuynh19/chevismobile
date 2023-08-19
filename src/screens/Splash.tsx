@@ -6,7 +6,7 @@ const SplashScreen = ({navigation}: RootStackScreenProps<'/'>) => {
   useEffect(() => {
     setTimeout(() => {
       navigation.replace('/vision-test', {
-        screen: '/vision-test/home',
+        screen: '/vision-test/adjust-sound',
       });
     }, 2500);
   }, [navigation]);

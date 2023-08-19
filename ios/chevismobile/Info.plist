@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow the app to access your device's microphone to record your audio responses for answering questions of vision test.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Enable the app to use speech recognition technology to transcribe your audio responses and provide accurate answers to the questions of vision test.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Enable Camera access to take pictures of and then attach the supporting documentation that is required to process the user's insurance claim</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This application needs access to your location to display the nearby hospitals and clinics</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This application needs access to your location to display the nearby hospitals and clinics</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This application needs access to your location to display the nearby hospitals and clinics</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery to change your profile picture</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
