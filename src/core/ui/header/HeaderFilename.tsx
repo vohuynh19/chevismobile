@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pressable} from 'react-native';
 
-import {BottomDashedLine} from '../dashedLine';
+import {BottomDashedLine} from '../dashed-line';
 import {Text} from '../text';
 
 interface Props {

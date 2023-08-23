@@ -51,7 +51,7 @@ const useTabOptions = () => {
       '/dashboard/profile': {
         tabBarLabel: t('navigation.profile'),
         tabBarIcon: ({focused}) => (
-          <Icon color={focused ? 'primary800' : 'primary200'} name="User" />
+          <Icon color={focused ? 'primary800' : 'primary200'} name="Admin" />
         ),
       },
     }),

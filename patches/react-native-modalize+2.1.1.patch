@@ -1,0 +1,11 @@
+diff --git a/node_modules/react-native-modalize/lib/options.d.ts b/node_modules/react-native-modalize/lib/options.d.ts
+index 42352fb..d9f185b 100644
+--- a/node_modules/react-native-modalize/lib/options.d.ts
++++ b/node_modules/react-native-modalize/lib/options.d.ts
+@@ -265,5 +265,5 @@ export interface IHandles {
+      * If you are using `alwaysOpen` prop, you can supply a `dest` argument to the `close` method to reset it
+      * to the initial position `close('alwaysOpen')`, and avoiding to close it completely.
+      */
+-    close(dest?: TClose): void;
++    close(dest?: TClose, cb?: () => void): void;
+ }
