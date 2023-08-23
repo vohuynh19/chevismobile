@@ -2,12 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import {Screen} from '~core/ui';
 
-const IllustrationScreen = () => {
+const UpdateProfileScreen = () => {
   return (
     <Screen>
-      <Text>IllustrationScreen</Text>
+      <Text>UpdateProfileScreen</Text>
     </Screen>
   );
 };
 
-export default IllustrationScreen;
+export default UpdateProfileScreen;

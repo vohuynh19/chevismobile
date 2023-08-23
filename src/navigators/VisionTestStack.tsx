@@ -1,50 +1,56 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import TestHomeScreen from '~screens/vision-test/Home';
-import AdjustSoundScreen from '~screens/vision-test/AdjustSound';
-import CheckConditionScreen from '~screens/vision-test/CheckCondition';
-import IllustrationScreen from '~screens/vision-test/Illustration';
-import StartTestScreen from '~screens/vision-test/StartTest';
-import TestResultScreen from '~screens/vision-test/TestResult';
+import TestHomeScreen from '~screens/vision-test/home';
+import AdjustSoundScreen from '~screens/vision-test/adjust-sound';
+import CheckConditionScreen from '~screens/vision-test/check-condition';
+import IllustrationScreen from '~screens/vision-test/illustration';
+import StartTestScreen from '~screens/vision-test/start-test';
+import TestCompletedScreen from '~screens/vision-test/test-completed';
+import ViewResultScreen from '~screens/vision-test/view-result';
 
-import {SCREEN_PATHS} from './paths';
-import {VisionStackParams} from './RootStack.type';
+import {VisionStackParams} from './types';
 
 export const VisionTestStack = createStackNavigator<VisionStackParams>();
 
 const VisionTestStackScreen = () => (
   <VisionTestStack.Navigator
-    initialRouteName={SCREEN_PATHS.VISION_TEST.HOME}
+    initialRouteName={'/vision-test/home'}
     screenOptions={{
       headerShown: false,
     }}>
     <VisionTestStack.Screen
-      name={SCREEN_PATHS.VISION_TEST.HOME}
+      name={'/vision-test/home'}
       component={TestHomeScreen}
     />
+
     <VisionTestStack.Screen
-      name={SCREEN_PATHS.VISION_TEST.TEST_RESULT}
-      component={TestResultScreen}
+      name={'/vision-test/view-result'}
+      component={ViewResultScreen}
     />
 
     <VisionTestStack.Group>
       <VisionTestStack.Screen
-        name={SCREEN_PATHS.VISION_TEST.ADJUST_SOUND}
+        name={'/vision-test/adjust-sound'}
         component={AdjustSoundScreen}
       />
       <VisionTestStack.Screen
-        name={SCREEN_PATHS.VISION_TEST.ILLUSTRATION}
+        name={'/vision-test/illustration'}
         component={IllustrationScreen}
       />
       <VisionTestStack.Screen
-        name={SCREEN_PATHS.VISION_TEST.CHECK_CONDITION}
+        name={'/vision-test/check-condition'}
         component={CheckConditionScreen}
       />
 
       <VisionTestStack.Screen
-        name={SCREEN_PATHS.VISION_TEST.START_TEST}
+        name={'/vision-test/start-test'}
         component={StartTestScreen}
+      />
+
+      <VisionTestStack.Screen
+        name={'/vision-test/test-completed'}
+        component={TestCompletedScreen}
       />
     </VisionTestStack.Group>
   </VisionTestStack.Navigator>

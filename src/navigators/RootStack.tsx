@@ -1,10 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import SplashScreen from '~screens/Splash';
-
-import VisionTestStack from './VisionTestStack';
-import {RootStackParams} from './RootStack.type';
+import DashboardStackScreen from './DashboardStack';
+import {RootStackParams} from './types';
 
 export const RootStack = createStackNavigator<RootStackParams>();
 
@@ -13,21 +11,13 @@ export const RootStack = createStackNavigator<RootStackParams>();
  */
 const RootStackScreen = () => {
   return (
-    <RootStack.Navigator initialRouteName="/">
+    <RootStack.Navigator initialRouteName="/dashboard">
       <RootStack.Screen
-        name="/"
-        component={SplashScreen}
+        name="/dashboard"
         options={{
           headerShown: false,
         }}
-      />
-
-      <RootStack.Screen
-        name="/vision-test"
-        options={{
-          headerShown: false,
-        }}
-        component={VisionTestStack}
+        component={DashboardStackScreen}
       />
     </RootStack.Navigator>
   );

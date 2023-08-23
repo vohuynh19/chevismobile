@@ -1,11 +1,13 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
+
+import {Screen} from '~core/ui';
 
 const HomeScreen = () => {
   return (
-    <View style={{backgroundColor: 'red'}}>
+    <Screen>
       <Text>HomeScreen</Text>
-    </View>
+    </Screen>
   );
 };
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Screen} from '~core/ui';
 
 const TestHomeScreen = () => {
   return (
-    <SafeAreaView>
+    <Screen>
       <Text>TestHomeScreen</Text>
-    </SafeAreaView>
+    </Screen>
   );
 };
 

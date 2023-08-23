@@ -2,12 +2,12 @@ import React from 'react';
 import {Text} from 'react-native';
 import {Screen} from '~core/ui';
 
-const IllustrationScreen = () => {
+const ProfileScreen = () => {
   return (
     <Screen>
-      <Text>IllustrationScreen</Text>
+      <Text>ProfileScreen</Text>
     </Screen>
   );
 };
 
-export default IllustrationScreen;
+export default ProfileScreen;
