@@ -5,7 +5,7 @@ import {Screen} from '~core/ui';
 
 const HomeScreen = () => {
   return (
-    <Screen>
+    <Screen topInset>
       <Text>HomeScreen</Text>
     </Screen>
   );

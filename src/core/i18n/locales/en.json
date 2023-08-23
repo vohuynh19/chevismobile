@@ -31,7 +31,8 @@
     "home": "Home",
     "more": "More",
     "network": "Network",
-    "wallet": "Wallet"
+    "wallet": "Wallet",
+    "profile": "Profile"
   },
   "validation": {
     "dueDateFrom": "This date must be less than due date until",
