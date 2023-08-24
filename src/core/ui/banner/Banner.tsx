@@ -23,6 +23,8 @@ export const Banner = ({
   onPress,
   ...viewProps
 }: Props) => {
+  const showClose = Boolean(onClose) || Boolean(onPress);
+
   const banner = (
     <View
       padding={4}
@@ -35,12 +37,13 @@ export const Banner = ({
       <Text
         accessible={!!onClose}
         variant="bodySmall"
-        mx={3}
+        ml={3}
+        mr={showClose ? 3 : 0}
         flex={1}
         {...bannerStyles[variant].text}>
         {text}
       </Text>
-      {(Boolean(onClose) || Boolean(onPress)) && (
+      {showClose && (
         <Button
           accessible={!!onClose}
           testID="btnCloseBanner"

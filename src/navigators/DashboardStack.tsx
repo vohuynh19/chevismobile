@@ -13,21 +13,22 @@ import ProfileStackScreen from './ProfileStack';
 import {DashboardStackParams} from './types';
 import {Icon, View} from '~core/ui';
 import {colors} from '~core/theme/primitives';
-import {useTranslation} from 'react-i18next';
 
 export const DashboardStack = createBottomTabNavigator<DashboardStackParams>();
 
 const useTabOptions = () => {
-  const {t} = useTranslation();
-
   return useMemo<
     Record<keyof DashboardStackParams, BottomTabNavigationOptions>
   >(
     () => ({
       '/dashboard/home': {
-        tabBarLabel: t('navigation.home'),
+        tabBarShowLabel: false,
         tabBarIcon: ({focused}) => (
-          <Icon color={focused ? 'primary800' : 'primary200'} name="Home" />
+          <Icon
+            size={32}
+            color={focused ? 'primary800' : 'neutral500'}
+            name="Home"
+          />
         ),
       },
       '/vision-test': {
@@ -37,25 +38,29 @@ const useTabOptions = () => {
             width={80}
             justifyContent="center"
             alignItems="center"
-            backgroundColor="primary200"
+            backgroundColor="primary100"
             borderRadius="full"
             mb={8}>
             <View>
-              <Icon name="Add" size={40} color="primary800" />
+              <Icon name="Add" size={40} color="neutral800" />
             </View>
           </View>
         ),
-        tabBarLabel: '',
+        tabBarShowLabel: false,
         tabBarStyle: {display: 'none'},
       },
       '/dashboard/profile': {
-        tabBarLabel: t('navigation.profile'),
+        tabBarShowLabel: false,
         tabBarIcon: ({focused}) => (
-          <Icon color={focused ? 'primary800' : 'primary200'} name="Admin" />
+          <Icon
+            size={32}
+            color={focused ? 'primary800' : 'neutral500'}
+            name="Admin"
+          />
         ),
       },
     }),
-    [t],
+    [],
   );
 };
 
