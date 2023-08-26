@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1040428636456",
+    "project_id": "chevis-414e4",
+    "storage_bucket": "chevis-414e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1040428636456:android:d5f9b6cb0395daeeaa181d",
+        "android_client_info": {
+          "package_name": "com.chevismobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1040428636456-ds3raspd3e5di7tq7ftu71g18aa24253.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chevismobile",
+            "certificate_hash": "052a910e2292470145aabc71813b15c6f57be800"
+          }
+        },
+        {
+          "client_id": "1040428636456-0gv0873ddve2oqo3kfr30eescjc1bujg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_XuLovFwbKiC3dTp1SWBQ2Wc4Go40YUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1040428636456-0gv0873ddve2oqo3kfr30eescjc1bujg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
