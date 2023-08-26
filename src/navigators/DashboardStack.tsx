@@ -76,7 +76,7 @@ const DashboardScreen = () => {
           tabBarHideOnKeyboard: true,
           tabBarActiveTintColor: colors.primary800,
           tabBarInactiveTintColor: colors.primary200,
-          tabBarStyle: {backgroundColor: colors.white},
+          tabBarStyle: {backgroundColor: colors.white, paddingBottom: 12},
         }}>
         <DashboardStack.Screen
           name={'/dashboard/home'}

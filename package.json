@@ -12,6 +12,13 @@
   },
   "dependencies": {
     "@miblanchard/react-native-slider": "^2.3.1",
+    "@react-native-firebase/analytics": "^18.3.1",
+    "@react-native-firebase/app": "^18.3.1",
+    "@react-native-firebase/auth": "^18.3.1",
+    "@react-native-firebase/crashlytics": "^18.3.1",
+    "@react-native-firebase/firestore": "^18.3.1",
+    "@react-native-firebase/perf": "^18.3.1",
+    "@react-native-firebase/remote-config": "^18.3.1",
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/native": "6.1.6",
     "@react-navigation/native-stack": "6.9.12",

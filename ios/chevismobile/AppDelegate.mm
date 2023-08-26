@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <Firebase.h>
 #import "RNBootSplash.h"
 #import <React/RCTBundleURLProvider.h>
 
@@ -11,6 +12,9 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  // Enable firebase
+  [FIRApp configure];
+  
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 

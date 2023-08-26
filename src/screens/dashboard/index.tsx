@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {images} from '~assets';
 import {PrescriptionHistoryBottomSheet} from '~bottom-sheets';
 import {screenWidth} from '~core/utils';
@@ -37,7 +38,7 @@ const HomeScreen = () => {
       </View>
 
       <View mt={4} px={4}>
-        <Banner text="Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độ" />
+        <Banner text="Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độ. Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độĐọc sách 3" />
       </View>
 
       <PrescriptionHistoryBottomSheet />
