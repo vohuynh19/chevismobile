@@ -1,11 +1,8 @@
 import React from 'react';
-import {Modalize} from 'react-native-modalize';
-import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
-
-import {Screen, View, Text, Banner} from '~core/ui';
-import {screenHeight, screenWidth} from '~core/utils';
-import {colors} from '~core/theme/primitives';
+import {PrescriptionHistoryBottomSheet} from '~bottom-sheets';
+import {screenWidth} from '~core/utils';
+import {Screen, View, Text, Banner, FastImage} from '~core/ui';
 
 const HomeScreen = () => {
   return (
@@ -43,21 +40,7 @@ const HomeScreen = () => {
         <Banner text="Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độ" />
       </View>
 
-      <Modalize
-        modalTopOffset={80}
-        alwaysOpen={(screenHeight * 2) / 5}
-        avoidKeyboardLikeIOS={true}>
-        <View alignItems="center" mt={8}>
-          <FastImage
-            tintColor={colors.neutral800}
-            source={images.tumbleE}
-            resizeMode="contain"
-            style={{width: 160, height: 160}}
-          />
-
-          <Text mt={6}>Let's do your first eye checking!</Text>
-        </View>
-      </Modalize>
+      <PrescriptionHistoryBottomSheet />
     </Screen>
   );
 };
