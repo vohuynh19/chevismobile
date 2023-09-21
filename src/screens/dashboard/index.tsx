@@ -1,9 +1,8 @@
 import React from 'react';
 
 import {images} from '~assets';
-import {PrescriptionHistoryBottomSheet} from '~bottom-sheets';
 import {screenWidth} from '~core/utils';
-import {Screen, View, Text, Banner, FastImage} from '~core/ui';
+import {Screen, View, Text, FastImage} from '~core/ui';
 
 const HomeScreen = () => {
   return (
@@ -36,12 +35,6 @@ const HomeScreen = () => {
           }}
         />
       </View>
-
-      <View mt={4} px={4}>
-        <Banner text="Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độ. Đọc sách 3 tiếng một ngày có thể làm mắt bạn giảm đi 0.00001 độĐọc sách 3" />
-      </View>
-
-      <PrescriptionHistoryBottomSheet />
     </Screen>
   );
 };

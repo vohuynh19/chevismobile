@@ -1,5 +1,17 @@
-import {configLoggerType, logger as rnLogger} from 'react-native-logs';
+import {
+  configLoggerType,
+  logger as rnLogger,
+  consoleTransport,
+} from 'react-native-logs';
 import {isTest} from '~core/utils/platform';
+import {firebaseTransport} from './firebaseTransport';
+
+const getTransport = () => {
+  if (__DEV__ || isTest()) {
+    return consoleTransport;
+  }
+  return firebaseTransport;
+};
 
 const config: configLoggerType = {
   levels: {
@@ -9,7 +21,7 @@ const config: configLoggerType = {
     error: 3, // errors are sent to crashlytics
   },
   severity: isTest() ? 'error' : 'debug',
-  // transport: getTransport(),
+  transport: getTransport(),
   transportOptions: {
     // https://github.com/onubo/react-native-logs#available-colors
     colors: {

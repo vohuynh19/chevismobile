@@ -2,6 +2,12 @@
  * All configurations will be put in this file to avoid circular importing
  */
 
+type LeafValues<T> = T extends object
+  ? {[K in keyof T]: LeafValues<T[K]>}[keyof T]
+  : T;
+
+export type ScreenPath = LeafValues<typeof SCREEN_PATHS>;
+
 const VISION_TEST_PREFIX = '/vision-test';
 const DASHBOARD_PREFIX = '/dashboard';
 const PROFILE_PREFIX = '/profile';
