@@ -84,7 +84,7 @@ export const Input = forwardRef<RNInput, InputProps>(
                   disabled={disabled}
                   size="s">
                   <View
-                    backgroundColor="primary50"
+                    backgroundColor="primary100"
                     borderRadius="full"
                     justifyContent="center"
                     alignItems="center"
@@ -96,7 +96,6 @@ export const Input = forwardRef<RNInput, InputProps>(
                   </View>
                 </Button>
               )}
-            {/* eslint-disable-next-line no-nested-ternary */}
             {hasRightIcon ? (
               <View
                 width={height}
@@ -212,7 +211,7 @@ const useStyles = makeStyles(({theme}) => ({
     paddingHorizontal: 0,
   },
   inputContainerStyle: {
-    borderColor: 'primary50',
+    borderColor: 'primary100',
     borderWidth: 1,
     backgroundColor: 'white',
     borderRadius: 'lg',

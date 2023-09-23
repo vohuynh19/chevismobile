@@ -9,10 +9,16 @@ type LeafValues<T> = T extends object
 export type ScreenPath = LeafValues<typeof SCREEN_PATHS>;
 
 const VISION_TEST_PREFIX = '/vision-test';
+const AUTH_PREFIX = '/auth';
 const DASHBOARD_PREFIX = '/dashboard';
 const PROFILE_PREFIX = '/profile';
+const HISTORY_PREFIX = '/history';
 
 export const SCREEN_PATHS = {
+  AUTH: {
+    __NAME__: AUTH_PREFIX,
+    LOGIN: `${AUTH_PREFIX}/login`,
+  },
   DASHBOARD: {
     __NAME__: DASHBOARD_PREFIX,
 
@@ -22,6 +28,10 @@ export const SCREEN_PATHS = {
       HOME: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/home`,
       UPDATE_PROFILE: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/update-profile`,
       SETTINGS: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/settings`,
+    },
+    HISTORY: {
+      __NAME__: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}`,
+      OVERVIEW: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}/overview`,
     },
   },
   VISION_TEST: {

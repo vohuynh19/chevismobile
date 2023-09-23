@@ -1,40 +1,21 @@
 import React from 'react';
+import {signIn, signOut} from '~core/firebase';
 
-import {images} from '~assets';
-import {screenWidth} from '~core/utils';
-import {Screen, View, Text, FastImage} from '~core/ui';
+import {Button, Screen} from '~core/ui';
 
 const HomeScreen = () => {
   return (
-    <Screen topInset backgroundColor="primary300">
-      <View
-        width={screenWidth}
-        justifyContent={'center'}
-        alignItems={'center'}
-        px={8}>
-        <Text
-          lineHeight={32}
-          fontSize={32}
-          color="black"
-          style={{position: 'absolute', bottom: 8, right: 72}}>
-          +3.0
-        </Text>
-        <Text
-          lineHeight={32}
-          fontSize={32}
-          color="black"
-          style={{position: 'absolute', bottom: 8, left: 72}}>
-          -2.5
-        </Text>
-        <FastImage
-          source={images.eyeWithGlass}
-          resizeMode="contain"
-          style={{
-            height: 240,
-            width: '100%',
-          }}
-        />
-      </View>
+    <Screen topInset backgroundColor="secondary100">
+      <Button
+        title="Sign in"
+        onPress={() =>
+          signIn('miyxet@miyxet.com', '123456')
+            .catch(e => console.log('e', e))
+            .then(res => console.log(res))
+        }
+      />
+
+      <Button title="Logout" onPress={() => signOut()} />
     </Screen>
   );
 };

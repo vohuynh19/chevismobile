@@ -26,7 +26,7 @@ const useTabOptions = () => {
         tabBarIcon: ({focused}) => (
           <Icon
             size={32}
-            color={focused ? 'primary800' : 'neutral500'}
+            color={focused ? 'primary800' : 'neutral700'}
             name="Home"
           />
         ),
@@ -38,11 +38,11 @@ const useTabOptions = () => {
             width={80}
             justifyContent="center"
             alignItems="center"
-            backgroundColor="primary100"
+            backgroundColor="primary600"
             borderRadius="full"
             mb={8}>
             <View>
-              <Icon name="Add" size={40} color="neutral800" />
+              <Icon name="Add" size={40} color="neutral300" />
             </View>
           </View>
         ),
@@ -54,8 +54,18 @@ const useTabOptions = () => {
         tabBarIcon: ({focused}) => (
           <Icon
             size={32}
-            color={focused ? 'primary800' : 'neutral500'}
+            color={focused ? 'primary800' : 'neutral700'}
             name="Admin"
+          />
+        ),
+      },
+      '/dashboard/history': {
+        tabBarShowLabel: false,
+        tabBarIcon: ({focused}) => (
+          <Icon
+            size={32}
+            color={focused ? 'primary800' : 'neutral700'}
+            name="Tasks"
           />
         ),
       },
@@ -89,9 +99,9 @@ const DashboardScreen = () => {
           options={tabOptions['/vision-test']}
         />
         <DashboardStack.Screen
-          name={'/dashboard/profile'}
+          name={'/dashboard/history'}
           component={ProfileStackScreen}
-          options={tabOptions['/dashboard/profile']}
+          options={tabOptions['/dashboard/history']}
         />
       </DashboardStack.Navigator>
     </Host>

@@ -54,6 +54,9 @@
     "generalSubtitle": "It seems like we ran into a technical error from our side. Please try again or contact support through email.",
     "generalTitle": "Something went wrong"
   },
+  "auth":{
+    "login": "Đăng nhập"
+  },
   "action": {
     "accept": "Accept",
     "add": "Add",

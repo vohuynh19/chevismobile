@@ -143,15 +143,19 @@ export default function useDebouncedCallback<
       return (result.current = funcRef.current.apply(thisArg, args));
     };
 
-    const startTimer = (pendingFunc: () => void, wait: number) => {
-      if (useRAF) cancelAnimationFrame(timerId.current);
+    const startTimer = (pendingFunc: () => void, waitNumber: number) => {
+      if (useRAF) {
+        cancelAnimationFrame(timerId.current);
+      }
       timerId.current = useRAF
         ? requestAnimationFrame(pendingFunc)
-        : setTimeout(pendingFunc, wait);
+        : setTimeout(pendingFunc, waitNumber);
     };
 
     const shouldInvoke = (time: number) => {
-      if (!mounted.current) return false;
+      if (!mounted.current) {
+        return false;
+      }
 
       const timeSinceLastCall = time - lastCallTime.current;
       const timeSinceLastInvoke = time - lastInvokeTime.current;
@@ -200,7 +204,9 @@ export default function useDebouncedCallback<
       startTimer(timerExpired, remainingWait);
     };
 
-    const func: DebouncedState<T> = (...args: Parameters<T>): ReturnType<T> => {
+    const tempFunc: DebouncedState<T> = (
+      ...args: Parameters<T>
+    ): ReturnType<T> => {
       const time = Date.now();
       const isInvoking = shouldInvoke(time);
 
@@ -229,7 +235,7 @@ export default function useDebouncedCallback<
       return result.current;
     };
 
-    func.cancel = () => {
+    tempFunc.cancel = () => {
       if (timerId.current) {
         useRAF
           ? cancelAnimationFrame(timerId.current)
@@ -243,15 +249,15 @@ export default function useDebouncedCallback<
           null;
     };
 
-    func.isPending = () => {
+    tempFunc.isPending = () => {
       return !!timerId.current;
     };
 
-    func.flush = () => {
+    tempFunc.flush = () => {
       return !timerId.current ? result.current : trailingEdge(Date.now());
     };
 
-    return func;
+    return tempFunc;
   }, [leading, maxing, wait, maxWait, trailing, useRAF]);
 
   return debounced;

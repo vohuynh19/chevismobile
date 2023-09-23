@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  // eslint-disable-next-line no-restricted-imports
   KeyboardAvoidingView as KeyboardAvoidingViewComponent,
   KeyboardAvoidingViewProps,
 } from 'react-native';

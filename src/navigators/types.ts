@@ -13,6 +13,7 @@ import {SCREEN_PATHS} from './paths';
 export type RootStackParams = {
   [SCREEN_PATHS.DASHBOARD
     .__NAME__]: NavigatorScreenParams<DashboardStackParams>;
+  [SCREEN_PATHS.AUTH.__NAME__]: NavigatorScreenParams<AuthStackParams>;
   [SCREEN_PATHS.VISION_TEST.__NAME__]: NavigatorScreenParams<VisionStackParams>;
 };
 
@@ -25,9 +26,20 @@ export type RootStackScreenProps<T extends keyof RootStackParams> =
  * Composite second layer screen params with the connected first layer params in order to typesafe for navigating options.
  */
 
+export type AuthStackParams = {
+  [SCREEN_PATHS.AUTH.LOGIN]: undefined;
+};
+export type AuthScreenProps<T extends keyof AuthStackParams> = StackScreenProps<
+  AuthStackParams,
+  T
+>;
+
+// -------------------------
+
 export type DashboardStackParams = {
   [SCREEN_PATHS.DASHBOARD.HOME]: undefined;
   [SCREEN_PATHS.DASHBOARD.PROFILE.__NAME__]: undefined;
+  [SCREEN_PATHS.DASHBOARD.HISTORY.__NAME__]: undefined;
 
   /**
    * Exception for changing stack
@@ -68,5 +80,17 @@ export type ProfileStackParams = {
 export type ProfileScreenProps<T extends keyof ProfileStackParams> =
   CompositeScreenProps<
     StackScreenProps<ProfileStackParams, T>,
+    RootStackScreenProps<'/dashboard'>
+  >;
+
+// -------------------------
+
+export type HistoryStackParams = {
+  [SCREEN_PATHS.DASHBOARD.HISTORY.OVERVIEW]: undefined;
+};
+
+export type HistoryScreenProps<T extends keyof HistoryStackParams> =
+  CompositeScreenProps<
+    StackScreenProps<HistoryStackParams, T>,
     RootStackScreenProps<'/dashboard'>
   >;
