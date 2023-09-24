@@ -54,6 +54,17 @@
     "generalSubtitle": "It seems like we ran into a technical error from our side. Please try again or contact support through email.",
     "generalTitle": "Something went wrong"
   },
+  "input":{
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "password_label": "Password",
+    "password_placeholder": "Enter your password"
+  },
+  "message":{
+    "login_success": "You login sucessfully",
+    "login_fail": "Wrong email or password",
+    "login_form_fail": "Please completed the login form before submit"
+  },
   "auth":{
     "login": "Đăng nhập"
   },

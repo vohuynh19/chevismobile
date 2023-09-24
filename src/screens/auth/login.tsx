@@ -5,11 +5,7 @@ import {Controller, FieldErrors, FormProvider, useForm} from 'react-hook-form';
 import {images} from '~assets';
 import {useLogin} from '~core/react-query';
 import {Button, FormItem, Input, Screen, View} from '~core/ui';
-import {
-  showErrorMessage,
-  showSuccessMessage,
-  useValidationRules,
-} from '~core/utils';
+import {showErrorMessage, useValidationRules, withMessages} from '~core/utils';
 
 type LoginFormValues = {
   email: string;
@@ -36,20 +32,18 @@ const LoginScreen = () => {
     )();
   };
 
-  const handleFormSuccess = async (formData: LoginFormValues) => {
-    try {
-      await login({
+  const handleFormSuccess = async (formData: LoginFormValues) =>
+    withMessages(
+      login({
         ...formData,
-      });
-
-      showSuccessMessage('Login success');
-    } catch (error) {
-      showSuccessMessage('Wrong email or password');
-    }
-  };
+      }),
+    )({
+      successMessage: t('message.login_success'),
+      errorMessage: t('message.login_fail'),
+    });
 
   const handleFormFail = (_: FieldErrors<LoginFormValues>) => {
-    showErrorMessage('Please completed the login form before submit');
+    showErrorMessage(t('message.login_form_fail'));
   };
 
   return (
@@ -67,7 +61,7 @@ const LoginScreen = () => {
       <FormProvider {...useFormValues}>
         <View width={'100%'}>
           <FormItem>
-            <FormItem.Label required>Tài khoản email</FormItem.Label>
+            <FormItem.Label required>{t('input.email_label')}</FormItem.Label>
             <Controller
               name={'email'}
               control={control}
@@ -81,7 +75,7 @@ const LoginScreen = () => {
               render={({field: {onChange, value}}) => (
                 <Input
                   allowClear
-                  placeholder={'Nhập tên đăng nhập'}
+                  placeholder={t('input.email_placeholder')}
                   onChangeText={onChange}
                   value={value}
                   errorMessage={errors?.email?.message}
@@ -91,7 +85,9 @@ const LoginScreen = () => {
           </FormItem>
 
           <FormItem>
-            <FormItem.Label required>Mật khẩu</FormItem.Label>
+            <FormItem.Label required>
+              {t('input.password_label')}
+            </FormItem.Label>
             <Controller
               name={'password'}
               control={control}
@@ -104,7 +100,7 @@ const LoginScreen = () => {
                 <Input
                   secureTextEntry
                   allowClear
-                  placeholder={'Nhập mật khẩu'}
+                  placeholder={t('input.password_placeholder')}
                   onChangeText={onChange}
                   value={value}
                   errorMessage={errors?.password?.message}
