@@ -6,10 +6,10 @@ export const colors = {
   shadow: 'rgba(0, 0, 0, 0.12)',
   secondaryButtonPressed: 'rgba(251, 250, 255, 0.1)',
 
-  primary100: '##F7F0E6',
+  primary100: '#F7F0E6',
   primary200: '#F0DFCE',
-  primary300: '##D3BAA6',
-  primary400: '##A88C7B',
+  primary300: '#D3BAA6',
+  primary400: '#A88C7B',
   primary500: '#6E5347',
   primary600: '#5E3E33',
   primary700: '#4F2B23',
