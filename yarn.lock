@@ -1505,11 +1505,6 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@miblanchard/react-native-slider@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@miblanchard/react-native-slider/-/react-native-slider-2.3.1.tgz#79e0f1f9b1ce43ef25ee51ee9256c012e5dfa412"
-  integrity sha512-J/hZDBWmXq8fJeOnTVHqIUVDHshqMSpJVxJ4WqwuCBKl5Rke9OBYXIdkSlgi75OgtScAr8FKK5KNkDKHUf6JIg==
-
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz#dbf733a965ca47b1973177dc0bb6c889edcfb129"
@@ -1733,11 +1728,6 @@
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-18.3.1.tgz#337304eee2570bfe58d66dba19d2c1a0ba865b1f"
   integrity sha512-+ot8gdZufsfXGbqW6F4sORxEPXhW2l/LnbJBKxhCVM+w0FikYJJu3VtEneumvojNP4KC0Ci+xn6aCvI5qkqZ6Q==
-
-"@react-native-firebase/perf@^18.3.1":
-  version "18.3.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/perf/-/perf-18.3.1.tgz#6feed1440128e9de973053b373ecdfb4a0fe8b8c"
-  integrity sha512-q7ayxwTjNE3/eb1tAaZcDvLe5Rje6mUFF+1hwmx0R4Vy+XDvb10afHT3ckiaSKTZH1WzQhTvi+GR8OMZGzN7kw==
 
 "@react-native-firebase/remote-config@^18.3.1":
   version "18.3.1"
@@ -6530,11 +6520,6 @@ react-native-size-matters@^0.4.0:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.0.tgz#01bfd0d59454318f4e0b13fe9c1eb0523d70f2e0"
   integrity sha512-8/C0htHrFWeUm9N8JegmadovUfgTWkGBkDPZ1N3YkXtDWb+98Ya2gThiKcu445r8c7YhcrBfnHz/mYsXIusaOQ==
 
-react-native-sound@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.11.2.tgz#e542dc5b9e16ab4b3ac7e6eaddb1fc8d98da9038"
-  integrity sha512-LmGc8lgOK3qecYMVQpyHvww/C+wgT6sWeMpVbOe4NCRGC2yKd4fo4U0KBUo9PO7AqKESO3I/2GZg1/C0+bwiiA==
-
 react-native-svg@^13.11.0:
   version "13.11.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.11.0.tgz#90be2834a358351a76a57834941cb79183beb6b2"
@@ -6548,16 +6533,6 @@ react-native-swipe-list-view@^3.2.9:
   resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-3.2.9.tgz#d725c7cdf481dd5df12a00dbfe0120013b5f2e59"
   integrity sha512-SjAEuHc/D6ovp+RjDUhfNmw6NYOntdT7+GFhfMGfP/BSLMuMWynpzJy9GKQeyB8sI78T6Lzip21TVbongOg1Mw==
 
-react-native-toast-message@^2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.6.tgz#322827c66901fa22cb3db614c7383cc717f5bbe2"
-  integrity sha512-VctXuq20vmRa9AE13acaNZhrLcS3FaBS2zEevS3+vhBsnVZYG0FIlWIis9tVnpnNxUb3ART+BWtwQjzSttXTng==
-
-react-native-tts@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-tts/-/react-native-tts-4.1.0.tgz#05fa34492bec234bcd64f6ed2bf122c4667d141a"
-  integrity sha512-tvf3lQ6u9MqztUie37qoPw5YQPqi0ql1lPhDsBBs/RRA6A/H1J9X9H/qb1A0Hx0ZpjavrEdtVSqQQ2JDZvZCTQ==
-
 react-native-vector-icons@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-10.0.0.tgz#0f031f7717f76f0a397f725de9b5a47ec87862e9"
@@ -6565,11 +6540,6 @@ react-native-vector-icons@^10.0.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
-
-react-native-volume-manager@^1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-volume-manager/-/react-native-volume-manager-1.10.0.tgz#4e73d284b31cf3b9b41df7c8ce9115454ad3e0af"
-  integrity sha512-MJbUyXCEz5q2GDJoOImvVZ+aC39mdxqvD6ZYVXPBuhbdhoThOIDZoaVAf+vC7H8ahGToLtNWVfcbgds8zzgHAg==
 
 react-native@0.72.4:
   version "0.72.4"

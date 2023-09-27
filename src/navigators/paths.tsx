@@ -8,48 +8,51 @@ type LeafValues<T> = T extends object
 
 export type ScreenPath = LeafValues<typeof SCREEN_PATHS>;
 
-const VISION_TEST_PREFIX = '/vision-test';
-const AUTH_PREFIX = '/auth';
-const DASHBOARD_PREFIX = '/dashboard';
-const PROFILE_PREFIX = '/profile';
-const HISTORY_PREFIX = '/history';
-const ORDER_PREFIX = '/order';
-
 export const SCREEN_PATHS = {
   AUTH: {
-    __NAME__: AUTH_PREFIX,
-    LOGIN: `${AUTH_PREFIX}/login`,
+    __NAME__: '/auth',
+    LOGIN: '/auth/login',
   },
-  DASHBOARD: {
-    __NAME__: DASHBOARD_PREFIX,
-
-    HOME: `${DASHBOARD_PREFIX}/home`,
-    PROFILE: {
-      __NAME__: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}`,
-      HOME: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/home`,
-      UPDATE_PROFILE: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/update-profile`,
-      SETTINGS: `${DASHBOARD_PREFIX}${PROFILE_PREFIX}/settings`,
-    },
-    HISTORY: {
-      __NAME__: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}`,
-      OVERVIEW: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}/overview`,
-    },
-
-    ORDER: {
-      __NAME__: `${DASHBOARD_PREFIX}${ORDER_PREFIX}`,
-      ADD_ORDER: `${DASHBOARD_PREFIX}${ORDER_PREFIX}/add-order`,
-      ORDER_PAYMENT: `${DASHBOARD_PREFIX}${ORDER_PREFIX}/order-payment`,
-    },
+  HOST: {
+    __NAME__: '/host',
   },
-  VISION_TEST: {
-    __NAME__: VISION_TEST_PREFIX,
-
-    HOME: `${VISION_TEST_PREFIX}/home`,
-    ADJUST_SOUND: `${VISION_TEST_PREFIX}/adjust-sound`,
-    ILLUSTRATION: `${VISION_TEST_PREFIX}/illustration`,
-    CHECK_CONDITION: `${VISION_TEST_PREFIX}/check-condition`,
-    START_TEST: `${VISION_TEST_PREFIX}/start-test`,
-    TEST_COMPLETED: `${VISION_TEST_PREFIX}/test-completed`,
-    VIEW_RESULT: `${VISION_TEST_PREFIX}/view-result`,
+  EMPLOYEE: {
+    __NAME__: '/employee',
   },
+  MANAGER: {
+    __NAME__: '/manager',
+  },
+
+  // DASHBOARD: {
+  //   __NAME__: 'dashboard',
+
+  //   HOME: `${'dashboard'}/home`,
+  //   PROFILE: {
+  //     __NAME__: `${'dashboard'}${PROFILE_PREFIX}`,
+  //     HOME: `${'dashboard'}${PROFILE_PREFIX}/home`,
+  //     UPDATE_PROFILE: `${'dashboard'}${PROFILE_PREFIX}/update-profile`,
+  //     SETTINGS: `${'dashboard'}${PROFILE_PREFIX}/settings`,
+  //   },
+  //   HISTORY: {
+  //     __NAME__: `${'dashboard'}${HISTORY_PREFIX}`,
+  //     OVERVIEW: `${'dashboard'}${HISTORY_PREFIX}/overview`,
+  //   },
+
+  //   ORDER: {
+  //     __NAME__: `${'dashboard'}${ORDER_PREFIX}`,
+  //     ADD_ORDER: `${'dashboard'}${ORDER_PREFIX}/add-order`,
+  //     ORDER_PAYMENT: `${'dashboard'}${ORDER_PREFIX}/order-payment`,
+  //   },
+  // },
+  // VISION_TEST: {
+  //   __NAME__: VISION_TEST_PREFIX,
+
+  //   HOME: `${VISION_TEST_PREFIX}/home`,
+  //   ADJUST_SOUND: `${VISION_TEST_PREFIX}/adjust-sound`,
+  //   ILLUSTRATION: `${VISION_TEST_PREFIX}/illustration`,
+  //   CHECK_CONDITION: `${VISION_TEST_PREFIX}/check-condition`,
+  //   START_TEST: `${VISION_TEST_PREFIX}/start-test`,
+  //   TEST_COMPLETED: `${VISION_TEST_PREFIX}/test-completed`,
+  //   VIEW_RESULT: `${VISION_TEST_PREFIX}/view-result`,
+  // },
 } as const;

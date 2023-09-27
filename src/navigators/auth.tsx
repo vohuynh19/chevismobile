@@ -1,8 +1,18 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {StackScreenProps, createStackNavigator} from '@react-navigation/stack';
 
-import {AuthStackParams} from './types';
 import LoginScreen from '~screens/auth/login';
+
+import {SCREEN_PATHS} from './paths';
+
+export type AuthScreenProps<T extends keyof AuthStackParams> = StackScreenProps<
+  AuthStackParams,
+  T
+>;
+
+export type AuthStackParams = {
+  [SCREEN_PATHS.AUTH.LOGIN]: undefined;
+};
 
 export const AuthStack = createStackNavigator<AuthStackParams>();
 
