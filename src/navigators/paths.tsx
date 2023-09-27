@@ -13,6 +13,7 @@ const AUTH_PREFIX = '/auth';
 const DASHBOARD_PREFIX = '/dashboard';
 const PROFILE_PREFIX = '/profile';
 const HISTORY_PREFIX = '/history';
+const ORDER_PREFIX = '/order';
 
 export const SCREEN_PATHS = {
   AUTH: {
@@ -32,6 +33,12 @@ export const SCREEN_PATHS = {
     HISTORY: {
       __NAME__: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}`,
       OVERVIEW: `${DASHBOARD_PREFIX}${HISTORY_PREFIX}/overview`,
+    },
+
+    ORDER: {
+      __NAME__: `${DASHBOARD_PREFIX}${ORDER_PREFIX}`,
+      ADD_ORDER: `${DASHBOARD_PREFIX}${ORDER_PREFIX}/add-order`,
+      ORDER_PAYMENT: `${DASHBOARD_PREFIX}${ORDER_PREFIX}/order-payment`,
     },
   },
   VISION_TEST: {

@@ -5,6 +5,7 @@ import {
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {SCREEN_PATHS} from './paths';
+import {MainDish} from '~modules/order';
 
 /**
  * ROOT NAVIGATION LAYER
@@ -40,6 +41,7 @@ export type DashboardStackParams = {
   [SCREEN_PATHS.DASHBOARD.HOME]: undefined;
   [SCREEN_PATHS.DASHBOARD.PROFILE.__NAME__]: undefined;
   [SCREEN_PATHS.DASHBOARD.HISTORY.__NAME__]: undefined;
+  [SCREEN_PATHS.DASHBOARD.ORDER.__NAME__]: undefined;
 
   /**
    * Exception for changing stack
@@ -92,5 +94,20 @@ export type HistoryStackParams = {
 export type HistoryScreenProps<T extends keyof HistoryStackParams> =
   CompositeScreenProps<
     StackScreenProps<HistoryStackParams, T>,
+    RootStackScreenProps<'/dashboard'>
+  >;
+
+// -------------------------
+
+export type OrderStackParams = {
+  [SCREEN_PATHS.DASHBOARD.ORDER.ADD_ORDER]: undefined;
+  [SCREEN_PATHS.DASHBOARD.ORDER.ORDER_PAYMENT]: {
+    dishes: MainDish[];
+  };
+};
+
+export type OrderScreenProps<T extends keyof OrderStackParams> =
+  CompositeScreenProps<
+    StackScreenProps<OrderStackParams, T>,
     RootStackScreenProps<'/dashboard'>
   >;

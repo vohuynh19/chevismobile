@@ -58,7 +58,7 @@ export const CheckBox = ({
       borderColor: interpolateColor(
         progress.value,
         [0, 1],
-        [theme.colors.primary75, theme.colors.primary500],
+        [theme.colors.primary300, theme.colors.primary500],
       ),
     }),
     [progress],

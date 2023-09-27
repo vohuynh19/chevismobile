@@ -7,18 +7,18 @@ import {Host} from 'react-native-portalize';
 
 import HomeScreen from '~screens/dashboard';
 
-import VisionTestStackScreen from './VisionTestStack';
-import ProfileStackScreen from './ProfileStack';
+import HistoryStackScreen from './HistoryStack';
 
-import {DashboardStackParams} from './types';
 import {Icon, View} from '~core/ui';
 import {colors} from '~core/theme/primitives';
+import {DashboardStackParams} from './types';
+import OrderStackScreen from './OrderStack';
 
 export const DashboardStack = createBottomTabNavigator<DashboardStackParams>();
 
 const useTabOptions = () => {
   return useMemo<
-    Record<keyof DashboardStackParams, BottomTabNavigationOptions>
+    Record<Partial<keyof DashboardStackParams>, BottomTabNavigationOptions>
   >(
     () => ({
       '/dashboard/home': {
@@ -32,6 +32,24 @@ const useTabOptions = () => {
         ),
       },
       '/vision-test': {
+        tabBarIcon: () => (
+          <View
+            height={80}
+            width={80}
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor="primary600"
+            borderRadius="full"
+            mb={8}>
+            <View>
+              <Icon name="Add" size={40} color="neutral300" />
+            </View>
+          </View>
+        ),
+        tabBarShowLabel: false,
+        tabBarStyle: {display: 'none'},
+      },
+      '/dashboard/order': {
         tabBarIcon: () => (
           <View
             height={80}
@@ -94,13 +112,13 @@ const DashboardScreen = () => {
           options={tabOptions['/dashboard/home']}
         />
         <DashboardStack.Screen
-          name={'/vision-test'}
-          component={VisionTestStackScreen}
-          options={tabOptions['/vision-test']}
+          name={'/dashboard/order'}
+          component={OrderStackScreen}
+          options={tabOptions['/dashboard/order']}
         />
         <DashboardStack.Screen
           name={'/dashboard/history'}
-          component={ProfileStackScreen}
+          component={HistoryStackScreen}
           options={tabOptions['/dashboard/history']}
         />
       </DashboardStack.Navigator>

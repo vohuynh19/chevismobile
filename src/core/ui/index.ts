@@ -22,3 +22,4 @@ export * from './view';
 export * from './keyboard-avoiding-view';
 export * from './radio';
 export * from './divider';
+export * from './header';
