@@ -1,5 +1,11 @@
-import {priceTable} from './const';
-import {Demographic, MainDish, MainDishName, ToppingName} from './types';
+import {mainDishPriceTable, toppingPriceTable} from './const';
+import {
+  Demographic,
+  MainDish,
+  MainDishName,
+  ToppingName,
+  ToppingRecord,
+} from './types';
 
 export const getMainDishName = (name: MainDishName) => {
   switch (name) {
@@ -20,10 +26,6 @@ export const getToppingName = (name: ToppingName) => {
       return 'Phô mai lát';
     case 'pho_mai_soi':
       return 'Phô mai sợi';
-    case 'sot_them':
-      return 'Sốt';
-    case 'mi_them':
-      return 'Mì';
     default:
       return 'ERROR';
   }
@@ -33,7 +35,9 @@ export const minifyDish = (dishList: MainDish[]) => {
   const dishMap: Record<string, MainDish> = {};
 
   for (const dish of dishList) {
-    const key = `${dish.name}_${JSON.stringify(dish.toppings)}`;
+    const key = `${dish.name}_${JSON.stringify(dish.toppings)}_${JSON.stringify(
+      dish.size,
+    )}`;
 
     if (dishMap[key]) {
       dishMap[key].amount += dish.amount;
@@ -65,10 +69,10 @@ export const getDishUnitPrice = (dish: MainDish) => {
     : [];
 
   return (
-    priceTable[dish.name] +
+    mainDishPriceTable[dish.name][dish.size] +
     toppingKeys.reduce((prev, key) => {
       const amount = dish?.toppings?.[key] || 0;
-      return prev + priceTable[key] * amount;
+      return prev + toppingPriceTable[key] * amount;
     }, 0)
   );
 };
@@ -94,4 +98,10 @@ export const getDemographicName = (demographic: Demographic) => {
     default:
       break;
   }
+};
+
+export const isToppingRecordSelected = (toppingRecord: ToppingRecord) => {
+  return (Object.keys(toppingRecord) as ToppingName[]).reduce((prev, cur) => {
+    return prev + toppingRecord[cur];
+  }, 0);
 };

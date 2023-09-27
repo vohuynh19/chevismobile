@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* chevismobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* chevismobileTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		279283402A99CE1F0047980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2792833F2A99CE1F0047980E /* GoogleService-Info.plist */; };
 		279283412A99CE1F0047980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2792833F2A99CE1F0047980E /* GoogleService-Info.plist */; };
-		27B168792A8FE71100D7F536 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27B168782A8FE71100D7F536 /* BootSplash.storyboard */; };
+		27D568362AC496C400BFDC05 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27D568342AC496C400BFDC05 /* BootSplash.storyboard */; };
+		27D568372AC496C400BFDC05 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27D568342AC496C400BFDC05 /* BootSplash.storyboard */; };
+		27D568382AC496C400BFDC05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27D568352AC496C400BFDC05 /* Images.xcassets */; };
+		27D568392AC496C400BFDC05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27D568352AC496C400BFDC05 /* Images.xcassets */; };
 		65C28A1B4E5982D7F47058FB /* Pods_chevismobile_chevismobileTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAB9F2DB2AAF6EC14CDEBDCE /* Pods_chevismobile_chevismobileTests.framework */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E1252EF7A739C600102635C4 /* Pods_chevismobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24BF9CCFE5ECDA5647E9858 /* Pods_chevismobile.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,18 +34,17 @@
 		00E356EE1AD99517003FC87E /* chevismobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chevismobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* chevismobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chevismobileTests.m; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Chevis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chevis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* XET. Pasta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XET. Pasta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = chevismobile/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = chevismobile/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chevismobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = chevismobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = chevismobile/main.m; sourceTree = "<group>"; };
 		2792833F2A99CE1F0047980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		27B168782A8FE71100D7F536 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = chevismobile/BootSplash.storyboard; sourceTree = "<group>"; };
+		27D568342AC496C400BFDC05 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = chevismobile/BootSplash.storyboard; sourceTree = "<group>"; };
+		27D568352AC496C400BFDC05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chevismobile/Images.xcassets; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-chevismobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chevismobile.debug.xcconfig"; path = "Target Support Files/Pods-chevismobile/Pods-chevismobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-chevismobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chevismobile.release.xcconfig"; path = "Target Support Files/Pods-chevismobile/Pods-chevismobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-chevismobile-chevismobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chevismobile-chevismobileTests.debug.xcconfig"; path = "Target Support Files/Pods-chevismobile-chevismobileTests/Pods-chevismobile-chevismobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = chevismobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-chevismobile-chevismobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chevismobile-chevismobileTests.release.xcconfig"; path = "Target Support Files/Pods-chevismobile-chevismobileTests/Pods-chevismobile-chevismobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		A24BF9CCFE5ECDA5647E9858 /* Pods_chevismobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chevismobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB9F2DB2AAF6EC14CDEBDCE /* Pods_chevismobile_chevismobileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_chevismobile_chevismobileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,13 +91,12 @@
 		13B07FAE1A68108700A75B9A /* chevismobile */ = {
 			isa = PBXGroup;
 			children = (
+				27D568342AC496C400BFDC05 /* BootSplash.storyboard */,
+				27D568352AC496C400BFDC05 /* Images.xcassets */,
 				2792833F2A99CE1F0047980E /* GoogleService-Info.plist */,
-				27B168782A8FE71100D7F536 /* BootSplash.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = chevismobile;
@@ -138,7 +137,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Chevis.app */,
+				13B07F961A680F5B00A75B9A /* XET. Pasta.app */,
 				00E356EE1AD99517003FC87E /* chevismobileTests.xctest */,
 			);
 			name = Products;
@@ -200,7 +199,7 @@
 			);
 			name = chevismobile;
 			productName = chevismobile;
-			productReference = 13B07F961A680F5B00A75B9A /* Chevis.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* XET. Pasta.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -244,7 +243,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27D568392AC496C400BFDC05 /* Images.xcassets in Resources */,
 				279283412A99CE1F0047980E /* GoogleService-Info.plist in Resources */,
+				27D568372AC496C400BFDC05 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,10 +253,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B168792A8FE71100D7F536 /* BootSplash.storyboard in Resources */,
+				27D568382AC496C400BFDC05 /* Images.xcassets in Resources */,
 				279283402A99CE1F0047980E /* GoogleService-Info.plist in Resources */,
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				27D568362AC496C400BFDC05 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +490,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chevismobile.app/chevismobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XET. Mi Y.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/XET. Mi Y";
 			};
 			name = Debug;
 		};
@@ -514,7 +514,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chevismobile.app/chevismobile";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XET. Mi Y.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/XET. Mi Y";
 			};
 			name = Release;
 		};
@@ -528,7 +528,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = chevismobile/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Chevis;
+				INFOPLIST_KEY_CFBundleDisplayName = "XET. Pasta";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -540,7 +541,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chevismobile;
-				PRODUCT_NAME = Chevis;
+				PRODUCT_NAME = "XET. Pasta";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -556,7 +557,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = chevismobile/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Chevis;
+				INFOPLIST_KEY_CFBundleDisplayName = "XET. Pasta";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,7 +570,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chevismobile;
-				PRODUCT_NAME = Chevis;
+				PRODUCT_NAME = "XET. Pasta";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -578,6 +580,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -631,6 +634,8 @@
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
 				);
+				INFOPLIST_KEY_CFBundleDisplayName = "XET. Pasta";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -650,6 +655,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				PRODUCT_NAME = "XET. Pasta";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -659,6 +665,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -705,6 +712,8 @@
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-NativeModulesApple/React_NativeModulesApple.framework/Headers",
 					"${PODS_CONFIGURATION_BUILD_DIR}/React-graphics/React_graphics.framework/Headers/react/renderer/graphics/platform/ios",
 				);
+				INFOPLIST_KEY_CFBundleDisplayName = "XET. Pasta";
+				INFOPLIST_KEY_UILaunchScreen_Generation = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
@@ -723,6 +732,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				PRODUCT_NAME = "XET. Pasta";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

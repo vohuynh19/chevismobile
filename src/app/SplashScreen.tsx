@@ -5,7 +5,7 @@ import {View} from '~core/ui';
 const SplashScreen = () => (
   <View flex={1} justifyContent={'center'} alignItems={'center'}>
     <Image
-      source={images.amanVista}
+      source={images.xetMiY}
       resizeMode="cover"
       style={{
         width: 96,

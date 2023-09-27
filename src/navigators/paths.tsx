@@ -18,6 +18,7 @@ export const SCREEN_PATHS = {
   },
   EMPLOYEE: {
     __NAME__: '/employee',
+    HOME: '/employee/home',
   },
   MANAGER: {
     __NAME__: '/manager',

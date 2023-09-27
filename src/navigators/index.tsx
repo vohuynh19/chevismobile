@@ -1,10 +1,10 @@
 import React from 'react';
 import {useAuthState} from '~core/firebase';
 
-import AuthStack from './auth';
+import AuthStackScreen from './auth';
 // import HostStack from './host';
 // import ManagerStack from './manager';
-import EmployeeStack from './employee';
+import EmployeeStackScreen from './employee';
 
 /**
  * Define all of group of stack in this component
@@ -13,7 +13,7 @@ const RootStackScreen = () => {
   const {authState} = useAuthState();
 
   if (!authState) {
-    return <AuthStack />;
+    return <AuthStackScreen />;
   }
 
   //   if (authState.email === 'miyxet@miyxet.com') {
@@ -24,7 +24,7 @@ const RootStackScreen = () => {
   //     return <ManagerStack />;
   //   }
 
-  return <EmployeeStack />;
+  return <EmployeeStackScreen />;
 };
 
 export default RootStackScreen;
