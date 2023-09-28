@@ -1,10 +1,11 @@
-import {useState} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
+import {useCallback, useEffect, useState} from 'react';
+import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
 
 import {Button, Divider, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
+import {useLogout} from '~modules/auth';
 
 import {
   MainDish,
@@ -13,8 +14,8 @@ import {
   ToppingName,
   ToppingRecord,
   defaultToppingRecord,
-  getMainDishName,
-  getTopping,
+  getDishNameInInvoice,
+  getDishTotalPrice,
   isToppingRecordSelected,
   mainDishImages,
   minifyDish,
@@ -24,6 +25,8 @@ import {
 import {EmployeeScreenProps} from '~navigators/employee';
 
 const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
+  const {logout} = useLogout();
+
   const [mainDishes, setMainDishes] = useState<MainDish[]>([]);
 
   const [toppings, setToppings] = useState<ToppingRecord>({
@@ -73,20 +76,22 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
       ...defaultToppingRecord,
     });
 
-  const resetAll = () => {
+  const resetAll = useCallback(() => {
     resetTopping();
     setMainDishes([]);
-  };
+  }, []);
 
   const goToOrderPayment = () => {
-    // navigation.navigate('/dashboard/order/order-payment', {
-    //   dishes: mainDishes,
-    // });
+    navigation.navigate('/employee/order', {
+      dishes: mainDishes,
+    });
   };
 
   const onCloseOrder = () => {
-    resetAll();
-    navigation.goBack();
+    // resetAll();
+    // navigation.goBack();
+
+    logout();
   };
 
   const onReset = () => {
@@ -97,6 +102,20 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
     }
   };
 
+  const dishesTotalPrice = mainDishes.reduce(
+    (prev, current) => prev + getDishTotalPrice(current),
+    0,
+  );
+
+  useEffect(() => {
+    const reloadListener = DeviceEventEmitter.addListener(
+      'reloadEmployeeHome',
+      resetAll,
+    );
+
+    return () => reloadListener.remove();
+  }, [resetAll]);
+
   return (
     <Screen topInset>
       <View
@@ -104,7 +123,7 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center">
-        <NavButton iconName="Close" onPress={onCloseOrder} />
+        <NavButton iconName="LogOut" onPress={onCloseOrder} />
         <Icon name="Reset" onPress={onReset} />
       </View>
 
@@ -148,17 +167,23 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
           <View flex={1} justifyContent={'center'} alignItems={'center'}>
             <FastImage
               source={images.xetMiY}
-              style={{width: 120, height: 120, marginBottom: 12}}
+              style={{width: 120, height: 120, marginBottom: 24}}
             />
 
-            <Text>Chọn món đi nào!!!</Text>
+            <Text fontSize={14} color="secondary800">
+              Chạm vào hình đồ ăn để bắt đầu chọn món
+            </Text>
           </View>
         )}
       </View>
 
       <View paddingHorizontal={4} mt={4}>
         <Button
-          title="Đi đến thanh toán"
+          title={
+            dishesTotalPrice > 0
+              ? `Thanh toán ${dishesTotalPrice},000 VND`
+              : 'Vui lòng thêm món'
+          }
           disabled={mainDishes.length <= 0}
           onPress={goToOrderPayment}
         />
@@ -296,9 +321,7 @@ const MainDishInvoice = (props: {
   return (
     <View flex={1} flexDirection="row" alignItems="center">
       <View flex={1}>
-        <Text>{`${getMainDishName(dish.name)} size ${dish.size} ${getTopping(
-          dish,
-        )}`}</Text>
+        <Text> {getDishNameInInvoice(dish)}</Text>
       </View>
 
       <View ml={2}>

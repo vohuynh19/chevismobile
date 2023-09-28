@@ -1,10 +1,10 @@
 import React from 'react';
-import {useLogout} from '~core/react-query';
 import {LineChart} from 'react-native-chart-kit';
 
 import {Icon, Screen, Text, View} from '~core/ui';
 import {screenWidth} from '~core/utils';
 import {colors} from '~core/theme';
+import {useLogout} from '~modules/auth/hooks';
 
 const HomeStatisticItem = (props: {
   label: string;

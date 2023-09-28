@@ -17,6 +17,7 @@
     "@react-native-firebase/crashlytics": "^18.3.1",
     "@react-native-firebase/firestore": "^18.3.1",
     "@react-native-firebase/remote-config": "^18.3.1",
+    "@react-native-firebase/storage": "^18.3.1",
     "@react-navigation/bottom-tabs": "6.5.7",
     "@react-navigation/native": "6.1.6",
     "@react-navigation/native-stack": "6.9.12",
@@ -48,6 +49,7 @@
     "react-native-svg": "^13.11.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-vector-icons": "^10.0.0",
+    "react-native-vision-camera": "^3.1.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {

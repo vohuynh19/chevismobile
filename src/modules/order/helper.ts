@@ -105,3 +105,6 @@ export const isToppingRecordSelected = (toppingRecord: ToppingRecord) => {
     return prev + toppingRecord[cur];
   }, 0);
 };
+
+export const getDishNameInInvoice = (dish: MainDish) =>
+  `${getMainDishName(dish.name)} size ${dish.size} ${getTopping(dish)}`;

@@ -19,9 +19,20 @@ export const SCREEN_PATHS = {
   EMPLOYEE: {
     __NAME__: '/employee',
     HOME: '/employee/home',
+    ORDER: '/employee/order',
+    PAYMENT: {
+      __NAME__: '/employee/payment',
+      BANKING: '/employee/payment/banking',
+      CASH: '/employee/payment/cash',
+      MOMO: '/employee/payment/momo',
+    },
   },
   MANAGER: {
     __NAME__: '/manager',
+  },
+  COMMON: {
+    __NAME__: '/common',
+    CAMERA_CAPTURE: '/common/camera-capture',
   },
 
   // DASHBOARD: {

@@ -11,4 +11,8 @@ export const images = {
   xetTanChay: require('./miyxet/xet-tan-chay.jpeg'),
   xetTruyenThong: require('./miyxet/xet-truyen-thong.jpeg'),
   xucXich: require('./miyxet/xuc-xich.jpeg'),
+
+  vietqr: require('./miyxet/vietqr.png'),
+  momo: require('./miyxet/momo.png'),
+  cash: require('./miyxet/cash.png'),
 };

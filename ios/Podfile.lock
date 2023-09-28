@@ -663,6 +663,9 @@ PODS:
   - Firebase/RemoteConfig (10.14.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 10.14.0)
+  - Firebase/Storage (10.14.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 10.14.0)
   - FirebaseABTesting (10.14.0):
     - FirebaseCore (~> 10.0)
   - FirebaseAnalytics (10.14.0):
@@ -691,6 +694,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
+  - FirebaseAuthInterop (10.15.0)
   - FirebaseCore (10.14.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -739,6 +743,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.10)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
+  - FirebaseStorage (10.14.0):
+    - FirebaseAppCheckInterop (~> 10.0)
+    - FirebaseAuthInterop (~> 10.0)
+    - FirebaseCore (~> 10.0)
+    - FirebaseCoreExtension (~> 10.0)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - fmt (6.2.1)
   - glog (0.3.5)
   - GoogleAppMeasurement (10.14.0):
@@ -1322,6 +1332,10 @@ PODS:
     - Firebase/RemoteConfig (= 10.14.0)
     - React-Core
     - RNFBApp
+  - RNFBStorage (18.5.0):
+    - Firebase/Storage (= 10.14.0)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (2.12.1):
     - React-Core
   - RNPermissions (3.8.4):
@@ -1370,6 +1384,10 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
   - Toast (4.0.0)
+  - VisionCamera (3.1.0):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1425,12 +1443,14 @@ DEPENDENCIES:
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
+  - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1442,6 +1462,7 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
@@ -1450,6 +1471,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseRemoteConfig
     - FirebaseSessions
+    - FirebaseStorage
     - fmt
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -1571,6 +1593,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBRemoteConfig:
     :path: "../node_modules/@react-native-firebase/remote-config"
+  RNFBStorage:
+    :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNPermissions:
@@ -1583,6 +1607,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1598,6 +1624,7 @@ SPEC CHECKSUMS:
   FirebaseAnalytics: 5c6d58814afa4db82cf7fdbc02b0b0e2fa3d43ff
   FirebaseAppCheckInterop: c87f1d5421c852413dd936b2b2340b21e62501a0
   FirebaseAuth: bd1ae3d28beb83bfe9247e50eb82688b683dd770
+  FirebaseAuthInterop: b566e21e2bc5e44a4d44babc56d05a7e5c10493b
   FirebaseCore: 6fc17ac9f03509d51c131298aacb3ee5698b4f02
   FirebaseCoreExtension: 976638051b1a46b503afce7ec80277f9161f2040
   FirebaseCoreInternal: d558159ee6cc4b823c2296ecc193de9f6d9a5bb3
@@ -1606,6 +1633,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: f672b1eda64e6381c21d424a2f680a943fd83f3b
   FirebaseRemoteConfig: e22a706fa7ecc64135325f4c430a15af1e795535
   FirebaseSessions: f145e7365d36bec0d724c4574a8750e6f82fa6c8
+  FirebaseStorage: e97b4bdd84b21ec060d5737a9c4f8f8fc6a0d041
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleAppMeasurement: 7fee012a868315d418f365fbc8d394d8e020e749
@@ -1666,6 +1694,7 @@ SPEC CHECKSUMS:
   RNFBCrashlytics: 921f5e4228b32427ce57d947332ed1b2a5b2a26f
   RNFBFirestore: 022e84bf1d17a498bb558a746df2a13eeab4b03c
   RNFBRemoteConfig: 0de138626a1e80b33ebe93d9dd3723cc136bbbf8
+  RNFBStorage: 98efefe92cf25b845ae833573139f8e54554771e
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNPermissions: 09010ab77268f92c9d34d8ab696532d6cdb8c2a3
   RNReanimated: 726395a2fa2f04cea340274ba57a4e659bc0d9c1
@@ -1676,6 +1705,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  VisionCamera: 53aa6766f9aea2342d8b7ba2761e98c717be33b0
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
 
 PODFILE CHECKSUM: e0564f4ab89cd434ef5bee35f1055701382b9274

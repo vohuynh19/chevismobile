@@ -3,9 +3,9 @@ import FastImage from 'react-native-fast-image';
 import {Controller, FieldErrors, FormProvider, useForm} from 'react-hook-form';
 
 import {images} from '~assets';
-import {useLogin} from '~core/react-query';
 import {Button, FormItem, Input, Screen, View} from '~core/ui';
 import {showErrorMessage, useValidationRules, withMessages} from '~core/utils';
+import {useLogin} from '~modules/auth/hooks';
 
 type LoginFormValues = {
   email: string;
