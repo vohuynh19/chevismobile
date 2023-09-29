@@ -11,6 +11,7 @@ import {SCREEN_PATHS} from './paths';
 import Banking from '~screens/employee/payment/banking';
 import CameraCapture from '~screens/common/camera-capture';
 import {EvenListenterName} from '~modules/types';
+import OrderHistory from '~screens/employee/order-history';
 
 export type EmployeeScreenProps<T extends keyof EmployeeStackParams> =
   StackScreenProps<EmployeeStackParams, T>;
@@ -38,6 +39,8 @@ export type EmployeeStackParams = {
     returnParams: any;
     callbackEvent: EvenListenterName;
   };
+
+  [SCREEN_PATHS.EMPLOYEE.ORDER_HISTORY]: undefined;
 };
 
 export const EmployeeStack = createStackNavigator<EmployeeStackParams>();
@@ -51,6 +54,10 @@ const EmployeeStackSreen = () => {
       }}>
       <EmployeeStack.Screen name="/employee/home" component={Home} />
       <EmployeeStack.Screen name="/employee/order" component={Order} />
+      <EmployeeStack.Screen
+        name="/employee/order-history"
+        component={OrderHistory}
+      />
 
       <EmployeeStack.Screen
         name="/common/camera-capture"

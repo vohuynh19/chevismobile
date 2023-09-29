@@ -20,6 +20,7 @@ export const SCREEN_PATHS = {
     __NAME__: '/employee',
     HOME: '/employee/home',
     ORDER: '/employee/order',
+    ORDER_HISTORY: '/employee/order-history',
     PAYMENT: {
       __NAME__: '/employee/payment',
       BANKING: '/employee/payment/banking',

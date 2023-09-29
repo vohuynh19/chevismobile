@@ -74,6 +74,8 @@ const LoginScreen = () => {
               }}
               render={({field: {onChange, value}}) => (
                 <Input
+                  autoCapitalize={'none'}
+                  keyboardType="email-address"
                   allowClear
                   placeholder={t('input.email_placeholder')}
                   onChangeText={onChange}
@@ -98,6 +100,7 @@ const LoginScreen = () => {
               }}
               render={({field: {onChange, value}}) => (
                 <Input
+                  autoCapitalize={'none'}
                   secureTextEntry
                   allowClear
                   placeholder={t('input.password_placeholder')}
