@@ -4,13 +4,11 @@ export const images = {
   tumbleE: require('./images/tumble-e.png'),
   xetMiY: require('./images/xetmiy.png'),
 
-  miThem: require('./miyxet/mi-them.jpg'),
-  phoMaiLat: require('./miyxet/pho-mai-lat.jpeg'),
-  phoMaiSoi: require('./miyxet/pho-mai-soi.jpeg'),
-  sotThem: require('./miyxet/sot-them.jpeg'),
-  xetTanChay: require('./miyxet/xet-tan-chay.jpeg'),
-  xetTruyenThong: require('./miyxet/xet-truyen-thong.jpeg'),
-  xucXich: require('./miyxet/xuc-xich.jpeg'),
+  phoMaiLat: require('./miyxet/phomailat.jpg'),
+  phoMaiSoi: require('./miyxet/phomaisoi.jpg'),
+  xetTanChay: require('./miyxet/tanchay.jpg'),
+  xetTruyenThong: require('./miyxet/truyenthong.jpg'),
+  xucXich: require('./miyxet/xucxich.jpg'),
 
   vietqr: require('./miyxet/vietqr.png'),
   momo: require('./miyxet/momo.png'),

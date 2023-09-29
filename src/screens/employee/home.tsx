@@ -288,7 +288,7 @@ const ToppingItem = (props: ToppingItemProps) => {
       <TouchableOpacity onPress={() => onPress(name)} activeOpacity={0.8}>
         <FastImage
           source={toppingImages[name]}
-          resizeMode="contain"
+          resizeMode="cover"
           style={{width: '100%', height: '100%'}}
         />
 

@@ -1,11 +1,12 @@
 import storage from '@react-native-firebase/storage';
-import {useEffect, useState} from 'react';
-import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {Alert, DeviceEventEmitter, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
 import {images} from '~assets';
 
 import {Button, Icon, Screen, Text, View} from '~core/ui';
+import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
 import {useUploadImage} from '~modules/image';
 import {useUpdateOrder} from '~modules/order';
@@ -18,6 +19,7 @@ const Momo = ({
 }: EmployeeScreenProps<'/employee/payment/momo'>) => {
   const {params} = route;
   const {orderId} = params;
+  const notFinished = useRef(true);
 
   const [image, setImage] = useState<PhotoFile>();
 
@@ -33,44 +35,16 @@ const Momo = ({
     return () => listener.remove();
   }, []);
 
-  const renderQRCode = () => (
-    <FastImage
-      source={images.momoQr}
-      style={{
-        maxWidth: '100%',
-        height: 400,
-        marginTop: 16,
-      }}
-      resizeMode="contain"
-    />
-  );
-
   const androidImagePath = `file://${image?.path}`;
-
-  const renderImage = () => (
-    <FastImage
-      source={{
-        uri: androidImagePath,
-      }}
-      style={{
-        maxWidth: '100%',
-        height: 400,
-        marginTop: 16,
-      }}
-      resizeMode="contain"
-    />
-  );
 
   const onConfirm = async () => {
     try {
       const storagePath = `momo/${orderId}`;
-
       await upload({
         path: androidImagePath,
         name: storagePath,
       });
       const imageUrl = await storage().ref(storagePath).getDownloadURL();
-
       await updateOrder({
         id: orderId,
         updateInfo: {
@@ -78,7 +52,7 @@ const Momo = ({
           status: 'CONFIRMED',
         },
       });
-
+      notFinished.current = false;
       showSuccessMessage('Xác nhận đơn hàng thành công');
       DeviceEventEmitter.emit(EvenListenterName.reloadEmployeeHome);
       navigation.navigate('/employee/home');
@@ -88,19 +62,85 @@ const Momo = ({
     }
   };
 
+  const deletePayment = useCallback(async () => {
+    await updateOrder({
+      id: orderId,
+      updateInfo: {
+        status: 'DELETED',
+      },
+    });
+    notFinished.current = false;
+    showSuccessMessage(
+      'Quay về thành công, vui lòng tiếp tục chọn phương thức thanh toán khác',
+    );
+    navigation.goBack();
+  }, [orderId, navigation, updateOrder]);
+
+  useEffect(
+    () =>
+      navigation.addListener('beforeRemove', e => {
+        e.preventDefault();
+        if (notFinished.current) {
+          Alert.alert(
+            'Quay về',
+            'Vui lòng hoàn thành thanh toán trước khi quay về',
+            [
+              {text: 'Ở lại', style: 'cancel', onPress: () => {}},
+              {
+                text: 'Vẫn quay về',
+                style: 'destructive',
+                onPress: deletePayment,
+              },
+            ],
+          );
+        } else {
+          navigation.dispatch(e.data.action);
+        }
+      }),
+    [navigation, deletePayment],
+  );
+
   return (
     <Screen topInset px={4}>
-      <Text lineHeight={28} fontSize={24} my={4}>
-        QR chuyển khoản
-      </Text>
+      <View flexDirection="row" alignItems="center">
+        <NavButton />
+        <Text fontWeight="700" fontSize={18}>
+          QR chuyển khoản
+        </Text>
+      </View>
 
-      {image ? renderImage() : renderQRCode()}
+      {image ? (
+        <FastImage
+          source={{
+            uri: androidImagePath,
+          }}
+          style={{
+            maxWidth: '100%',
+            height: 400,
+            marginTop: 16,
+          }}
+          resizeMode="contain"
+        />
+      ) : (
+        <FastImage
+          source={images.momoQr}
+          style={{
+            maxWidth: '100%',
+            height: 400,
+            marginTop: 16,
+          }}
+          resizeMode="contain"
+        />
+      )}
 
       <View my={4}>
-        <Text mb={4}>Thêm hình ảnh giao dịch thành công</Text>
+        <Text mb={4}>
+          {image?.path
+            ? 'Thay đổi hình ảnh giao dịch'
+            : 'Thêm hình ảnh giao dịch'}
+        </Text>
 
         <TouchableOpacity
-          disabled={!!image}
           onPress={() =>
             navigation.navigate('/common/camera-capture', {
               returnPath: '/employee/payment/momo',
