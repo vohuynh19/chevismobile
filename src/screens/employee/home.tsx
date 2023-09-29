@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
@@ -88,9 +88,6 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
   };
 
   const onCloseOrder = () => {
-    // resetAll();
-    // navigation.goBack();
-
     logout();
   };
 
@@ -102,10 +99,12 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
     }
   };
 
-  const dishesTotalPrice = mainDishes.reduce(
-    (prev, current) => prev + getDishTotalPrice(current),
-    0,
-  );
+  const dishesTotalPrice = useMemo(() => {
+    return mainDishes.reduce(
+      (prev, current) => prev + getDishTotalPrice(current),
+      0,
+    );
+  }, [mainDishes]);
 
   useEffect(() => {
     const reloadListener = DeviceEventEmitter.addListener(
@@ -277,7 +276,7 @@ const ToppingItem = (props: ToppingItemProps) => {
       height={'100%'}
       borderWidth={2}
       borderColor={amount > 0 ? 'success600' : 'neutralLavender600'}>
-      <TouchableOpacity onPress={() => onPress(name)}>
+      <TouchableOpacity onPress={() => onPress(name)} activeOpacity={0.8}>
         <FastImage
           source={toppingImages[name]}
           resizeMode="contain"
