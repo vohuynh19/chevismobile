@@ -222,7 +222,7 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
   );
 };
 
-const InvoiceDishItem = ({dish}: {dish: MainDish}) => {
+export const InvoiceDishItem = ({dish}: {dish: MainDish}) => {
   return (
     <View flex={1} flexDirection="row" alignItems="center">
       <View flex={1}>

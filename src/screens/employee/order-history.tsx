@@ -1,19 +1,25 @@
 import {useQueryClient} from '@tanstack/react-query';
 import moment from 'moment';
-import {useCallback} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {useCallback, useRef, useState} from 'react';
+import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {Modalize} from 'react-native-modalize';
 import {images} from '~assets';
-import {Button, Screen, Text, View} from '~core/ui';
+import {Button, Divider, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
 import {OrderSchema, useOrders, useUpdateOrder} from '~modules/order';
 import {EmployeeScreenProps} from '~navigators/employee';
+import {InvoiceDishItem} from './order';
 
 const OrderHistory = ({
   navigation,
 }: EmployeeScreenProps<'/employee/order-history'>) => {
   const {isLoading, orders} = useOrders('UNRESOLVE_ORDER');
+
+  const [currentOrder, setCurrentOrder] = useState<OrderSchema>();
+
+  const modalRef = useRef<Modalize>(null);
 
   const onContinue = useCallback(
     (order: OrderSchema) => {
@@ -40,6 +46,10 @@ const OrderHistory = ({
     },
     [navigation],
   );
+  const onShowModal = useCallback((order: OrderSchema) => {
+    setCurrentOrder(order);
+    setTimeout(() => modalRef.current?.open(), 100);
+  }, []);
 
   return (
     <Screen topInset px={4}>
@@ -66,8 +76,66 @@ const OrderHistory = ({
       )}
 
       {orders?.map(order => (
-        <OrderItem key={order.id} order={order} onContinue={onContinue} />
+        <OrderItem
+          key={order.id}
+          order={order}
+          onContinue={onContinue}
+          onPress={onShowModal}
+        />
       ))}
+
+      <Modalize ref={modalRef} adjustToContentHeight>
+        <View py={4}>
+          <View flexDirection="row" paddingHorizontal={4}>
+            <View flex={1}>
+              <Text>Tên món</Text>
+            </View>
+
+            <View width={64}>
+              <Text textAlign={'center'}>SL</Text>
+            </View>
+
+            <View width={64}>
+              <Text textAlign={'center'}>Giá</Text>
+            </View>
+
+            <View width={80}>
+              <Text textAlign={'center'}>Thành tiền</Text>
+            </View>
+          </View>
+
+          <Divider backgroundColor={'neutral500'} />
+
+          <View flex={1}>
+            <ScrollView>
+              {currentOrder?.dishes.map((dish, index) => (
+                <View key={JSON.stringify(dish)} paddingHorizontal={4}>
+                  <InvoiceDishItem dish={dish} />
+                  {index !== currentOrder?.dishes.length - 1 && (
+                    <Divider
+                      backgroundColor={'neutral500'}
+                      width={'100%'}
+                      ml={0}
+                    />
+                  )}
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+
+          <Divider backgroundColor={'neutral500'} />
+
+          <View flexDirection="row" paddingHorizontal={4}>
+            <View flex={1}>
+              <Text>Tổng</Text>
+            </View>
+
+            <View width={80}>
+              <Text textAlign={'center'}>{currentOrder?.totalPrice}k</Text>
+            </View>
+          </View>
+        </View>
+      </Modalize>
     </Screen>
   );
 };
@@ -75,9 +143,11 @@ const OrderHistory = ({
 const OrderItem = ({
   order,
   onContinue,
+  onPress,
 }: {
   order: OrderSchema;
   onContinue: (order: OrderSchema) => void;
+  onPress: (order: OrderSchema) => void;
 }) => {
   const {updateOrder, isLoading} = useUpdateOrder();
   const client = useQueryClient();
@@ -98,7 +168,7 @@ const OrderItem = ({
   };
 
   return (
-    <>
+    <TouchableOpacity onPress={() => onPress(order)} activeOpacity={0.8}>
       <View
         flexDirection="row"
         alignItems="center"
@@ -128,7 +198,7 @@ const OrderItem = ({
           />
         </View>
       </View>
-    </>
+    </TouchableOpacity>
   );
 };
 
