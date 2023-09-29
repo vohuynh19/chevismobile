@@ -65,7 +65,7 @@ const Banking = ({
 
   const onConfirm = async () => {
     try {
-      const storagePath = `payment/${orderId}`;
+      const storagePath = `banking/${orderId}`;
 
       await upload({
         path: androidImagePath,

@@ -15,4 +15,5 @@ export const images = {
   vietqr: require('./miyxet/vietqr.png'),
   momo: require('./miyxet/momo.png'),
   cash: require('./miyxet/cash.png'),
+  momoQr: require('./miyxet/momo-qr.jpg'),
 };
