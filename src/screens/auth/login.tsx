@@ -1,4 +1,3 @@
-import {useTranslation} from 'react-i18next';
 import FastImage from 'react-native-fast-image';
 import {Controller, FieldErrors, FormProvider, useForm} from 'react-hook-form';
 
@@ -13,7 +12,6 @@ type LoginFormValues = {
 };
 
 const LoginScreen = () => {
-  const {t} = useTranslation();
   const validationRules = useValidationRules();
 
   const {login, isLoading} = useLogin();
@@ -38,12 +36,12 @@ const LoginScreen = () => {
         ...formData,
       }),
     )({
-      successMessage: t('message.login_success'),
-      errorMessage: t('message.login_fail'),
+      successMessage: 'Đăng nhập thành công',
+      errorMessage: 'Đăng nhập thấp bại, vui lòng thử lại',
     });
 
   const handleFormFail = (_: FieldErrors<LoginFormValues>) => {
-    showErrorMessage(t('message.login_form_fail'));
+    showErrorMessage('Đăng nhập không hợp lệ');
   };
 
   return (
@@ -61,7 +59,7 @@ const LoginScreen = () => {
       <FormProvider {...useFormValues}>
         <View width={'100%'}>
           <FormItem>
-            <FormItem.Label required>{t('input.email_label')}</FormItem.Label>
+            <FormItem.Label required>Tài khoản</FormItem.Label>
             <Controller
               name={'email'}
               control={control}
@@ -77,7 +75,7 @@ const LoginScreen = () => {
                   autoCapitalize={'none'}
                   keyboardType="email-address"
                   allowClear
-                  placeholder={t('input.email_placeholder')}
+                  placeholder={'Nhập tài khoản'}
                   onChangeText={onChange}
                   value={value}
                   errorMessage={errors?.email?.message}
@@ -87,9 +85,7 @@ const LoginScreen = () => {
           </FormItem>
 
           <FormItem>
-            <FormItem.Label required>
-              {t('input.password_label')}
-            </FormItem.Label>
+            <FormItem.Label required>Mật khẩu</FormItem.Label>
             <Controller
               name={'password'}
               control={control}
@@ -103,7 +99,7 @@ const LoginScreen = () => {
                   autoCapitalize={'none'}
                   secureTextEntry
                   allowClear
-                  placeholder={t('input.password_placeholder')}
+                  placeholder={'Nhập mật khẩu'}
                   onChangeText={onChange}
                   value={value}
                   errorMessage={errors?.password?.message}
@@ -116,7 +112,7 @@ const LoginScreen = () => {
             style={{marginTop: 16}}
             size="m"
             fullWidth
-            title={t('auth.login')}
+            title={'Đăng nhập'}
             onPress={onLogin}
             isLoading={isLoading}
           />

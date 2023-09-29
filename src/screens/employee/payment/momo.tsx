@@ -18,7 +18,7 @@ const Momo = ({
   route,
 }: EmployeeScreenProps<'/employee/payment/momo'>) => {
   const {params} = route;
-  const {orderId} = params;
+  const {orderId, required} = params;
   const notFinished = useRef(true);
 
   const [image, setImage] = useState<PhotoFile>();
@@ -38,6 +38,13 @@ const Momo = ({
   const androidImagePath = `file://${image?.path}`;
 
   const onConfirm = async () => {
+    if (!image?.path) {
+      showErrorMessage(
+        'Vui lòng thêm hình ảnh giao dịch trước khi xác nhận đơn hàng',
+      );
+      return;
+    }
+
     try {
       const storagePath = `momo/${orderId}`;
       await upload({
@@ -78,26 +85,28 @@ const Momo = ({
 
   useEffect(
     () =>
-      navigation.addListener('beforeRemove', e => {
-        e.preventDefault();
-        if (notFinished.current) {
-          Alert.alert(
-            'Quay về',
-            'Vui lòng hoàn thành thanh toán trước khi quay về',
-            [
-              {text: 'Ở lại', style: 'cancel', onPress: () => {}},
-              {
-                text: 'Vẫn quay về',
-                style: 'destructive',
-                onPress: deletePayment,
-              },
-            ],
-          );
-        } else {
-          navigation.dispatch(e.data.action);
-        }
-      }),
-    [navigation, deletePayment],
+      required
+        ? navigation.addListener('beforeRemove', e => {
+            e.preventDefault();
+            if (notFinished.current) {
+              Alert.alert(
+                'Quay về',
+                'Vui lòng hoàn thành thanh toán trước khi quay về',
+                [
+                  {text: 'Ở lại', style: 'cancel', onPress: () => {}},
+                  {
+                    text: 'Vẫn quay về',
+                    style: 'destructive',
+                    onPress: deletePayment,
+                  },
+                ],
+              );
+            } else {
+              navigation.dispatch(e.data.action);
+            }
+          })
+        : undefined,
+    [navigation, deletePayment, required],
   );
 
   return (

@@ -12,12 +12,12 @@ const Cash = ({
   route,
 }: EmployeeScreenProps<'/employee/payment/cash'>) => {
   const {params} = route;
-  const {orderId, total} = params;
+  const {orderId, total, required} = params;
 
   const {isLoading, updateOrder} = useUpdateOrder();
   const notFinished = useRef(true);
 
-  const [value, setValue] = useState('0');
+  const [value, setValue] = useState('');
 
   const returnValue = (Number(value) || 0) - total;
 
@@ -56,26 +56,28 @@ const Cash = ({
 
   useEffect(
     () =>
-      navigation.addListener('beforeRemove', e => {
-        e.preventDefault();
-        if (notFinished.current) {
-          Alert.alert(
-            'Quay về',
-            'Vui lòng hoàn thành thanh toán trước khi quay về',
-            [
-              {text: 'Ở lại', style: 'cancel', onPress: () => {}},
-              {
-                text: 'Vẫn quay về',
-                style: 'destructive',
-                onPress: deletePayment,
-              },
-            ],
-          );
-        } else {
-          navigation.dispatch(e.data.action);
-        }
-      }),
-    [navigation, deletePayment],
+      required
+        ? navigation.addListener('beforeRemove', e => {
+            e.preventDefault();
+            if (notFinished.current) {
+              Alert.alert(
+                'Quay về',
+                'Vui lòng hoàn thành thanh toán trước khi quay về',
+                [
+                  {text: 'Ở lại', style: 'cancel', onPress: () => {}},
+                  {
+                    text: 'Vẫn quay về',
+                    style: 'destructive',
+                    onPress: deletePayment,
+                  },
+                ],
+              );
+            } else {
+              navigation.dispatch(e.data.action);
+            }
+          })
+        : undefined,
+    [navigation, deletePayment, required],
   );
 
   return (

@@ -28,18 +28,21 @@ const OrderHistory = ({
           navigation.navigate('/employee/payment/banking', {
             orderId: order?.id || '',
             total: order.totalPrice,
+            required: false,
           });
           break;
         case 'momo':
           navigation.navigate('/employee/payment/momo', {
             orderId: order?.id || '',
             total: order.totalPrice,
+            required: false,
           });
           break;
         default:
           navigation.navigate('/employee/payment/cash', {
             orderId: order?.id || '',
             total: order.totalPrice,
+            required: false,
           });
           break;
       }

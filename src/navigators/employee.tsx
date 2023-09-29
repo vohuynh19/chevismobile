@@ -24,14 +24,17 @@ export type EmployeeStackParams = {
   [SCREEN_PATHS.EMPLOYEE.PAYMENT.CASH]: {
     orderId: string;
     total: number;
+    required?: boolean;
   };
   [SCREEN_PATHS.EMPLOYEE.PAYMENT.BANKING]: {
     orderId: string;
     total: number;
+    required?: boolean;
   };
   [SCREEN_PATHS.EMPLOYEE.PAYMENT.MOMO]: {
     orderId: string;
     total: number;
+    required?: boolean;
   };
 
   [SCREEN_PATHS.COMMON.CAMERA_CAPTURE]: {

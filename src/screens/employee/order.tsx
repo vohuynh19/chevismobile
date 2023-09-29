@@ -53,18 +53,21 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
           navigation.navigate('/employee/payment/banking', {
             orderId: data.id,
             total: dishesTotalPrice,
+            required: true,
           });
           break;
         case 'momo':
           navigation.navigate('/employee/payment/momo', {
             orderId: data.id,
             total: dishesTotalPrice,
+            required: true,
           });
           break;
         default:
           navigation.navigate('/employee/payment/cash', {
             orderId: data.id,
             total: dishesTotalPrice,
+            required: true,
           });
           break;
       }

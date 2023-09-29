@@ -18,7 +18,7 @@ const Banking = ({
   route,
 }: EmployeeScreenProps<'/employee/payment/banking'>) => {
   const {params} = route;
-  const {orderId, total} = params;
+  const {orderId, total, required} = params;
 
   const [image, setImage] = useState<PhotoFile>();
 
@@ -112,26 +112,28 @@ const Banking = ({
 
   useEffect(
     () =>
-      navigation.addListener('beforeRemove', e => {
-        e.preventDefault();
-        if (notFinished.current) {
-          Alert.alert(
-            'Quay về',
-            'Vui lòng hoàn thành thanh toán trước khi quay về',
-            [
-              {text: 'Ở lại', style: 'cancel', onPress: () => {}},
-              {
-                text: 'Vẫn quay về',
-                style: 'destructive',
-                onPress: deletePayment,
-              },
-            ],
-          );
-        } else {
-          navigation.dispatch(e.data.action);
-        }
-      }),
-    [navigation, deletePayment],
+      required
+        ? navigation.addListener('beforeRemove', e => {
+            e.preventDefault();
+            if (notFinished.current) {
+              Alert.alert(
+                'Quay về',
+                'Vui lòng hoàn thành thanh toán trước khi quay về',
+                [
+                  {text: 'Ở lại', style: 'cancel', onPress: () => {}},
+                  {
+                    text: 'Vẫn quay về',
+                    style: 'destructive',
+                    onPress: deletePayment,
+                  },
+                ],
+              );
+            } else {
+              navigation.dispatch(e.data.action);
+            }
+          })
+        : undefined,
+    [navigation, deletePayment, required],
   );
 
   return (

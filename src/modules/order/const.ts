@@ -48,8 +48,8 @@ export const dishToppings: Record<MainDishName, ToppingName[]> = {
 };
 
 export const toppingPriceTable: Record<ToppingName, number> = {
-  pho_mai_lat: 3,
-  pho_mai_soi: 5,
+  pho_mai_lat: 2,
+  pho_mai_soi: 4,
   xuc_xich: 4,
 };
 
@@ -59,10 +59,10 @@ export const mainDishPriceTable: Record<
 > = {
   xet_truyen_thong: {
     M: 23,
-    L: 30,
+    L: 28,
   },
   xet_tan_chay: {
     M: 28,
-    L: 35,
+    L: 33,
   },
 };
