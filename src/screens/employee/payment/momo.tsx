@@ -1,11 +1,12 @@
 import storage from '@react-native-firebase/storage';
+import {StackActions} from '@react-navigation/native';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
 import {images} from '~assets';
-import {useBack} from '~core/hooks/useBack';
+import {useBack} from '~core/hooks';
 
 import {Button, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
@@ -20,7 +21,7 @@ const Momo = ({
   route,
 }: EmployeeScreenProps<'/employee/payment/momo'>) => {
   const {params} = route;
-  const {orderId, required} = params;
+  const {orderId, required = false} = params;
 
   const {t} = useTranslation();
   const {isLoading, updateOrder} = useUpdateOrder();
@@ -57,13 +58,15 @@ const Momo = ({
         id: orderId,
         updateInfo: {
           imageUrl,
-          status: 'CONFIRMED',
+          status: 'PROCESSING',
         },
       });
       notFinished.current = false;
       showSuccessMessage(t('message.orderPaymentSuccess'));
       DeviceEventEmitter.emit(EvenListenterName.reloadEmployeeHome);
-      navigation.navigate('/employee/home');
+      const popAction = StackActions.popToTop();
+      navigation.dispatch(popAction);
+      navigation.navigate('/employee/order-history');
     } catch (error) {
       showErrorMessage(t('error.generalTitle'));
     }
@@ -82,7 +85,8 @@ const Momo = ({
   }, [orderId, navigation, updateOrder, t]);
 
   useBack({
-    enabled: required || true,
+    enabled: required,
+    stateRef: notFinished,
     title: t('action.goBack'),
     description: t('message.paymentBeforeGoBack'),
     cancelText: t('action.cancel'),

@@ -1,61 +1,43 @@
 import {useQueryClient} from '@tanstack/react-query';
 import moment from 'moment';
 import {useCallback, useRef, useState} from 'react';
-import {ActivityIndicator, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
-import {images} from '~assets';
-import {Button, Screen, Text, View} from '~core/ui';
+import {useTranslation} from 'react-i18next';
+import {StackNavigationProp} from '@react-navigation/stack';
+
+import {Button, RefreshControl, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
 import {OrderSchema, useOrders, useUpdateOrder} from '~modules/order';
-import {EmployeeScreenProps} from '~navigators/employee';
+import {EmployeeScreenProps, EmployeeStackParams} from '~navigators/employee';
+import {images} from '~assets';
+
 import {InvoiceDish} from './order';
-import {useTranslation} from 'react-i18next';
+import {useFocusEffect} from '@react-navigation/native';
 
 const OrderHistory = ({
   navigation,
 }: EmployeeScreenProps<'/employee/order-history'>) => {
   const {t} = useTranslation();
 
-  const {isLoading, orders} = useOrders('UNRESOLVE_ORDER');
+  const {isLoading, orders, refetch} = useOrders('UNRESOLVE_ORDER');
 
   const [currentOrder, setCurrentOrder] = useState<OrderSchema>();
 
   const modalRef = useRef<Modalize>(null);
 
-  const onContinue = useCallback(
-    (order: OrderSchema) => {
-      switch (order.paymentMethod) {
-        case 'banking':
-          navigation.navigate('/employee/payment/banking', {
-            orderId: order?.id || '',
-            total: order.totalPrice,
-            required: false,
-          });
-          break;
-        case 'momo':
-          navigation.navigate('/employee/payment/momo', {
-            orderId: order?.id || '',
-            total: order.totalPrice,
-            required: false,
-          });
-          break;
-        default:
-          navigation.navigate('/employee/payment/cash', {
-            orderId: order?.id || '',
-            total: order.totalPrice,
-            required: false,
-          });
-          break;
-      }
-    },
-    [navigation],
-  );
   const onShowModal = useCallback((order: OrderSchema) => {
     setCurrentOrder(order);
     setTimeout(() => modalRef.current?.open(), 100);
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   return (
     <Screen topInset px={4}>
@@ -81,14 +63,18 @@ const OrderHistory = ({
         </View>
       )}
 
-      {orders?.map(order => (
-        <OrderItem
-          key={order.id}
-          order={order}
-          onContinue={onContinue}
-          onPress={onShowModal}
-        />
-      ))}
+      <View flex={1}>
+        <ScrollView refreshControl={<RefreshControl onRefresh={refetch} />}>
+          {orders?.map(order => (
+            <OrderItem
+              key={order.id}
+              order={order}
+              onPress={onShowModal}
+              navigation={navigation}
+            />
+          ))}
+        </ScrollView>
+      </View>
 
       <Modalize ref={modalRef} adjustToContentHeight>
         {currentOrder && (
@@ -104,12 +90,16 @@ const OrderHistory = ({
 
 const OrderItem = ({
   order,
-  onContinue,
   onPress,
+  navigation,
 }: {
   order: OrderSchema;
-  onContinue: (order: OrderSchema) => void;
   onPress: (order: OrderSchema) => void;
+  navigation: StackNavigationProp<
+    EmployeeStackParams,
+    '/employee/order-history',
+    undefined
+  >;
 }) => {
   const {t} = useTranslation();
   const {updateOrder, isLoading} = useUpdateOrder();
@@ -124,9 +114,86 @@ const OrderItem = ({
         },
       });
       showSuccessMessage(t('message.deleteOrderSuccess'));
-      await client.invalidateQueries(['UNRESOLVE_ORDER']);
+      await client.invalidateQueries(['order', 'UNRESOLVE_ORDER']);
     } catch (error) {
       showErrorMessage(t('message.deleteOrderFail'));
+    }
+  };
+
+  const handleOrderCreated = () => {
+    switch (order.paymentMethod) {
+      case 'banking':
+        navigation.navigate('/employee/payment/banking', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+      case 'momo':
+        navigation.navigate('/employee/payment/momo', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+      default:
+        navigation.navigate('/employee/payment/cash', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+    }
+  };
+  const handleOrderProcessing = async () => {
+    try {
+      await updateOrder({
+        id: order.id || '',
+        updateInfo: {
+          status: 'DONE',
+        },
+      });
+      showSuccessMessage(t('message.orderConfirmSuccess'));
+      await client.invalidateQueries(['order', 'UNRESOLVE_ORDER']);
+    } catch (error) {
+      showErrorMessage(t('error.generalTitle'));
+    }
+  };
+
+  const onContinue = () => {
+    switch (order.status) {
+      case 'CREATED':
+        handleOrderCreated();
+        break;
+      case 'PROCESSING':
+        handleOrderProcessing();
+        break;
+
+      default:
+        showErrorMessage(t('error.generalTitle'));
+        break;
+    }
+  };
+
+  const getOrderColor = () => {
+    switch (order.status) {
+      case 'CREATED':
+        return 'neutral600';
+      case 'PROCESSING':
+        return 'warning600';
+      default:
+        return 'neutral600';
+    }
+  };
+
+  const getStatus = () => {
+    switch (order.status) {
+      case 'CREATED':
+        return 'Chưa thanh toán';
+      case 'PROCESSING':
+        return 'Đang chờ bếp';
+      default:
+        return 'Không xác định';
     }
   };
 
@@ -143,6 +210,7 @@ const OrderItem = ({
         <View>
           <Text>{order.totalPrice},000 VND</Text>
           <Text>{moment(order.updatedAt).format('HH:mm DD/MM')}</Text>
+          <Text color={getOrderColor()}>{getStatus()}</Text>
         </View>
 
         <View flexDirection="row">
@@ -156,8 +224,12 @@ const OrderItem = ({
           <Button
             variant="primary"
             size="s"
-            title={t('action.continue')}
-            onPress={() => onContinue(order)}
+            title={
+              order.status === 'CREATED'
+                ? t('action.continue')
+                : t('action.confirm')
+            }
+            onPress={onContinue}
           />
         </View>
       </View>

@@ -2,6 +2,7 @@ import {
   ForwardRefExoticComponent,
   RefAttributes,
   forwardRef,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -156,8 +157,12 @@ type DemographicsRef = {
 
 const Demographics: ForwardRefExoticComponent<
   DemographicsProps & RefAttributes<DemographicsRef>
-> = forwardRef(() => {
+> = forwardRef(({}, ref) => {
   const [demographicState, setDemographicState] = useState(defaultDemographics);
+
+  useImperativeHandle(ref, () => ({
+    getState: () => demographicState,
+  }));
 
   return (
     <View

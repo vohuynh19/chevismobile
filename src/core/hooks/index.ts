@@ -3,3 +3,4 @@ export * from './useDebounce';
 export * from './useIllustrationDimensions';
 export * from './useHeaderDimensions';
 export * from './useQuitApp';
+export * from './useBack';

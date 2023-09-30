@@ -1,8 +1,11 @@
 import storage from '@react-native-firebase/storage';
+import {StackActions} from '@react-navigation/native';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {Alert, DeviceEventEmitter, TouchableOpacity} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
+import {useBack} from '~core/hooks';
 
 import {Button, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
@@ -18,7 +21,9 @@ const Banking = ({
   route,
 }: EmployeeScreenProps<'/employee/payment/banking'>) => {
   const {params} = route;
-  const {orderId, total, required} = params;
+  const {orderId, total, required = false} = params;
+
+  const {t} = useTranslation();
 
   const [image, setImage] = useState<PhotoFile>();
 
@@ -68,9 +73,7 @@ const Banking = ({
   const onConfirm = async () => {
     try {
       if (!image?.path) {
-        showErrorMessage(
-          'Vui lòng thêm hình ảnh giao dịch trước khi xác nhận đơn hàng',
-        );
+        showErrorMessage(t('message.paymentImageRequired'));
         return;
       }
       const storagePath = `banking/${orderId}`;
@@ -83,16 +86,18 @@ const Banking = ({
         id: orderId,
         updateInfo: {
           imageUrl,
-          status: 'CONFIRMED',
+          status: 'PROCESSING',
         },
       });
       notFinished.current = false;
-      showSuccessMessage('Xác nhận đơn hàng thành công');
+      showSuccessMessage(t('message.orderPaymentSuccess'));
       DeviceEventEmitter.emit(EvenListenterName.reloadEmployeeHome);
-      navigation.navigate('/employee/home');
+      const popAction = StackActions.popToTop();
+      navigation.dispatch(popAction);
+      navigation.navigate('/employee/order-history');
     } catch (error) {
       console.log('error', error);
-      showErrorMessage('Sự cố mạng, vui lòng thử lại');
+      showErrorMessage(t('error.generalTitle'));
     }
   };
 
@@ -104,44 +109,26 @@ const Banking = ({
       },
     });
     notFinished.current = false;
-    showSuccessMessage(
-      'Quay về thành công, vui lòng tiếp tục chọn phương thức thanh toán khác',
-    );
+    showSuccessMessage(t('message.backToPaymentMethod'));
     navigation.goBack();
-  }, [orderId, navigation, updateOrder]);
+  }, [orderId, navigation, updateOrder, t]);
 
-  useEffect(
-    () =>
-      required
-        ? navigation.addListener('beforeRemove', e => {
-            e.preventDefault();
-            if (notFinished.current) {
-              Alert.alert(
-                'Quay về',
-                'Vui lòng hoàn thành thanh toán trước khi quay về',
-                [
-                  {text: 'Ở lại', style: 'cancel', onPress: () => {}},
-                  {
-                    text: 'Vẫn quay về',
-                    style: 'destructive',
-                    onPress: deletePayment,
-                  },
-                ],
-              );
-            } else {
-              navigation.dispatch(e.data.action);
-            }
-          })
-        : undefined,
-    [navigation, deletePayment, required],
-  );
+  useBack({
+    enabled: required,
+    stateRef: notFinished,
+    title: t('action.goBack'),
+    description: t('message.paymentBeforeGoBack'),
+    cancelText: t('action.cancel'),
+    okText: t('action.goBack'),
+    onPress: deletePayment,
+  });
 
   return (
     <Screen topInset px={4}>
       <View flexDirection="row" alignItems="center">
         <NavButton />
         <Text fontWeight="700" fontSize={18}>
-          QR chuyển khoản
+          {t('common.bankTitle')}
         </Text>
       </View>
 
@@ -150,8 +137,8 @@ const Banking = ({
       <View my={4}>
         <Text mb={4}>
           {image?.path
-            ? 'Thay đổi hình ảnh giao dịch'
-            : 'Thêm hình ảnh giao dịch'}
+            ? t('common.updatePaymentImage')
+            : t('common.addPaymentImage')}
         </Text>
 
         <TouchableOpacity
@@ -176,7 +163,7 @@ const Banking = ({
       <View flex={1} />
 
       <Button
-        title="Xác nhận đơn hàng"
+        title={t('action.confirmOrder')}
         onPress={onConfirm}
         isLoading={uploadImgLoading || isLoading}
       />

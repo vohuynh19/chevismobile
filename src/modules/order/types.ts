@@ -25,4 +25,4 @@ export type Order = {
 
 export type Demographic = 'kid' | 'cap_1' | 'cap_2' | 'cap_3' | '20-30' | '>30';
 
-export type OrderStatus = 'CREATED' | 'CONFIRMED' | 'DELETED';
+export type OrderStatus = 'CREATED' | 'PROCESSING' | 'DONE' | 'DELETED';

@@ -58,9 +58,16 @@
     "paymentImageRequired": "Vui lòng thêm hình ảnh giao dịch trước khi xác nhận đơn hàng",
     "orderPaymentSuccess": "Xác nhận đơn hàng thành công",
     "backToPaymentMethod": "Quay về thành công, vui lòng tiếp tục chọn phương thức thanh toán khác",
-    "paymentBeforeGoBack": "Vui lòng hoàn thành thanh toán trước khi quay về"
+    "paymentBeforeGoBack": "Vui lòng hoàn thành thanh toán trước khi quay về",
+    "invalidReceivedAmount": "Tiền nhận không hợp lệ",
+    "orderConfirmSuccess": "Xác nhận đơn thành công"
   },
   "common":{
+    "abb": {
+      "unitPrice": "Giá",
+      "totalPrice": "Thành tiền",
+      "amount": "SL"
+    },
     "dishName": "Tên món",
     "amount": "Số lượng",
     "price": "Giá",
@@ -77,11 +84,9 @@
     "cashTitle": "Thanh toán tiền mặt",
     "addPaymentImage": "Thêm hình ảnh giao dịch",
     "updatePaymentImage": "Thay đổi hình ảnh giao dịch",
-    "abb": {
-      "unitPrice": "Giá",
-      "totalPrice": "Thành tiền",
-      "amount": "SL"
-    }
+    "totalPrice": "Tổng tiền",
+    "receivedPrice": "Nhận tiền",
+    "returnPrice" : "Thối tiền"
   },
   "action": {
     "accept": "Chấp nhận",

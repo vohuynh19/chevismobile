@@ -1,9 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Alert} from 'react-native';
 
 export const useBack = ({
   enabled,
+  stateRef,
   onPress,
   title,
   description,
@@ -11,6 +12,7 @@ export const useBack = ({
   okText,
 }: {
   enabled: boolean;
+  stateRef: React.RefObject<boolean>;
   onPress: () => void;
   title: string;
   description: string;
@@ -21,22 +23,33 @@ export const useBack = ({
 
   useEffect(
     () =>
-      navigation.addListener('beforeRemove', e => {
-        e.preventDefault();
-        if (enabled) {
-          Alert.alert(title, description, [
-            {text: cancelText, style: 'cancel', onPress: () => {}},
-            {
-              text: okText,
-              style: 'destructive',
-              onPress,
-            },
-          ]);
-        } else {
-          navigation.dispatch(e.data.action);
-        }
-      }),
-    [navigation, onPress, enabled, title, description, cancelText, okText],
+      enabled
+        ? navigation.addListener('beforeRemove', e => {
+            e.preventDefault();
+            if (stateRef.current) {
+              Alert.alert(title, description, [
+                {text: cancelText, style: 'cancel', onPress: () => {}},
+                {
+                  text: okText,
+                  style: 'destructive',
+                  onPress,
+                },
+              ]);
+            } else {
+              navigation.dispatch(e.data.action);
+            }
+          })
+        : undefined,
+    [
+      enabled,
+      navigation,
+      onPress,
+      stateRef,
+      title,
+      description,
+      cancelText,
+      okText,
+    ],
   );
 
   return null;
