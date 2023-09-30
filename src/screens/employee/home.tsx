@@ -1,7 +1,9 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
+import {useQuitApp} from '~core/hooks';
 
 import {Button, Divider, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
@@ -25,6 +27,8 @@ import {
 import {EmployeeScreenProps} from '~navigators/employee';
 
 const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
+  const {t} = useTranslation();
+
   const {logout} = useLogout();
 
   const [mainDishes, setMainDishes] = useState<MainDish[]>([]);
@@ -119,6 +123,10 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
     return () => reloadListener.remove();
   }, [resetAll]);
 
+  useQuitApp({
+    message: t('message.continueQuitApp'),
+  });
+
   return (
     <Screen topInset>
       <View
@@ -179,7 +187,7 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
             />
 
             <Text fontSize={14} color="secondary800">
-              Chạm vào hình đồ ăn để bắt đầu chọn món
+              {t('common.touchDishToStartOrder')}
             </Text>
           </View>
         )}
@@ -189,8 +197,10 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
         <Button
           title={
             dishesTotalPrice > 0
-              ? `Thanh toán ${dishesTotalPrice},000 VND`
-              : 'Vui lòng thêm món'
+              ? t('common.paymentWithPrice', {
+                  price: `${dishesTotalPrice},000 VND`,
+                })
+              : t('common.orderPlaceholder')
           }
           disabled={mainDishes.length <= 0}
           onPress={goToOrderPayment}

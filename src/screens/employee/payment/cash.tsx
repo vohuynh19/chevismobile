@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {Alert, DeviceEventEmitter} from 'react-native';
 import {Button, Divider, Input, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
@@ -11,6 +12,8 @@ const Cash = ({
   navigation,
   route,
 }: EmployeeScreenProps<'/employee/payment/cash'>) => {
+  const {t} = useTranslation();
+
   const {params} = route;
   const {orderId, total, required} = params;
 

@@ -1,20 +1,23 @@
 import {useQueryClient} from '@tanstack/react-query';
 import moment from 'moment';
 import {useCallback, useRef, useState} from 'react';
-import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {images} from '~assets';
-import {Button, Divider, Screen, Text, View} from '~core/ui';
+import {Button, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
 import {OrderSchema, useOrders, useUpdateOrder} from '~modules/order';
 import {EmployeeScreenProps} from '~navigators/employee';
-import {InvoiceDishItem} from './order';
+import {InvoiceDish} from './order';
+import {useTranslation} from 'react-i18next';
 
 const OrderHistory = ({
   navigation,
 }: EmployeeScreenProps<'/employee/order-history'>) => {
+  const {t} = useTranslation();
+
   const {isLoading, orders} = useOrders('UNRESOLVE_ORDER');
 
   const [currentOrder, setCurrentOrder] = useState<OrderSchema>();
@@ -59,7 +62,7 @@ const OrderHistory = ({
       <View flexDirection="row" alignItems="center">
         <NavButton />
         <Text fontWeight="700" fontSize={18}>
-          Đơn hàng chưa hoành thành
+          {t('common.unfinishedOrder')}
         </Text>
       </View>
 
@@ -73,7 +76,7 @@ const OrderHistory = ({
           />
 
           <Text fontSize={14} color="secondary800">
-            Không có đơn chưa xử lí nào
+            {t('common.noUnfinishedOrder')}
           </Text>
         </View>
       )}
@@ -88,56 +91,12 @@ const OrderHistory = ({
       ))}
 
       <Modalize ref={modalRef} adjustToContentHeight>
-        <View py={4}>
-          <View flexDirection="row" paddingHorizontal={4}>
-            <View flex={1}>
-              <Text>Tên món</Text>
-            </View>
-
-            <View width={64}>
-              <Text textAlign={'center'}>SL</Text>
-            </View>
-
-            <View width={64}>
-              <Text textAlign={'center'}>Giá</Text>
-            </View>
-
-            <View width={80}>
-              <Text textAlign={'center'}>Thành tiền</Text>
-            </View>
-          </View>
-
-          <Divider backgroundColor={'neutral500'} />
-
-          <View flex={1}>
-            <ScrollView>
-              {currentOrder?.dishes.map((dish, index) => (
-                <View key={JSON.stringify(dish)} paddingHorizontal={4}>
-                  <InvoiceDishItem dish={dish} />
-                  {index !== currentOrder?.dishes.length - 1 && (
-                    <Divider
-                      backgroundColor={'neutral500'}
-                      width={'100%'}
-                      ml={0}
-                    />
-                  )}
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-
-          <Divider backgroundColor={'neutral500'} />
-
-          <View flexDirection="row" paddingHorizontal={4}>
-            <View flex={1}>
-              <Text>Tổng</Text>
-            </View>
-
-            <View width={80}>
-              <Text textAlign={'center'}>{currentOrder?.totalPrice}k</Text>
-            </View>
-          </View>
-        </View>
+        {currentOrder && (
+          <InvoiceDish
+            dishes={currentOrder?.dishes}
+            total={currentOrder?.totalPrice}
+          />
+        )}
       </Modalize>
     </Screen>
   );
@@ -152,6 +111,7 @@ const OrderItem = ({
   onContinue: (order: OrderSchema) => void;
   onPress: (order: OrderSchema) => void;
 }) => {
+  const {t} = useTranslation();
   const {updateOrder, isLoading} = useUpdateOrder();
   const client = useQueryClient();
 
@@ -163,10 +123,10 @@ const OrderItem = ({
           status: 'DELETED',
         },
       });
-      showSuccessMessage('Xoá đơn thành công');
+      showSuccessMessage(t('message.deleteOrderSuccess'));
       await client.invalidateQueries(['UNRESOLVE_ORDER']);
     } catch (error) {
-      showErrorMessage('Không thể xoá đơn, vui lòng thử lại');
+      showErrorMessage(t('message.deleteOrderFail'));
     }
   };
 
@@ -190,13 +150,13 @@ const OrderItem = ({
             isLoading={isLoading}
             variant="secondary"
             size="s"
-            title="Xoá"
+            title={t('action.delete')}
             onPress={onDelete}
           />
           <Button
             variant="primary"
             size="s"
-            title="Tiếp tục"
+            title={t('action.continue')}
             onPress={() => onContinue(order)}
           />
         </View>

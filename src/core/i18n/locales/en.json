@@ -2,115 +2,131 @@
   "components": {
     "spinner": {
       "a11y": {
-        "spinnerLabel": "Spinner Label"
+        "spinnerLabel": "Nhãn Spinner"
       }
     },
     "button": {
       "a11y": {
-        "continueButtonLabel": "Continue Button"
+        "continueButtonLabel": "Nút Tiếp tục"
       }
     }
   },
   "label": {
-    "currencies": "Currencies",
-    "documentInfo": "Document info",
-    "invoice": "Invoice",
-    "paymentMethod": "Payment method",
-    "previewDocument": "Preview the document in another app",
-    "required": "Required",
-    "selected": "selected"
+    "required": "Bắt buộc",
+    "selected": "đã chọn"
   },
   "navigation": {
     "a11y": {
-      "navButtonBackHint": "Double tap to go back",
-      "navButtonCloseHint": "Double tap to close"
+      "navButtonBackHint": "Nhấn hai lần để quay lại",
+      "navButtonCloseHint": "Nhấn hai lần để đóng"
     },
-    "accounting": "Accounting",
-    "accounts": "Accounts",
-    "documents": "Documents",
-    "home": "Home",
-    "more": "More",
-    "network": "Network",
-    "wallet": "Wallet",
-    "profile": "Profile"
+    "home": "Trang chủ",
+    "more": "Thêm",
+    "profile": "Hồ sơ"
   },
   "validation": {
-    "dueDateFrom": "This date must be less than due date until",
-    "dueDateUntil": "This date must be greater than due date from",
-    "email": "This email is not valid",
-    "invalidCharacter": "The value contains an invalid character",
-    "maxLength": "The value exceeds the max length ({{length}})",
-    "phone": "This phone is not valid",
-    "required": "This field is required",
-    "requiredFields": "Please complete all required fields",
-    "smsCode": "This SMS code requires 5 digits",
-    "totalFrom": "The value must be less than total until",
-    "totalUntil": "The value must be greater than total from",
-    "whitespace": "The value contains leading whitespace"
+    "email": "Email không hợp lệ",
+    "invalidCharacter": "Giá trị chứa ký tự không hợp lệ",
+    "maxLength": "Giá trị vượt quá độ dài tối đa ({{length}})",
+    "phone": "Số điện thoại không hợp lệ",
+    "required": "Thông tin này là bắt buộc",
+    "requiredFields": "Vui lòng điền đầy đủ thông tin bắt buộc",
+    "smsCode": "Mã SMS này cần có 5 chữ số",
+    "whitespace": "Giá trị chứa khoảng trắng đầu"
   },
   "error": {
-    "403": "403: You don't have permission to access this.",
-    "404": "404: Not found",
-    "generalSubtitle": "It seems like we ran into a technical error from our side. Please try again or contact support through email.",
-    "generalTitle": "Something went wrong"
+    "403": "403: Bạn không có quyền truy cập vào nội dung này.",
+    "404": "404: Không tìm thấy",
+    "generalSubtitle": "Có vẻ như chúng tôi gặp sự cố kỹ thuật từ phía chúng tôi. Vui lòng thử lại hoặc liên hệ hỗ trợ qua email.",
+    "generalTitle": "Có lỗi xảy ra"
   },
   "input":{
-    "email_label": "Email",
-    "email_placeholder": "Enter your email",
-    "password_label": "Password",
-    "password_placeholder": "Enter your password"
+    "emailLabel": "Email",
+    "emailPlaceholder": "Nhập email của bạn",
+    "passwordLabel": "Mật khẩu",
+    "passwordPlaceholder": "Nhập mật khẩu của bạn"
   },
   "message":{
-    "login_success": "You login sucessfully",
-    "login_fail": "Wrong email or password",
-    "login_form_fail": "Please completed the login form before submit"
+    "loginSuccess": "Bạn đã đăng nhập thành công",
+    "loginFail": "Email hoặc mật khẩu không đúng",
+    "loginFormFail": "Vui lòng điền đầy đủ thông tin đăng nhập trước khi gửi",
+    "createOrderSuccess": "Tạo đơn hàng thành công: {{orderId}}",
+    "createOrderFail": "Có lỗi xảy ra: Tạo đơn hàng thất bại",
+    "deleteOrderSuccess": "Xoá đơn thành công",
+    "deleteOrderFail": "Có lỗi xảy ra: Xoá đơn thất bại",
+    "continueQuitApp": "Nhấn quay về thêm 1 lần để thoát ứng dụng",
+    "paymentImageRequired": "Vui lòng thêm hình ảnh giao dịch trước khi xác nhận đơn hàng",
+    "orderPaymentSuccess": "Xác nhận đơn hàng thành công",
+    "backToPaymentMethod": "Quay về thành công, vui lòng tiếp tục chọn phương thức thanh toán khác",
+    "paymentBeforeGoBack": "Vui lòng hoàn thành thanh toán trước khi quay về"
   },
-  "auth":{
-    "login": "Đăng nhập"
+  "common":{
+    "dishName": "Tên món",
+    "amount": "Số lượng",
+    "price": "Giá",
+    "total": "Tổng",
+    "totalWithPrice": "Tổng: {{value}}",
+    "unfinishedOrder": "Đơn hàng chưa hoành thành",
+    "noUnfinishedOrder": "Không có đơn chưa xử lí nào",
+    "touchDishToStartOrder": "Chạm vào hình đồ ăn để bắt đầu chọn món",
+    "payment":"Thanh toán",
+    "paymentWithPrice": "Thanh toán: {{price}}",
+    "orderPlaceholder" : "Vui lòng thêm món",
+    "bankTitle": "QR chuyển khoản",
+    "momoTitle": "QR chuyển khoản",
+    "cashTitle": "Thanh toán tiền mặt",
+    "addPaymentImage": "Thêm hình ảnh giao dịch",
+    "updatePaymentImage": "Thay đổi hình ảnh giao dịch",
+    "abb": {
+      "unitPrice": "Giá",
+      "totalPrice": "Thành tiền",
+      "amount": "SL"
+    }
   },
   "action": {
-    "accept": "Accept",
-    "add": "Add",
-    "archive": "Archive",
-    "back": "Back",
-    "cancel": "Cancel",
-    "clear": "Clear",
-    "clearAll": "Clear all",
-    "close": "Close",
-    "confirm": "Confirm",
-    "contactSupport": "Contact support",
-    "continue": "Continue",
-    "deactivate": "Deactivate",
-    "delete": "Delete",
-    "edit": "Edit",
-    "editName": "Edit name",
-    "gotIt": "Got it",
-    "later": "Later",
-    "more": "More",
-    "no": "No",
-    "ok": "Ok",
-    "okay": "Okay, got it",
-    "open": "Open",
-    "paid": "Paid",
-    "pay": "Pay",
-    "resend": "Resend",
-    "reset": "Reset",
-    "review": "Review",
-    "save": "Save",
-    "scan": "Scan",
-    "search": "Search",
-    "share": "Share",
-    "showDocuments": "Show documents",
-    "takePicture": "Take a picture",
-    "tryAgain": "Try again",
-    "update": "Update",
-    "upload": "Upload",
-    "verify": "Verify",
-    "view": "View",
-    "viewAll": "View all",
-    "yes": "Yes",
-    "yesAccept": "Yes, accept",
-    "goBack": "Go back",
-    "doThisLater": "I'll do this later"
+    "accept": "Chấp nhận",
+    "add": "Thêm",
+    "archive": "Lưu trữ",
+    "back": "Quay lại",
+    "cancel": "Hủy",
+    "clear": "Xóa",
+    "clearAll": "Xóa tất cả",
+    "close": "Đóng",
+    "confirm": "Xác nhận",
+    "contactSupport": "Liên hệ hỗ trợ",
+    "continue": "Tiếp tục",
+    "deactivate": "Vô hiệu hóa",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "editName": "Chỉnh sửa tên",
+    "gotIt": "Đã hiểu",
+    "later": "Sau",
+    "more": "Thêm",
+    "no": "Không",
+    "ok": "OK",
+    "okay": "OK, đã hiểu",
+    "open": "Mở",
+    "paid": "Đã thanh toán",
+    "pay": "Thanh toán",
+    "resend": "Gửi lại",
+    "reset": "Đặt lại",
+    "review": "Xem lại",
+    "save": "Lưu",
+    "scan": "Quét",
+    "search": "Tìm kiếm",
+    "share": "Chia sẻ",
+    "showDocuments": "Hiển thị tài liệu",
+    "takePicture": "Chụp ảnh",
+    "tryAgain": "Thử lại",
+    "update": "Cập nhật",
+    "upload": "Tải lên",
+    "verify": "Xác minh",
+    "view": "Xem",
+    "viewAll": "Xem tất cả",
+    "yes": "Có",
+    "yesAccept": "Có, chấp nhận",
+    "goBack": "Quay lại",
+    "doThisLater": "Tôi sẽ làm sau",
+    "confirmOrder": "Xác nhận đơn hàng"
   }
 }

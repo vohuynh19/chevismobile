@@ -1,4 +1,11 @@
-import {useMemo, useRef, useState} from 'react';
+import {
+  ForwardRefExoticComponent,
+  RefAttributes,
+  forwardRef,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
@@ -9,6 +16,7 @@ import {Screen, View, Text, Divider, Button, CheckBox, Icon} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {screenWidth, showErrorMessage, showSuccessMessage} from '~core/utils';
 import {
+  Demographic,
   MainDish,
   defaultDemographics,
   demographics,
@@ -19,15 +27,17 @@ import {
   useCreateOrder,
 } from '~modules/order';
 import {PaymentMethod, paymentImages, paymentMethods} from '~modules/payment';
+import {useTranslation} from 'react-i18next';
 
 const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
+  const {t} = useTranslation();
   const {params} = route;
   const {dishes} = params;
   const modalizeRef = useRef<Modalize>(null);
   const {createOrder, isLoading} = useCreateOrder();
 
-  const [demographicState, setDemographicState] = useState(defaultDemographics);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash');
+  const demographicRef = useRef<DemographicsRef>(null);
 
   const dishesTotalPrice = useMemo(() => {
     return dishes.reduce(
@@ -42,11 +52,11 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
         dishes,
         paymentMethod,
         status: 'CREATED',
-        demographics: demographicState,
+        demographics: demographicRef.current?.getState()!!,
         totalPrice: dishesTotalPrice,
       });
 
-      showSuccessMessage(`Tạo đơn hàng thành công: ${data.id}`);
+      showSuccessMessage(t('message.createOrderSuccess', {orderId: data.id}));
 
       switch (paymentMethod) {
         case 'banking':
@@ -72,13 +82,18 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
           break;
       }
     } catch (error) {
-      showErrorMessage('Tạo đơn hàng thất bại');
+      showErrorMessage(t('message.createOrderFail'));
     }
   };
 
-  const renderPaymentMethods = useMemo(() => {
-    const imageWidth = (screenWidth * 1) / 2 - 12;
-    return (
+  const imageWidth = (screenWidth * 1) / 2 - 12;
+
+  return (
+    <Screen topInset bottomInset={false}>
+      <View paddingHorizontal={4}>
+        <NavButton iconName="ArrowLeft" />
+      </View>
+
       <View
         px={3}
         py={4}
@@ -113,101 +128,10 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
           </TouchableOpacity>
         ))}
       </View>
-    );
-  }, [paymentMethod]);
-
-  const renderModal = useMemo(() => {
-    return (
-      <View py={4}>
-        <View flexDirection="row" paddingHorizontal={4}>
-          <View flex={1}>
-            <Text>Tên món</Text>
-          </View>
-
-          <View width={64}>
-            <Text textAlign={'center'}>SL</Text>
-          </View>
-
-          <View width={64}>
-            <Text textAlign={'center'}>Giá</Text>
-          </View>
-
-          <View width={80}>
-            <Text textAlign={'center'}>Thành tiền</Text>
-          </View>
-        </View>
-
-        <Divider backgroundColor={'neutral500'} />
-
-        <View flex={1}>
-          <ScrollView>
-            {dishes.map((dish, index) => (
-              <View key={JSON.stringify(dish)} paddingHorizontal={4}>
-                <InvoiceDishItem dish={dish} />
-                {index !== dishes.length - 1 && (
-                  <Divider
-                    backgroundColor={'neutral500'}
-                    width={'100%'}
-                    ml={0}
-                  />
-                )}
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-
-        <Divider backgroundColor={'neutral500'} />
-
-        <View flexDirection="row" paddingHorizontal={4}>
-          <View flex={1}>
-            <Text>Tổng</Text>
-          </View>
-
-          <View width={80}>
-            <Text textAlign={'center'}>{dishesTotalPrice}k</Text>
-          </View>
-        </View>
-      </View>
-    );
-  }, [dishesTotalPrice, dishes]);
-
-  const renderDemographics = useMemo(() => {
-    return (
-      <View
-        px={3}
-        py={4}
-        flexDirection={'row'}
-        flexWrap="wrap"
-        backgroundColor="white">
-        {demographics.map(demographic => (
-          <View key={demographic} width={'50%'} mb={2}>
-            <CheckBox
-              checked={demographicState[demographic]}
-              onChange={() =>
-                setDemographicState(prev => ({
-                  ...prev,
-                  [demographic]: !demographicState[demographic],
-                }))
-              }
-              title={getDemographicName(demographic)}
-            />
-          </View>
-        ))}
-      </View>
-    );
-  }, [demographicState]);
-
-  return (
-    <Screen topInset bottomInset={false}>
-      <View paddingHorizontal={4}>
-        <NavButton iconName="ArrowLeft" />
-      </View>
-
-      {renderPaymentMethods}
 
       <Divider />
 
-      {renderDemographics}
+      <Demographics ref={demographicRef} />
 
       <View flex={1} />
 
@@ -218,10 +142,104 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
         btnLoading={isLoading}
       />
 
-      <Modalize ref={modalizeRef} adjustToContentHeight>
-        {renderModal}
+      <Modalize ref={modalizeRef} adjustToContentHeight handlePosition="inside">
+        <InvoiceDish total={dishesTotalPrice} dishes={dishes} />
       </Modalize>
     </Screen>
+  );
+};
+
+type DemographicsProps = {};
+type DemographicsRef = {
+  getState: () => Record<Demographic, boolean>;
+};
+
+const Demographics: ForwardRefExoticComponent<
+  DemographicsProps & RefAttributes<DemographicsRef>
+> = forwardRef(() => {
+  const [demographicState, setDemographicState] = useState(defaultDemographics);
+
+  return (
+    <View
+      px={3}
+      py={4}
+      flexDirection={'row'}
+      flexWrap="wrap"
+      backgroundColor="white">
+      {demographics.map(demographic => (
+        <View key={demographic} width={'50%'} mb={2}>
+          <CheckBox
+            checked={demographicState[demographic]}
+            onChange={() =>
+              setDemographicState(prev => ({
+                ...prev,
+                [demographic]: !demographicState[demographic],
+              }))
+            }
+            title={getDemographicName(demographic)}
+          />
+        </View>
+      ))}
+    </View>
+  );
+});
+
+export const InvoiceDish = ({
+  total,
+  dishes,
+}: {
+  total: number;
+  dishes: MainDish[];
+}) => {
+  const {t} = useTranslation();
+
+  return (
+    <View py={4}>
+      <View flexDirection="row" paddingHorizontal={4}>
+        <View flex={1}>
+          <Text>{t('common.dishName')}</Text>
+        </View>
+
+        <View width={64}>
+          <Text textAlign={'center'}>{t('common.abb.amount')}</Text>
+        </View>
+
+        <View width={64}>
+          <Text textAlign={'center'}>{t('common.abb.unitPrice')}</Text>
+        </View>
+
+        <View width={80}>
+          <Text textAlign={'center'}>{t('common.abb.totalPrice')}</Text>
+        </View>
+      </View>
+
+      <Divider backgroundColor={'neutral500'} />
+
+      <View flex={1}>
+        <ScrollView>
+          {dishes.map((dish, index) => (
+            <View key={JSON.stringify(dish)} paddingHorizontal={4}>
+              <InvoiceDishItem dish={dish} />
+              {index !== dishes.length - 1 && (
+                <Divider backgroundColor={'neutral500'} width={'100%'} ml={0} />
+              )}
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+
+      <Divider backgroundColor={'neutral500'} />
+
+      <View flexDirection="row" paddingHorizontal={4}>
+        <View flex={1}>
+          <Text>{t('common.total')}</Text>
+        </View>
+
+        <View width={80}>
+          <Text textAlign={'center'}>{total}k</Text>
+        </View>
+      </View>
+    </View>
   );
 };
 
@@ -266,6 +284,8 @@ const PaymentFooter = ({
   onShow: () => void;
   btnLoading: boolean;
 }) => {
+  const {t} = useTranslation();
+
   return (
     <View
       flexDirection="row"
@@ -276,12 +296,16 @@ const PaymentFooter = ({
       <TouchableOpacity
         onPress={onShow}
         style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-        <Text fontSize={18}>Tổng: {value}</Text>
+        <Text fontSize={18}>{t('common.totalWithPrice', {value})} </Text>
         <Icon name="ChevronDown" />
       </TouchableOpacity>
 
       <View>
-        <Button title="Xác nhận" onPress={onConfirm} isLoading={btnLoading} />
+        <Button
+          title={t('action.confirm')}
+          onPress={onConfirm}
+          isLoading={btnLoading}
+        />
       </View>
     </View>
   );
