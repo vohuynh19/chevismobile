@@ -75,6 +75,8 @@
     "totalWithPrice": "Tổng: {{value}}",
     "unfinishedOrder": "Đơn hàng chưa hoành thành",
     "noUnfinishedOrder": "Không có đơn chưa xử lí nào",
+    "orderHistory":"Lịch sử đơn hàng",
+    "emptyOrderHistory": "Hôm nay chưa có đơn hàng nào",
     "touchDishToStartOrder": "Chạm vào hình đồ ăn để bắt đầu chọn món",
     "payment":"Thanh toán",
     "paymentWithPrice": "Thanh toán: {{price}}",

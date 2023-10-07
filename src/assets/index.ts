@@ -9,6 +9,8 @@ export const images = {
   xetTanChay: require('./miyxet/tanchay.jpg'),
   xetTruyenThong: require('./miyxet/truyenthong.jpg'),
   xucXich: require('./miyxet/xucxich.jpg'),
+  xaLach: require('./miyxet/xa-lach.jpg'),
+  gaPopcorn: require('./miyxet/ga-popcorn.jpg'),
 
   vietqr: require('./miyxet/vietqr.png'),
   momo: require('./miyxet/momo.png'),

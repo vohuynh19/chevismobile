@@ -94,47 +94,48 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
       <View paddingHorizontal={4}>
         <NavButton iconName="ArrowLeft" />
       </View>
+      <View flex={1}>
+        <ScrollView>
+          <View
+            px={3}
+            py={4}
+            flexDirection={'row'}
+            flexWrap="wrap"
+            backgroundColor="white"
+            justifyContent="space-between">
+            {paymentMethods.map(method => (
+              <TouchableOpacity
+                key={method}
+                activeOpacity={0.8}
+                onPress={() => setPaymentMethod(method)}
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: imageWidth,
+                  height: imageWidth,
+                  borderWidth: paymentMethod === method ? 1 : 1,
+                  borderColor:
+                    paymentMethod === method
+                      ? colors.success600
+                      : colors.neutralLavender300,
+                }}>
+                <FastImage
+                  source={paymentImages[method]}
+                  style={{
+                    width: imageWidth - 40,
+                    height: imageWidth - 40,
+                  }}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
 
-      <View
-        px={3}
-        py={4}
-        flexDirection={'row'}
-        flexWrap="wrap"
-        backgroundColor="white"
-        justifyContent="space-between">
-        {paymentMethods.map(method => (
-          <TouchableOpacity
-            key={method}
-            activeOpacity={0.8}
-            onPress={() => setPaymentMethod(method)}
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: imageWidth,
-              height: imageWidth,
-              borderWidth: paymentMethod === method ? 1 : 1,
-              borderColor:
-                paymentMethod === method
-                  ? colors.success600
-                  : colors.neutralLavender300,
-            }}>
-            <FastImage
-              source={paymentImages[method]}
-              style={{
-                width: imageWidth - 40,
-                height: imageWidth - 40,
-              }}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        ))}
+          <Divider />
+
+          <Demographics ref={demographicRef} />
+        </ScrollView>
       </View>
-
-      <Divider />
-
-      <Demographics ref={demographicRef} />
-
-      <View flex={1} />
 
       <PaymentFooter
         value={`${dishesTotalPrice},000 VND`}

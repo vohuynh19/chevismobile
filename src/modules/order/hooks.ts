@@ -1,9 +1,22 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
-
-import firestore from '@react-native-firebase/firestore';
-import {OrderSchema} from './schema';
 import moment from 'moment';
+import firestore from '@react-native-firebase/firestore';
+
+import {appConfig} from '~config';
+
+import {OrderSchema} from './schema';
 import {OrderStatus} from './types';
+
+type OrderFilterType = 'UNRESOLVE_ORDER' | 'LATEST_10';
+
+const getCollection = (name: 'orders' | '') => {
+  if (appConfig.isTesting) {
+    return `test_${name}`;
+  }
+  return name;
+};
+
+export const getOrderQueryKey = (type: OrderFilterType) => ['order', type];
 
 const createOrder = ({
   dishes,
@@ -13,7 +26,7 @@ const createOrder = ({
   paymentMethod,
   imageUrl = '',
 }: OrderSchema) =>
-  firestore().collection('orders').add({
+  firestore().collection(getCollection('orders')).add({
     status,
     dishes,
     totalPrice,
@@ -41,7 +54,7 @@ const updateOrder = ({
   updateInfo: Partial<OrderSchema>;
 }) =>
   firestore()
-    .collection('orders')
+    .collection(getCollection('orders'))
     .doc(id)
     .update({
       ...updateInfo,
@@ -57,11 +70,9 @@ export const useUpdateOrder = () => {
   };
 };
 
-type OrderFilterType = 'UNRESOLVE_ORDER';
-
 const getByStatus = (status: OrderStatus) =>
   firestore()
-    .collection('orders')
+    .collection(getCollection('orders'))
     .where('status', '==', status)
     .get()
     .then(data => {
@@ -74,9 +85,32 @@ const getByStatus = (status: OrderStatus) =>
       );
     });
 
-export const useOrders = (type: OrderFilterType) => {
+export const useOrders = (type: OrderFilterType, fetchOnMount = true) => {
   const request = async () => {
     switch (type) {
+      case 'LATEST_10':
+        return firestore()
+          .collection(getCollection('orders'))
+          .orderBy('createdAt', 'desc')
+          .limit(10)
+          .get()
+          .then(data => {
+            return data.docs
+              .map(
+                val =>
+                  ({
+                    ...val.data(),
+                    id: val.id,
+                  } as OrderSchema),
+              )
+              .filter(order => {
+                const orderTime = moment(
+                  moment(order.createdAt).format('YYYY-MM-DD'),
+                );
+                const nowTime = moment(moment().format('YYYY-MM-DD'));
+                return nowTime.diff(orderTime, 'day') === 0;
+              });
+          });
       default:
         return Promise.all([
           getByStatus('CREATED'),
@@ -94,7 +128,11 @@ export const useOrders = (type: OrderFilterType) => {
     }
   };
 
-  const {data, isLoading, error, refetch} = useQuery(['order', type], request);
+  const {data, isLoading, error, refetch} = useQuery({
+    queryFn: request,
+    queryKey: getOrderQueryKey(type),
+    enabled: fetchOnMount,
+  });
 
   return {
     orders: data,

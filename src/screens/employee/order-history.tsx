@@ -6,23 +6,28 @@ import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {useTranslation} from 'react-i18next';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {Button, RefreshControl, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
-import {OrderSchema, useOrders, useUpdateOrder} from '~modules/order';
+import {
+  OrderSchema,
+  getOrderQueryKey,
+  useOrders,
+  useUpdateOrder,
+} from '~modules/order';
 import {EmployeeScreenProps, EmployeeStackParams} from '~navigators/employee';
 import {images} from '~assets';
 
 import {InvoiceDish} from './order';
-import {useFocusEffect} from '@react-navigation/native';
 
 const OrderHistory = ({
   navigation,
 }: EmployeeScreenProps<'/employee/order-history'>) => {
   const {t} = useTranslation();
 
-  const {isLoading, orders, refetch} = useOrders('UNRESOLVE_ORDER');
+  const {isLoading, orders, refetch} = useOrders('LATEST_10');
 
   const [currentOrder, setCurrentOrder] = useState<OrderSchema>();
 
@@ -44,7 +49,7 @@ const OrderHistory = ({
       <View flexDirection="row" alignItems="center">
         <NavButton />
         <Text fontWeight="700" fontSize={18}>
-          {t('common.unfinishedOrder')}
+          {t('common.orderHistory')}
         </Text>
       </View>
 
@@ -58,7 +63,7 @@ const OrderHistory = ({
           />
 
           <Text fontSize={14} color="secondary800">
-            {t('common.noUnfinishedOrder')}
+            {t('common.emptyOrderHistory')}
           </Text>
         </View>
       )}
@@ -114,7 +119,7 @@ const OrderItem = ({
         },
       });
       showSuccessMessage(t('message.deleteOrderSuccess'));
-      await client.invalidateQueries(['order', 'UNRESOLVE_ORDER']);
+      await client.invalidateQueries(getOrderQueryKey('LATEST_10'));
     } catch (error) {
       showErrorMessage(t('message.deleteOrderFail'));
     }
@@ -154,7 +159,7 @@ const OrderItem = ({
         },
       });
       showSuccessMessage(t('message.orderConfirmSuccess'));
-      await client.invalidateQueries(['order', 'UNRESOLVE_ORDER']);
+      await client.invalidateQueries(getOrderQueryKey('LATEST_10'));
     } catch (error) {
       showErrorMessage(t('error.generalTitle'));
     }
@@ -181,6 +186,10 @@ const OrderItem = ({
         return 'neutral600';
       case 'PROCESSING':
         return 'warning600';
+      case 'DONE':
+        return 'success600';
+      case 'DELETED':
+        return 'error600';
       default:
         return 'neutral600';
     }
@@ -192,10 +201,16 @@ const OrderItem = ({
         return 'Chưa thanh toán';
       case 'PROCESSING':
         return 'Đang chờ bếp';
+      case 'DONE':
+        return 'Đã hoàn thành';
+      case 'DELETED':
+        return 'Đã huỷ';
       default:
         return 'Không xác định';
     }
   };
+
+  const isBtnDisabled = order.status === 'DONE' || order.status === 'DELETED';
 
   return (
     <TouchableOpacity onPress={() => onPress(order)} activeOpacity={0.8}>
@@ -208,13 +223,16 @@ const OrderItem = ({
         p={4}
         borderRadius="lg">
         <View>
-          <Text>{order.totalPrice},000 VND</Text>
-          <Text>{moment(order.updatedAt).format('HH:mm DD/MM')}</Text>
+          <Text pb={1} fontWeight="700" fontSize={20}>
+            {order.totalPrice},000 VND
+          </Text>
+          <Text>Vào lúc: {moment(order.updatedAt).format('HH:mm')}</Text>
           <Text color={getOrderColor()}>{getStatus()}</Text>
         </View>
 
         <View flexDirection="row">
           <Button
+            disabled={isBtnDisabled}
             isLoading={isLoading}
             variant="secondary"
             size="s"
@@ -222,6 +240,7 @@ const OrderItem = ({
             onPress={onDelete}
           />
           <Button
+            disabled={isBtnDisabled}
             variant="primary"
             size="s"
             title={

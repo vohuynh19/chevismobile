@@ -5,12 +5,16 @@ export const defaultToppingRecord: Record<ToppingName, number> = {
   pho_mai_lat: 0,
   pho_mai_soi: 0,
   xuc_xich: 0,
+  ga_popcorn: 0,
+  xa_lach: 0,
 };
 
 export const toppingImages: Record<ToppingName, any> = {
   pho_mai_lat: images.phoMaiLat,
   pho_mai_soi: images.phoMaiSoi,
   xuc_xich: images.xucXich,
+  ga_popcorn: images.gaPopcorn,
+  xa_lach: images.xaLach,
 };
 
 export const mainDishImages: Record<MainDishName, any> = {
@@ -19,9 +23,11 @@ export const mainDishImages: Record<MainDishName, any> = {
 };
 
 export const toppingNames: ToppingName[] = [
-  'xuc_xich',
   'pho_mai_lat',
   'pho_mai_soi',
+  'xuc_xich',
+  'ga_popcorn',
+  'xa_lach',
 ];
 
 export const demographics: Demographic[] = [
@@ -51,6 +57,8 @@ export const toppingPriceTable: Record<ToppingName, number> = {
   pho_mai_lat: 2,
   pho_mai_soi: 4,
   xuc_xich: 4,
+  ga_popcorn: 6,
+  xa_lach: 2,
 };
 
 export const mainDishPriceTable: Record<

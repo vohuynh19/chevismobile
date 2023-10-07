@@ -1,4 +1,9 @@
-export type ToppingName = 'xuc_xich' | 'pho_mai_lat' | 'pho_mai_soi';
+export type ToppingName =
+  | 'xuc_xich'
+  | 'pho_mai_lat'
+  | 'pho_mai_soi'
+  | 'xa_lach'
+  | 'ga_popcorn';
 
 export type MainDishName = 'xet_truyen_thong' | 'xet_tan_chay';
 
