@@ -60,7 +60,8 @@
     "backToPaymentMethod": "Quay về thành công, vui lòng tiếp tục chọn phương thức thanh toán khác",
     "paymentBeforeGoBack": "Vui lòng hoàn thành thanh toán trước khi quay về",
     "invalidReceivedAmount": "Tiền nhận không hợp lệ",
-    "orderConfirmSuccess": "Xác nhận đơn thành công"
+    "orderConfirmSuccess": "Xác nhận đơn thành công",
+    "fillDemographic": "Vui lòng lựa chọn nhân khẩu học để tiếp tục"
   },
   "common":{
     "abb": {

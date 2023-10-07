@@ -49,11 +49,26 @@ const Order = ({navigation, route}: EmployeeScreenProps<'/employee/order'>) => {
 
   const onConfirm = async () => {
     try {
+      const demographicData = demographicRef.current?.getState();
+      if (demographicData) {
+        if (
+          !(Object.keys(demographicData) as Demographic[]).reduce(
+            (prev, cur) => {
+              return prev + (demographicData[cur] ? 1 : 0);
+            },
+            0,
+          )
+        ) {
+          showErrorMessage(t('message.fillDemographic'));
+          return;
+        }
+      }
+
       const data = await createOrder({
         dishes,
         paymentMethod,
         status: 'CREATED',
-        demographics: demographicRef.current?.getState()!!,
+        demographics: demographicData!!,
         totalPrice: dishesTotalPrice,
       });
 

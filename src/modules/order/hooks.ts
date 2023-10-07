@@ -2,15 +2,14 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import moment from 'moment';
 import firestore from '@react-native-firebase/firestore';
 
-import {appConfig} from '~config';
-
 import {OrderSchema} from './schema';
 import {OrderStatus} from './types';
+import Config from 'react-native-config';
 
-type OrderFilterType = 'UNRESOLVE_ORDER' | 'LATEST_10';
+type OrderFilterType = 'UNRESOLVE_ORDER' | 'LATEST_10' | 'ALL_DONE_TODAY';
 
-const getCollection = (name: 'orders' | '') => {
-  if (appConfig.isTesting) {
+const getCollection = (name: 'orders') => {
+  if (Config.ENV === 'test') {
     return `test_${name}`;
   }
   return name;
@@ -111,6 +110,34 @@ export const useOrders = (type: OrderFilterType, fetchOnMount = true) => {
                 return nowTime.diff(orderTime, 'day') === 0;
               });
           });
+
+      case 'ALL_DONE_TODAY':
+        return firestore()
+          .collection(getCollection('orders'))
+          .orderBy('createdAt', 'desc')
+          .limit(1000)
+          .get()
+          .then(data => {
+            return data.docs
+              .map(
+                val =>
+                  ({
+                    ...val.data(),
+                    id: val.id,
+                  } as OrderSchema),
+              )
+              .filter(order => {
+                const orderTime = moment(
+                  moment(order.createdAt).format('YYYY-MM-DD'),
+                );
+                const nowTime = moment(moment().format('YYYY-MM-DD'));
+                return (
+                  nowTime.diff(orderTime, 'day') === 0 &&
+                  order.status === 'DONE'
+                );
+              });
+          });
+
       default:
         return Promise.all([
           getByStatus('CREATED'),

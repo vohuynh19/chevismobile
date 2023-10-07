@@ -15,6 +15,7 @@ export const SCREEN_PATHS = {
   },
   HOST: {
     __NAME__: '/host',
+    HOME: '/host/home',
   },
   EMPLOYEE: {
     __NAME__: '/employee',

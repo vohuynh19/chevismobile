@@ -2,12 +2,12 @@ import {StackActions} from '@react-navigation/native';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
+import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
-import {images} from '~assets';
-import {appConfig} from '~config';
-import {useBack} from '~core/hooks';
 
+import {images} from '~assets';
+import {useBack} from '~core/hooks';
 import {Button, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
@@ -48,9 +48,8 @@ const Momo = ({
       return;
     }
     try {
-      const storagePath = appConfig.isTesting
-        ? `testing_momo/${orderId}`
-        : `momo/${orderId}`;
+      const storagePath =
+        Config.ENV === 'test' ? `testing_momo/${orderId}` : `momo/${orderId}`;
       const imageUrl = await upload({
         path: androidImagePath,
         name: storagePath,
