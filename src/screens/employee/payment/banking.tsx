@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
+import {appConfig} from '~config';
 import {useBack} from '~core/hooks';
 
 import {Button, Icon, Screen, Text, View} from '~core/ui';
@@ -75,7 +76,9 @@ const Banking = ({
         showErrorMessage(t('message.paymentImageRequired'));
         return;
       }
-      const storagePath = `banking/${orderId}`;
+      const storagePath = appConfig.isTesting
+        ? `testing_banking/${orderId}`
+        : `banking/${orderId}`;
       const imageUrl = await upload({
         path: androidImagePath,
         name: storagePath,

@@ -5,6 +5,7 @@ import {DeviceEventEmitter, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {PhotoFile} from 'react-native-vision-camera';
 import {images} from '~assets';
+import {appConfig} from '~config';
 import {useBack} from '~core/hooks';
 
 import {Button, Icon, Screen, Text, View} from '~core/ui';
@@ -47,7 +48,9 @@ const Momo = ({
       return;
     }
     try {
-      const storagePath = `momo/${orderId}`;
+      const storagePath = appConfig.isTesting
+        ? `testing_momo/${orderId}`
+        : `momo/${orderId}`;
       const imageUrl = await upload({
         path: androidImagePath,
         name: storagePath,
