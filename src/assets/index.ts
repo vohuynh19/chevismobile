@@ -1,4 +1,5 @@
 export const images = {
+  xetMiY: require('./images/xetmiy.png'),
   phoMaiLat: require('./images/phomailat.jpg'),
   phoMaiSoi: require('./images/phomaisoi.jpg'),
   xetTanChay: require('./images/tanchay.jpg'),
