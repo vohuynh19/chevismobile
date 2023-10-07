@@ -1,4 +1,3 @@
-import storage from '@react-native-firebase/storage';
 import {StackActions} from '@react-navigation/native';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -28,7 +27,7 @@ const Banking = ({
   const [image, setImage] = useState<PhotoFile>();
 
   const {isLoading, updateOrder} = useUpdateOrder();
-  const {isLoading: uploadImgLoading, upload} = useUploadImage();
+  const {isLoading: uploadImgLoading, upload, percent} = useUploadImage();
   const notFinished = useRef(true);
 
   useEffect(() => {
@@ -77,11 +76,10 @@ const Banking = ({
         return;
       }
       const storagePath = `banking/${orderId}`;
-      await upload({
+      const imageUrl = await upload({
         path: androidImagePath,
         name: storagePath,
       });
-      const imageUrl = await storage().ref(storagePath).getDownloadURL();
       await updateOrder({
         id: orderId,
         updateInfo: {
@@ -163,9 +161,14 @@ const Banking = ({
       <View flex={1} />
 
       <Button
-        title={t('action.confirmOrder')}
+        title={
+          uploadImgLoading && percent !== undefined
+            ? `${(percent * 100).toFixed(2)}%`
+            : t('action.confirmOrder')
+        }
         onPress={onConfirm}
-        isLoading={uploadImgLoading || isLoading}
+        disabled={uploadImgLoading}
+        isLoading={isLoading}
       />
     </Screen>
   );

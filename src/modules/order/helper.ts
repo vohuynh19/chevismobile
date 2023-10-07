@@ -26,6 +26,10 @@ export const getToppingName = (name: ToppingName) => {
       return 'Phô mai lát';
     case 'pho_mai_soi':
       return 'Phô mai sợi';
+    case 'ga_popcorn':
+      return 'Gà popcorn';
+    case 'xa_lach':
+      return 'Xà lách';
     default:
       return 'ERROR';
   }

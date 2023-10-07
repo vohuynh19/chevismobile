@@ -14,9 +14,13 @@ const CameraCapture = ({
   navigation,
   route,
 }: EmployeeScreenProps<'/common/camera-capture'>) => {
-  const cameraRef = useRef<Camera>(null);
-  const device = useCameraDevice('back');
+  const device = useCameraDevice('back', {
+    physicalDevices: ['wide-angle-camera'],
+  });
   const {hasPermission, requestPermission} = useCameraPermission();
+
+  const cameraRef = useRef<Camera>(null);
+
   const [isActive, setActive] = useState(true);
 
   const {params} = route;
@@ -59,6 +63,7 @@ const CameraCapture = ({
         style={StyleSheet.absoluteFill}
         device={device}
         isActive={isActive}
+        orientation="portrait"
       />
 
       <View
