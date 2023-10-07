@@ -40,7 +40,11 @@ const CameraCapture = ({
   }, [navigation]);
 
   const onTakePhoto = async () => {
-    const photos = await cameraRef.current?.takePhoto();
+    const photos = await cameraRef.current?.takePhoto({
+      qualityPrioritization: 'speed',
+      flash: 'off',
+      enableShutterSound: false,
+    });
     navigation.navigate(returnPath, {...returnParams});
     DeviceEventEmitter.emit(callbackEvent, photos);
   };
@@ -64,6 +68,7 @@ const CameraCapture = ({
         device={device}
         isActive={isActive}
         orientation="portrait"
+        fps={30}
       />
 
       <View
