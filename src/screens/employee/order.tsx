@@ -221,11 +221,11 @@ export const InvoiceDish = ({
           <Text>{t('common.dishName')}</Text>
         </View>
 
-        <View width={64}>
+        <View width={40}>
           <Text textAlign={'center'}>{t('common.abb.amount')}</Text>
         </View>
 
-        <View width={64}>
+        <View width={40}>
           <Text textAlign={'center'}>{t('common.abb.unitPrice')}</Text>
         </View>
 
@@ -268,18 +268,18 @@ export const InvoiceDishItem = ({dish}: {dish: MainDish}) => {
   return (
     <View flex={1} flexDirection="row" alignItems="center">
       <View flex={1}>
-        <Text lineHeight={14} fontSize={12}>
+        <Text lineHeight={20} fontSize={16}>
           {getDishNameInInvoice(dish)}
         </Text>
       </View>
 
-      <View width={64}>
+      <View width={40}>
         <Text lineHeight={14} fontSize={14} textAlign={'center'}>
           {dish.amount}
         </Text>
       </View>
 
-      <View width={64}>
+      <View width={40}>
         <Text lineHeight={14} fontSize={14} textAlign={'center'}>
           {getDishUnitPrice(dish)}k
         </Text>

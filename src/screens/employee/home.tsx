@@ -127,10 +127,6 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
     }
   };
 
-  const onReviewOrder = () => {
-    navigation.navigate('/employee/order-history');
-  };
-
   const dishesTotalPrice = useMemo(() => {
     return mainDishes.reduce(
       (prev, current) => prev + getDishTotalPrice(current),
@@ -161,7 +157,10 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
         <NavButton iconName="LogOut" onPress={onCloseOrder} />
         <View flexDirection="row" alignItems="center">
           <View mr={3}>
-            <Icon name="ReviewDocument" onPress={onReviewOrder} />
+            <Icon
+              name="ReviewDocument"
+              onPress={() => navigation.navigate('/employee/order-history')}
+            />
           </View>
           <Icon name="Reset" onPress={onReset} />
         </View>

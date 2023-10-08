@@ -3,10 +3,15 @@ import moment from 'moment';
 import firestore from '@react-native-firebase/firestore';
 
 import {OrderSchema} from './schema';
-import {OrderStatus} from './types';
 import Config from 'react-native-config';
 
-type OrderFilterType = 'UNRESOLVE_ORDER' | 'LATEST_10' | 'ALL_DONE_TODAY';
+type OrderFilterType =
+  | 'ALL'
+  | 'UNRESOLVE_ORDER'
+  | 'LATEST_10'
+  | 'ALL_DONE_TODAY'
+  | 'ALL_DONE_MORNING'
+  | 'ALL_DONE_EVENING';
 
 const getCollection = (name: 'orders') => {
   if (Config.ENV === 'test') {
@@ -69,21 +74,6 @@ export const useUpdateOrder = () => {
   };
 };
 
-const getByStatus = (status: OrderStatus) =>
-  firestore()
-    .collection(getCollection('orders'))
-    .where('status', '==', status)
-    .get()
-    .then(data => {
-      return data.docs.map(
-        val =>
-          ({
-            ...val.data(),
-            id: val.id,
-          } as OrderSchema),
-      );
-    });
-
 export const useOrders = (type: OrderFilterType, fetchOnMount = true) => {
   const request = async () => {
     switch (type) {
@@ -111,6 +101,78 @@ export const useOrders = (type: OrderFilterType, fetchOnMount = true) => {
               });
           });
 
+      case 'ALL_DONE_MORNING':
+        return firestore()
+          .collection(getCollection('orders'))
+          .orderBy('createdAt', 'desc')
+          .limit(1000)
+          .get()
+          .then(data => {
+            return data.docs
+              .map(
+                val =>
+                  ({
+                    ...val.data(),
+                    id: val.id,
+                  } as OrderSchema),
+              )
+              .filter(order => {
+                const orderDate = moment(
+                  moment(order.createdAt).format('YYYY-MM-DD'),
+                );
+                const nowDate = moment(moment().format('YYYY-MM-DD'));
+
+                const orderTime = moment(order.createdAt);
+                const maxTime = moment(
+                  `${moment(order.createdAt).format('YYYY-MM-DD')} 11:00`,
+                );
+
+                return (
+                  nowDate.diff(orderDate, 'day') === 0 &&
+                  maxTime.isAfter(orderTime) &&
+                  order.status === 'DONE'
+                );
+              });
+          });
+
+      case 'ALL_DONE_EVENING':
+        return firestore()
+          .collection(getCollection('orders'))
+          .orderBy('createdAt', 'desc')
+          .limit(1000)
+          .get()
+          .then(data => {
+            return data.docs
+              .map(
+                val =>
+                  ({
+                    ...val.data(),
+                    id: val.id,
+                  } as OrderSchema),
+              )
+              .filter(order => {
+                const orderDate = moment(
+                  moment(order.createdAt).format('YYYY-MM-DD'),
+                );
+                const nowDate = moment(moment().format('YYYY-MM-DD'));
+
+                const minTime = moment(
+                  `${moment(order.createdAt).format('YYYY-MM-DD')} 15:00`,
+                );
+                const orderTime = moment(order.createdAt);
+                const maxTime = moment(
+                  `${moment(order.createdAt).format('YYYY-MM-DD')} 23:00`,
+                );
+
+                return (
+                  nowDate.diff(orderDate, 'day') === 0 &&
+                  minTime.isBefore(orderTime) &&
+                  maxTime.isAfter(orderTime) &&
+                  order.status === 'DONE'
+                );
+              });
+          });
+
       case 'ALL_DONE_TODAY':
         return firestore()
           .collection(getCollection('orders'))
@@ -127,31 +189,36 @@ export const useOrders = (type: OrderFilterType, fetchOnMount = true) => {
                   } as OrderSchema),
               )
               .filter(order => {
-                const orderTime = moment(
+                const orderDate = moment(
                   moment(order.createdAt).format('YYYY-MM-DD'),
                 );
-                const nowTime = moment(moment().format('YYYY-MM-DD'));
+                const nowDate = moment(moment().format('YYYY-MM-DD'));
+
                 return (
-                  nowTime.diff(orderTime, 'day') === 0 &&
+                  nowDate.diff(orderDate, 'day') === 0 &&
                   order.status === 'DONE'
                 );
               });
           });
 
-      default:
-        return Promise.all([
-          getByStatus('CREATED'),
-          getByStatus('PROCESSING'),
-        ]).then(val => {
-          const mergeResponse = val.reduce((prev, cur) => {
-            return [...prev, ...cur];
-          }, []);
-          return mergeResponse.sort((a, b) => {
-            const aDate = moment(a.updatedAt || '');
-            const bDate = moment(b.updatedAt || '');
-            return bDate.diff(aDate);
+      case 'ALL':
+        return firestore()
+          .collection(getCollection('orders'))
+          .orderBy('createdAt', 'desc')
+          .limit(1000)
+          .get()
+          .then(data => {
+            return data.docs.map(
+              val =>
+                ({
+                  ...val.data(),
+                  id: val.id,
+                } as OrderSchema),
+            );
           });
-        });
+
+      default:
+        throw 'Not supported';
     }
   };
 

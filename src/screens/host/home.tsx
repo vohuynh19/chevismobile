@@ -1,10 +1,24 @@
-import {Divider, Screen, Text, View} from '~core/ui';
+import {useState} from 'react';
+import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
+import {BarChart, PieChart} from 'react-native-chart-kit';
+import {colors, theme} from '~core/theme';
+import {Divider, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
+import {screenWidth} from '~core/utils';
 import {useLogout} from '~modules/auth';
 import {Demographic, ToppingName, useOrders} from '~modules/order';
+import {HostScreenProps} from '~navigators/host';
 
-const Home = () => {
-  const {orders} = useOrders('ALL_DONE_TODAY');
+const Home = ({navigation}: HostScreenProps<'/host/home'>) => {
+  const [time, setTime] = useState<'all' | 'morning' | 'evening'>('all');
+
+  const {orders, isLoading} = useOrders(
+    time === 'all'
+      ? 'ALL_DONE_TODAY'
+      : time === 'morning'
+      ? 'ALL_DONE_MORNING'
+      : 'ALL_DONE_EVENING',
+  );
   const {logout} = useLogout();
 
   //
@@ -126,6 +140,18 @@ const Home = () => {
     },
   );
 
+  const chartConfig = {
+    backgroundColor: colors.primary600,
+    backgroundGradientFrom: colors.primary600,
+    backgroundGradientTo: colors.primary600,
+    decimalPlaces: 1, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+  };
+
   return (
     <Screen topInset backgroundColor="white">
       <View
@@ -134,44 +160,206 @@ const Home = () => {
         justifyContent="space-between"
         alignItems="center">
         <NavButton iconName="LogOut" onPress={() => logout()} />
+        <View flexDirection="row" alignItems="center">
+          <View mr={3}>
+            <Icon
+              name="ReviewDocument"
+              onPress={() => navigation.navigate('/host/history')}
+            />
+          </View>
+        </View>
       </View>
 
-      <View flex={1} paddingHorizontal={4}>
-        <Divider />
+      <View paddingHorizontal={4} flexDirection="row">
+        <TouchableOpacity
+          onPress={() => setTime('all')}
+          style={{
+            paddingVertical: 4,
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor:
+              time === 'all' ? theme.colors.neutralLavender300 : 'white',
+          }}>
+          <Text>Cả ngày</Text>
+        </TouchableOpacity>
 
-        <Text fontWeight="700">Doanh số món chính:</Text>
-        <Text>
-          XET. truyền thống size M: {totalMainDishes.xet_truyen_thong_M}
-        </Text>
-        <Text>
-          XET. truyền thống size L: {totalMainDishes.xet_truyen_thong_L}
-        </Text>
-        <Text>XET. tan chảy size M: {totalMainDishes.xet_tan_chay_M}</Text>
-        <Text>XET. tan chảy size L: {totalMainDishes.xet_tan_chay_L}</Text>
+        <TouchableOpacity
+          onPress={() => setTime('morning')}
+          style={{
+            paddingVertical: 4,
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor:
+              time === 'morning' ? theme.colors.neutralLavender300 : 'white',
+          }}>
+          <Text>Ca Sáng</Text>
+        </TouchableOpacity>
 
-        <Divider />
+        <TouchableOpacity
+          onPress={() => setTime('evening')}
+          style={{
+            paddingVertical: 4,
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor:
+              time === 'evening' ? theme.colors.neutralLavender300 : 'white',
+          }}>
+          <Text>Ca Tối</Text>
+        </TouchableOpacity>
+      </View>
 
-        <Text fontWeight="700">Doanh số topping:</Text>
-        <Text>Xúc xích: {totalTopping.xuc_xich}</Text>
-        <Text>Gà viên popcorn: {totalTopping.ga_popcorn}</Text>
-        <Text>Phô mai lát: {totalTopping.pho_mai_lat}</Text>
-        <Text>Phô mai sợi: {totalTopping.pho_mai_soi}</Text>
-        <Text>Xà lách: {totalTopping.xa_lach}</Text>
+      {isLoading && <ActivityIndicator size="large" />}
 
-        <Divider />
+      <Divider />
 
-        <Text fontWeight="700">Doanh thu:</Text>
-        <Text>{total}k</Text>
+      <View flex={1}>
+        <ScrollView
+          style={{
+            paddingHorizontal: 16,
+          }}>
+          <View flexDirection="row" justifyContent="space-between">
+            <View flex={1}>
+              <Text fontWeight="700">Doanh thu:</Text>
+              <Text>{total}k</Text>
+            </View>
 
-        <Divider />
+            <View flex={1}>
+              <Text fontWeight="700">Số phần:</Text>
+              <Text>
+                {totalMainDishes.xet_truyen_thong_M +
+                  totalMainDishes.xet_truyen_thong_L +
+                  totalMainDishes.xet_tan_chay_M +
+                  totalMainDishes.xet_tan_chay_L}
+              </Text>
+            </View>
+          </View>
+          <Divider />
 
-        <Text fontWeight="700">Nhân khẩu học</Text>
-        <Text>Trẻ em: {demographic.kid} người</Text>
-        <Text>Cấp 1: {demographic.cap_1} người</Text>
-        <Text>Cấp 2: {demographic.cap_2} người</Text>
-        <Text>Cấp 3: {demographic.cap_3} người</Text>
-        <Text>Từ 20 đến 30: {demographic['20-30']} người</Text>
-        <Text>Trên 30: {demographic['>30']} người</Text>
+          <Text fontWeight="700" mb={4}>
+            Doanh số món chính:
+          </Text>
+
+          <BarChart
+            showValuesOnTopOfBars
+            fromZero
+            data={{
+              labels: ['TT | M', 'TT | L', 'TC | M', 'TC | L'],
+              datasets: [
+                {
+                  data: [
+                    totalMainDishes.xet_truyen_thong_M,
+                    totalMainDishes.xet_truyen_thong_L,
+                    totalMainDishes.xet_tan_chay_M,
+                    totalMainDishes.xet_tan_chay_L,
+                  ],
+                },
+              ],
+            }}
+            width={screenWidth - 16 * 2}
+            height={320}
+            chartConfig={chartConfig}
+            verticalLabelRotation={30}
+            yAxisLabel=""
+            yAxisSuffix=" phần"
+            style={{
+              borderRadius: 8,
+            }}
+          />
+
+          <Divider />
+
+          <Text fontWeight="700" mb={4}>
+            Doanh số topping:
+          </Text>
+
+          <BarChart
+            showValuesOnTopOfBars
+            fromZero
+            data={{
+              labels: ['Xúc xích', 'Gà viên', 'PM lát', 'PM sợi', 'Xà lách'],
+              datasets: [
+                {
+                  data: [
+                    totalTopping.xuc_xich,
+                    totalTopping.ga_popcorn,
+                    totalTopping.pho_mai_lat,
+                    totalTopping.pho_mai_soi,
+                    totalTopping.xa_lach,
+                  ],
+                },
+              ],
+            }}
+            width={screenWidth - 16 * 2}
+            height={320}
+            chartConfig={chartConfig}
+            verticalLabelRotation={30}
+            yAxisLabel=""
+            yAxisSuffix=" phần"
+            style={{
+              borderRadius: 8,
+            }}
+          />
+
+          <Divider />
+
+          <Text fontWeight="700" mb={4}>
+            Nhân khẩu học
+          </Text>
+
+          <PieChart
+            data={[
+              {
+                name: 'Trẻ em',
+                value: demographic.kid,
+                color: colors.warning300,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+              {
+                name: 'Cấp 1',
+                value: demographic.cap_1,
+                color: colors.primary400,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+              {
+                name: 'Cấp 2',
+                value: demographic.cap_2,
+                color: colors.error600,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+              {
+                name: 'Cấp 3',
+                value: demographic.cap_3,
+                color: colors.primary900,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+              {
+                name: '20-30',
+                value: demographic['20-30'],
+                color: colors.success600,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+              {
+                name: '>30',
+                value: demographic['>30'],
+                color: colors.secondary400,
+                legendFontColor: colors.primary900,
+                legendFontSize: 15,
+              },
+            ]}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+            accessor={'value'}
+            backgroundColor={'transparent'}
+            center={[10, 10]}
+            paddingLeft="0"
+          />
+        </ScrollView>
       </View>
     </Screen>
   );

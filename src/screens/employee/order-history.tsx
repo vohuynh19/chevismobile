@@ -10,7 +10,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 import {Button, RefreshControl, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
-import {showErrorMessage, showSuccessMessage} from '~core/utils';
+import {screenHeight, showErrorMessage, showSuccessMessage} from '~core/utils';
 import {
   OrderSchema,
   getOrderQueryKey,
@@ -28,15 +28,93 @@ const OrderHistory = ({
   const {t} = useTranslation();
 
   const {isLoading, orders, refetch} = useOrders('LATEST_10');
+  const {updateOrder, isLoading: updateLoading} = useUpdateOrder();
 
   const [currentOrder, setCurrentOrder] = useState<OrderSchema>();
 
   const modalRef = useRef<Modalize>(null);
 
+  const onDelete = async () => {
+    try {
+      await updateOrder({
+        id: currentOrder?.id || '',
+        updateInfo: {
+          status: 'DELETED',
+        },
+      });
+      showSuccessMessage(t('message.deleteOrderSuccess'));
+      await refetch();
+      modalRef.current?.close();
+    } catch (error) {
+      showErrorMessage(t('message.deleteOrderFail'));
+    }
+  };
+
   const onShowModal = useCallback((order: OrderSchema) => {
     setCurrentOrder(order);
     setTimeout(() => modalRef.current?.open(), 100);
   }, []);
+
+  const isCurrentOrderDisabled =
+    currentOrder?.status === 'DONE' || currentOrder?.status === 'DELETED';
+
+  const handleOrderCreated = (order: OrderSchema) => {
+    modalRef.current?.close();
+
+    switch (order.paymentMethod) {
+      case 'banking':
+        navigation.navigate('/employee/payment/banking', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+      case 'momo':
+        navigation.navigate('/employee/payment/momo', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+      default:
+        navigation.navigate('/employee/payment/cash', {
+          orderId: order?.id || '',
+          total: order.totalPrice,
+          required: false,
+        });
+        break;
+    }
+  };
+  const handleOrderProcessing = async (order: OrderSchema) => {
+    try {
+      await updateOrder({
+        id: order.id || '',
+        updateInfo: {
+          status: 'DONE',
+        },
+      });
+      showSuccessMessage(t('message.orderConfirmSuccess'));
+      modalRef.current?.close();
+      await refetch();
+    } catch (error) {
+      showErrorMessage(t('error.generalTitle'));
+    }
+  };
+
+  const onContinue = (order: OrderSchema) => {
+    switch (order.status) {
+      case 'CREATED':
+        handleOrderCreated(order);
+        break;
+      case 'PROCESSING':
+        handleOrderProcessing(order);
+        break;
+
+      default:
+        showErrorMessage(t('error.generalTitle'));
+        break;
+    }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -81,13 +159,42 @@ const OrderHistory = ({
         </ScrollView>
       </View>
 
-      <Modalize ref={modalRef} adjustToContentHeight>
+      <Modalize
+        ref={modalRef}
+        adjustToContentHeight
+        childrenStyle={{
+          height: (screenHeight * 3) / 5,
+        }}>
         {currentOrder && (
           <InvoiceDish
             dishes={currentOrder?.dishes}
             total={currentOrder?.totalPrice}
           />
         )}
+
+        <View flexDirection="row" mb={4} px={4}>
+          <Button
+            flex
+            disabled={isCurrentOrderDisabled}
+            isLoading={updateLoading}
+            variant="secondary"
+            title={t('action.delete')}
+            onPress={onDelete}
+          />
+
+          <Button
+            flex
+            disabled={isCurrentOrderDisabled}
+            isLoading={updateLoading}
+            variant="primary"
+            title={
+              currentOrder?.status === 'CREATED'
+                ? t('action.continue')
+                : t('action.confirm')
+            }
+            onPress={() => currentOrder && onContinue(currentOrder)}
+          />
+        </View>
       </Modalize>
     </Screen>
   );
@@ -109,21 +216,6 @@ const OrderItem = ({
   const {t} = useTranslation();
   const {updateOrder, isLoading} = useUpdateOrder();
   const client = useQueryClient();
-
-  const onDelete = async () => {
-    try {
-      await updateOrder({
-        id: order.id || '',
-        updateInfo: {
-          status: 'DELETED',
-        },
-      });
-      showSuccessMessage(t('message.deleteOrderSuccess'));
-      await client.invalidateQueries(getOrderQueryKey('LATEST_10'));
-    } catch (error) {
-      showErrorMessage(t('message.deleteOrderFail'));
-    }
-  };
 
   const handleOrderCreated = () => {
     switch (order.paymentMethod) {
@@ -234,13 +326,6 @@ const OrderItem = ({
           <Button
             disabled={isBtnDisabled}
             isLoading={isLoading}
-            variant="secondary"
-            size="s"
-            title={t('action.delete')}
-            onPress={onDelete}
-          />
-          <Button
-            disabled={isBtnDisabled}
             variant="primary"
             size="s"
             title={
