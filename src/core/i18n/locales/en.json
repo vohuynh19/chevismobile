@@ -61,7 +61,8 @@
     "paymentBeforeGoBack": "Vui lòng hoàn thành thanh toán trước khi quay về",
     "invalidReceivedAmount": "Tiền nhận không hợp lệ",
     "orderConfirmSuccess": "Xác nhận đơn thành công",
-    "fillDemographic": "Vui lòng lựa chọn nhân khẩu học để tiếp tục"
+    "fillDemographic": "Vui lòng lựa chọn nhân khẩu học để tiếp tục",
+    "dishEmpty": "Vui lòng chọn món chính trước khi thêm"
   },
   "common":{
     "abb": {

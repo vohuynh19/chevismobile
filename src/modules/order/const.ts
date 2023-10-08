@@ -20,6 +20,7 @@ export const toppingImages: Record<ToppingName, any> = {
 export const mainDishImages: Record<MainDishName, any> = {
   xet_tan_chay: images.xetTanChay,
   xet_truyen_thong: images.xetTruyenThong,
+  none: images.xetTruyenThong,
 };
 
 export const toppingNames: ToppingName[] = [
@@ -48,11 +49,6 @@ export const defaultDemographics: Record<Demographic, boolean> = {
   '20-30': false,
 };
 
-export const dishToppings: Record<MainDishName, ToppingName[]> = {
-  xet_tan_chay: ['xuc_xich', 'pho_mai_soi'],
-  xet_truyen_thong: ['xuc_xich', 'pho_mai_lat'],
-};
-
 export const toppingPriceTable: Record<ToppingName, number> = {
   pho_mai_lat: 2,
   pho_mai_soi: 4,
@@ -72,5 +68,9 @@ export const mainDishPriceTable: Record<
   xet_tan_chay: {
     M: 28,
     L: 33,
+  },
+  none: {
+    M: 0,
+    L: 0,
   },
 };

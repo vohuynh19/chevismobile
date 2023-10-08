@@ -5,7 +5,7 @@ export type ToppingName =
   | 'xa_lach'
   | 'ga_popcorn';
 
-export type MainDishName = 'xet_truyen_thong' | 'xet_tan_chay';
+export type MainDishName = 'xet_truyen_thong' | 'xet_tan_chay' | 'none';
 
 export type MainDishSize = 'M' | 'L';
 

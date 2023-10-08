@@ -13,6 +13,8 @@ export const getMainDishName = (name: MainDishName) => {
       return 'XET. Tan Chảy';
     case 'xet_truyen_thong':
       return 'XET. Truyền thống';
+    case 'none':
+      return '';
     default:
       return 'ERROR';
   }
@@ -63,6 +65,11 @@ export const getTopping = (dish: MainDish) => {
 
   return toppingKeys.reduce((prev, key) => {
     const amount = dish?.toppings?.[key];
+
+    if (prev.length === 0) {
+      return amount ? `${amount} ${getToppingName(key)}` : prev;
+    }
+
     return amount ? `${prev} | ${amount} ${getToppingName(key)}` : prev;
   }, '');
 };
@@ -110,5 +117,12 @@ export const isToppingRecordSelected = (toppingRecord: ToppingRecord) => {
   }, 0);
 };
 
-export const getDishNameInInvoice = (dish: MainDish) =>
-  `${getMainDishName(dish.name)} size ${dish.size} ${getTopping(dish)}`;
+export const getDishNameInInvoice = (dish: MainDish) => {
+  if (dish.name === 'none') {
+    return getTopping(dish);
+  }
+
+  return `${getMainDishName(dish.name)} size ${dish.size} | ${getTopping(
+    dish,
+  )}`;
+};
