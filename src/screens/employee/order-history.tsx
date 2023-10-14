@@ -1,23 +1,16 @@
-import {useQueryClient} from '@tanstack/react-query';
 import moment from 'moment';
 import {useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Modalize} from 'react-native-modalize';
 import {useTranslation} from 'react-i18next';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {useFocusEffect} from '@react-navigation/native';
 
 import {Button, RefreshControl, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {screenHeight, showErrorMessage, showSuccessMessage} from '~core/utils';
-import {
-  OrderSchema,
-  getOrderQueryKey,
-  useOrders,
-  useUpdateOrder,
-} from '~modules/order';
-import {EmployeeScreenProps, EmployeeStackParams} from '~navigators/employee';
+import {OrderSchema, useOrders, useUpdateOrder} from '~modules/order';
+import {EmployeeScreenProps} from '~navigators/employee';
 import {images} from '~assets';
 
 import {InvoiceDish} from './order';
@@ -52,7 +45,7 @@ const OrderHistory = ({
 
   const onShowModal = useCallback((order: OrderSchema) => {
     setCurrentOrder(order);
-    setTimeout(() => modalRef.current?.open(), 100);
+    modalRef.current?.open();
   }, []);
 
   const isCurrentOrderDisabled =
@@ -149,12 +142,7 @@ const OrderHistory = ({
       <View flex={1}>
         <ScrollView refreshControl={<RefreshControl onRefresh={refetch} />}>
           {orders?.map(order => (
-            <OrderItem
-              key={order.id}
-              order={order}
-              onPress={onShowModal}
-              navigation={navigation}
-            />
+            <OrderItem key={order.id} order={order} onPress={onShowModal} />
           ))}
         </ScrollView>
       </View>
@@ -165,35 +153,41 @@ const OrderHistory = ({
         childrenStyle={{
           height: (screenHeight * 3) / 5,
         }}>
-        {currentOrder && (
-          <InvoiceDish
-            dishes={currentOrder?.dishes}
-            total={currentOrder?.totalPrice}
-          />
-        )}
+        <View height={(screenHeight * 3) / 5}>
+          <View flex={1}>
+            <ScrollView>
+              {currentOrder && (
+                <InvoiceDish
+                  dishes={currentOrder?.dishes}
+                  total={currentOrder?.totalPrice}
+                />
+              )}
+            </ScrollView>
+          </View>
 
-        <View flexDirection="row" mb={4} px={4}>
-          <Button
-            flex
-            disabled={isCurrentOrderDisabled}
-            isLoading={updateLoading}
-            variant="secondary"
-            title={t('action.delete')}
-            onPress={onDelete}
-          />
+          <View flexDirection="row" mb={8} px={4}>
+            <Button
+              flex
+              disabled={isCurrentOrderDisabled}
+              isLoading={updateLoading}
+              variant="secondary"
+              title={t('action.delete')}
+              onPress={onDelete}
+            />
 
-          <Button
-            flex
-            disabled={isCurrentOrderDisabled}
-            isLoading={updateLoading}
-            variant="primary"
-            title={
-              currentOrder?.status === 'CREATED'
-                ? t('action.continue')
-                : t('action.confirm')
-            }
-            onPress={() => currentOrder && onContinue(currentOrder)}
-          />
+            <Button
+              flex
+              disabled={isCurrentOrderDisabled}
+              isLoading={updateLoading}
+              variant="primary"
+              title={
+                currentOrder?.status === 'CREATED'
+                  ? t('action.continue')
+                  : t('action.confirm')
+              }
+              onPress={() => currentOrder && onContinue(currentOrder)}
+            />
+          </View>
         </View>
       </Modalize>
     </Screen>
@@ -203,75 +197,10 @@ const OrderHistory = ({
 const OrderItem = ({
   order,
   onPress,
-  navigation,
 }: {
   order: OrderSchema;
   onPress: (order: OrderSchema) => void;
-  navigation: StackNavigationProp<
-    EmployeeStackParams,
-    '/employee/order-history',
-    undefined
-  >;
 }) => {
-  const {t} = useTranslation();
-  const {updateOrder, isLoading} = useUpdateOrder();
-  const client = useQueryClient();
-
-  const handleOrderCreated = () => {
-    switch (order.paymentMethod) {
-      case 'banking':
-        navigation.navigate('/employee/payment/banking', {
-          orderId: order?.id || '',
-          total: order.totalPrice,
-          required: false,
-        });
-        break;
-      case 'momo':
-        navigation.navigate('/employee/payment/momo', {
-          orderId: order?.id || '',
-          total: order.totalPrice,
-          required: false,
-        });
-        break;
-      default:
-        navigation.navigate('/employee/payment/cash', {
-          orderId: order?.id || '',
-          total: order.totalPrice,
-          required: false,
-        });
-        break;
-    }
-  };
-  const handleOrderProcessing = async () => {
-    try {
-      await updateOrder({
-        id: order.id || '',
-        updateInfo: {
-          status: 'DONE',
-        },
-      });
-      showSuccessMessage(t('message.orderConfirmSuccess'));
-      await client.invalidateQueries(getOrderQueryKey('LATEST_10'));
-    } catch (error) {
-      showErrorMessage(t('error.generalTitle'));
-    }
-  };
-
-  const onContinue = () => {
-    switch (order.status) {
-      case 'CREATED':
-        handleOrderCreated();
-        break;
-      case 'PROCESSING':
-        handleOrderProcessing();
-        break;
-
-      default:
-        showErrorMessage(t('error.generalTitle'));
-        break;
-    }
-  };
-
   const getOrderColor = () => {
     switch (order.status) {
       case 'CREATED':
@@ -302,8 +231,6 @@ const OrderItem = ({
     }
   };
 
-  const isBtnDisabled = order.status === 'DONE' || order.status === 'DELETED';
-
   return (
     <TouchableOpacity onPress={() => onPress(order)} activeOpacity={0.8}>
       <View
@@ -318,23 +245,15 @@ const OrderItem = ({
           <Text pb={1} fontWeight="700" fontSize={20}>
             {order.totalPrice},000 VND
           </Text>
-          <Text>Vào lúc: {moment(order.updatedAt).format('HH:mm')}</Text>
-          <Text color={getOrderColor()}>{getStatus()}</Text>
+
+          {(order?.returnPrice || 0) !== 0 && (
+            <Text>Tiền thối: {order.returnPrice || 0}k</Text>
+          )}
         </View>
 
-        <View flexDirection="row">
-          <Button
-            disabled={isBtnDisabled}
-            isLoading={isLoading}
-            variant="primary"
-            size="s"
-            title={
-              order.status === 'CREATED'
-                ? t('action.continue')
-                : t('action.confirm')
-            }
-            onPress={onContinue}
-          />
+        <View alignItems="flex-end">
+          <Text>Vào lúc: {moment(order.updatedAt).format('HH:mm')}</Text>
+          <Text color={getOrderColor()}>{getStatus()}</Text>
         </View>
       </View>
     </TouchableOpacity>

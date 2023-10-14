@@ -12,4 +12,5 @@ export type OrderSchema = {
   status: OrderStatus;
   paymentMethod: PaymentMethod;
   imageUrl?: string;
+  returnPrice?: number;
 };

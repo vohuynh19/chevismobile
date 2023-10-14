@@ -36,6 +36,7 @@ const Cash = ({
       id: orderId,
       updateInfo: {
         status: 'PROCESSING',
+        returnPrice: returnValue,
       },
     });
     notFinished.current = false;
