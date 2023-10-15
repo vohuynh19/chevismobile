@@ -10,8 +10,7 @@
 		00E356F31AD99517003FC87E /* chevismobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* chevismobileTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		279283402A99CE1F0047980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2792833F2A99CE1F0047980E /* GoogleService-Info.plist */; };
-		279283412A99CE1F0047980E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2792833F2A99CE1F0047980E /* GoogleService-Info.plist */; };
+		2730A7A12ADBB87A00EBD92A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2730A7A02ADBB87A00EBD92A /* GoogleService-Info.plist */; };
 		27D568362AC496C400BFDC05 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27D568342AC496C400BFDC05 /* BootSplash.storyboard */; };
 		27D568372AC496C400BFDC05 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27D568342AC496C400BFDC05 /* BootSplash.storyboard */; };
 		27D568382AC496C400BFDC05 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27D568352AC496C400BFDC05 /* Images.xcassets */; };
@@ -39,7 +38,7 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = chevismobile/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = chevismobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = chevismobile/main.m; sourceTree = "<group>"; };
-		2792833F2A99CE1F0047980E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2730A7A02ADBB87A00EBD92A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27D568342AC496C400BFDC05 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = chevismobile/BootSplash.storyboard; sourceTree = "<group>"; };
 		27D568352AC496C400BFDC05 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chevismobile/Images.xcassets; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-chevismobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chevismobile.debug.xcconfig"; path = "Target Support Files/Pods-chevismobile/Pods-chevismobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,9 +90,9 @@
 		13B07FAE1A68108700A75B9A /* chevismobile */ = {
 			isa = PBXGroup;
 			children = (
+				2730A7A02ADBB87A00EBD92A /* GoogleService-Info.plist */,
 				27D568342AC496C400BFDC05 /* BootSplash.storyboard */,
 				27D568352AC496C400BFDC05 /* Images.xcassets */,
-				2792833F2A99CE1F0047980E /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -244,7 +243,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				27D568392AC496C400BFDC05 /* Images.xcassets in Resources */,
-				279283412A99CE1F0047980E /* GoogleService-Info.plist in Resources */,
 				27D568372AC496C400BFDC05 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,8 +252,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				27D568382AC496C400BFDC05 /* Images.xcassets in Resources */,
-				279283402A99CE1F0047980E /* GoogleService-Info.plist in Resources */,
 				27D568362AC496C400BFDC05 /* BootSplash.storyboard in Resources */,
+				2730A7A12ADBB87A00EBD92A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

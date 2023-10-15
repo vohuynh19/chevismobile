@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
+import Config from 'react-native-config';
 import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
 import {useQuitApp} from '~core/hooks';
@@ -38,6 +39,8 @@ const defaultSelected: SelectedState = {
 
 const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
   const {t} = useTranslation();
+
+  console.log('Config.ENV ', Config.ENV);
 
   const {logout} = useLogout();
 
