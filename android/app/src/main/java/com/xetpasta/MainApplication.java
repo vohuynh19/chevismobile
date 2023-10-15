@@ -1,4 +1,4 @@
-package com.chevismobile;
+package com.xetpasta;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

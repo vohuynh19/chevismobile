@@ -79,9 +79,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.chevismobile"
+    namespace "com.xetpasta"
     defaultConfig {
-        applicationId "com.chevismobile"
+        applicationId "com.xetpasta"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 130
