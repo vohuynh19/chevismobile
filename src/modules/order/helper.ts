@@ -15,8 +15,14 @@ export const getMainDishName = (name: MainDishName) => {
       return 'XET. Truyền thống';
     case 'none':
       return '';
+    case 'xet_ai_cap':
+      return 'XET. Ai Cập';
+    case 'xet_nhen_nhen':
+      return 'XET. Nhền Nhện';
+    case 'xet_zombie':
+      return 'XET. Zombie';
     default:
-      return 'ERROR';
+      return 'Chưa có tên';
   }
 };
 

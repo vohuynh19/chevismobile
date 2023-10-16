@@ -7,7 +7,9 @@ export const images = {
   xucXich: require('./images/xucxich.jpg'),
   xaLach: require('./images/xa-lach.jpg'),
   gaPopcorn: require('./images/ga-popcorn.jpg'),
-
+  xetAiCap: require('./images/xet-ai-cap.jpg'),
+  xetNhenNhen: require('./images/xet-nhen-nhen.jpg'),
+  xetZombie: require('./images/xet-zombie.jpg'),
   vietqr: require('./images/vietqr.png'),
   momo: require('./images/momo.png'),
   cash: require('./images/cash.png'),

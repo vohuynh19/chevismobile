@@ -1,5 +1,11 @@
 import {images} from '~assets';
-import {Demographic, MainDishName, MainDishSize, ToppingName} from './types';
+import {
+  Demographic,
+  EventDish,
+  MainDishName,
+  MainDishSize,
+  ToppingName,
+} from './types';
 
 export const defaultToppingRecord: Record<ToppingName, number> = {
   pho_mai_lat: 0,
@@ -17,10 +23,17 @@ export const toppingImages: Record<ToppingName, any> = {
   xa_lach: images.xaLach,
 };
 
+export const eventDishImages: Record<EventDish, any> = {
+  xet_ai_cap: images.xetAiCap,
+  xet_nhen_nhen: images.xetNhenNhen,
+  xet_zombie: images.xetZombie,
+};
+
 export const mainDishImages: Record<MainDishName, any> = {
   xet_tan_chay: images.xetTanChay,
   xet_truyen_thong: images.xetTruyenThong,
   none: images.xetTruyenThong,
+  ...eventDishImages,
 };
 
 export const toppingNames: ToppingName[] = [
@@ -57,6 +70,24 @@ export const toppingPriceTable: Record<ToppingName, number> = {
   xa_lach: 2,
 };
 
+export const eventDishPriceTable: Record<
+  EventDish,
+  Record<MainDishSize, number>
+> = {
+  xet_zombie: {
+    M: 39,
+    L: 39,
+  },
+  xet_ai_cap: {
+    M: 39,
+    L: 39,
+  },
+  xet_nhen_nhen: {
+    M: 39,
+    L: 39,
+  },
+};
+
 export const mainDishPriceTable: Record<
   MainDishName,
   Record<MainDishSize, number>
@@ -73,4 +104,5 @@ export const mainDishPriceTable: Record<
     M: 0,
     L: 0,
   },
+  ...eventDishPriceTable,
 };

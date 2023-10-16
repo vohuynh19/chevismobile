@@ -5,7 +5,13 @@ export type ToppingName =
   | 'xa_lach'
   | 'ga_popcorn';
 
-export type MainDishName = 'xet_truyen_thong' | 'xet_tan_chay' | 'none';
+export type MainDishName =
+  | 'xet_truyen_thong'
+  | 'xet_tan_chay'
+  | 'none'
+  | EventDish;
+
+export type EventDish = 'xet_ai_cap' | 'xet_nhen_nhen' | 'xet_zombie';
 
 export type MainDishSize = 'M' | 'L';
 

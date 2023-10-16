@@ -167,16 +167,38 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
       </View>
 
       <View flexDirection="row" height={140} paddingHorizontal={4}>
-        <MainDishItem
-          selectedState={selectedDish}
-          name="xet_truyen_thong"
-          onPress={onPressDish}
-        />
-        <MainDishItem
-          selectedState={selectedDish}
-          name="xet_tan_chay"
-          onPress={onPressDish}
-        />
+        <ScrollView horizontal>
+          <View flexDirection="row" height={140}>
+            <MainDishItem
+              selectedState={selectedDish}
+              name="xet_truyen_thong"
+              onPress={onPressDish}
+            />
+            <MainDishItem
+              selectedState={selectedDish}
+              name="xet_tan_chay"
+              onPress={onPressDish}
+            />
+            <MainDishItem
+              isEvent
+              selectedState={selectedDish}
+              name="xet_ai_cap"
+              onPress={onPressDish}
+            />
+            <MainDishItem
+              isEvent
+              selectedState={selectedDish}
+              name="xet_zombie"
+              onPress={onPressDish}
+            />
+            <MainDishItem
+              isEvent
+              selectedState={selectedDish}
+              name="xet_nhen_nhen"
+              onPress={onPressDish}
+            />
+          </View>
+        </ScrollView>
       </View>
 
       <View
@@ -254,6 +276,7 @@ type MainDishItemProps = {
   name: MainDishName;
   selectedState?: SelectedState;
   onPress: (name: MainDishName, size: MainDishSize) => void;
+  isEvent?: boolean;
 };
 
 const MainDishItem = (props: MainDishItemProps) => {
@@ -262,75 +285,109 @@ const MainDishItem = (props: MainDishItemProps) => {
   const isSelected = name === selectedState?.name;
 
   return (
-    <View flex={1} height={'100%'} borderWidth={1}>
+    <View width={150} height={'100%'} mr={2}>
       <FastImage
         source={mainDishImages[name]}
-        resizeMode="contain"
+        resizeMode="cover"
         style={{width: '100%', height: '100%'}}
       />
 
-      <View
-        position="absolute"
-        width="50%"
-        height="100%"
-        justifyContent="center"
-        alignItems="center"
-        backgroundColor="primary600"
-        opacity={0.3}
-        right={0}
-        borderColor={'success500'}
-      />
+      {props?.isEvent ? (
+        <TouchableOpacity
+          onPress={() => onPress(name, 'M')}
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            right: 0,
+          }}>
+          <Text
+            color={
+              isSelected && selectedState.size === 'M' ? 'success600' : 'white'
+            }
+            fontWeight={
+              isSelected && selectedState.size === 'M' ? '900' : '600'
+            }
+            lineHeight={32}
+            fontSize={32}>
+            M
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <>
+          <View
+            position="absolute"
+            width="50%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor="primary600"
+            opacity={0.3}
+            right={0}
+            borderColor={'success500'}
+          />
 
-      <View
-        position="absolute"
-        width="50%"
-        height="100%"
-        justifyContent="center"
-        alignItems="center"
-        backgroundColor="black"
-        opacity={0.3}
-      />
+          <View
+            position="absolute"
+            width="50%"
+            height="100%"
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor="black"
+            opacity={0.3}
+          />
+          <TouchableOpacity
+            onPress={() => onPress(name, 'M')}
+            style={{
+              position: 'absolute',
+              width: '50%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text
+              color={
+                isSelected && selectedState.size === 'M'
+                  ? 'success600'
+                  : 'white'
+              }
+              fontWeight={
+                isSelected && selectedState.size === 'M' ? '900' : '600'
+              }
+              lineHeight={32}
+              fontSize={32}>
+              M
+            </Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => onPress(name, 'M')}
-        style={{
-          position: 'absolute',
-          width: '50%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
-          color={
-            isSelected && selectedState.size === 'M' ? 'success600' : 'white'
-          }
-          fontWeight={isSelected && selectedState.size === 'M' ? '900' : '600'}
-          lineHeight={32}
-          fontSize={32}>
-          M
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => onPress(name, 'L')}
-        style={{
-          position: 'absolute',
-          width: '50%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          right: 0,
-        }}>
-        <Text
-          color={
-            isSelected && selectedState.size === 'L' ? 'success600' : 'white'
-          }
-          fontWeight={isSelected && selectedState.size === 'L' ? '900' : '600'}
-          lineHeight={32}
-          fontSize={32}>
-          L
-        </Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onPress(name, 'L')}
+            style={{
+              position: 'absolute',
+              width: '50%',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              right: 0,
+            }}>
+            <Text
+              color={
+                isSelected && selectedState.size === 'L'
+                  ? 'success600'
+                  : 'white'
+              }
+              fontWeight={
+                isSelected && selectedState.size === 'L' ? '900' : '600'
+              }
+              lineHeight={32}
+              fontSize={32}>
+              L
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
