@@ -4,6 +4,7 @@ import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {images} from '~assets';
 import {useQuitApp} from '~core/hooks';
+import {useAppStore} from '~core/store/app';
 
 import {Button, Divider, Icon, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
@@ -147,6 +148,8 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
     message: t('message.continueQuitApp'),
   });
 
+  const {features} = useAppStore();
+
   return (
     <Screen topInset>
       <View
@@ -179,24 +182,28 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
               name="xet_tan_chay"
               onPress={onPressDish}
             />
-            <MainDishItem
-              isEvent
-              selectedState={selectedDish}
-              name="xet_ai_cap"
-              onPress={onPressDish}
-            />
-            <MainDishItem
-              isEvent
-              selectedState={selectedDish}
-              name="xet_zombie"
-              onPress={onPressDish}
-            />
-            <MainDishItem
-              isEvent
-              selectedState={selectedDish}
-              name="xet_nhen_nhen"
-              onPress={onPressDish}
-            />
+            {features?.halloween && (
+              <>
+                <MainDishItem
+                  isEvent
+                  selectedState={selectedDish}
+                  name="xet_ai_cap"
+                  onPress={onPressDish}
+                />
+                <MainDishItem
+                  isEvent
+                  selectedState={selectedDish}
+                  name="xet_zombie"
+                  onPress={onPressDish}
+                />
+                <MainDishItem
+                  isEvent
+                  selectedState={selectedDish}
+                  name="xet_nhen_nhen"
+                  onPress={onPressDish}
+                />
+              </>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -285,7 +292,7 @@ const MainDishItem = (props: MainDishItemProps) => {
   const isSelected = name === selectedState?.name;
 
   return (
-    <View width={150} height={'100%'} mr={2}>
+    <View width={180} height={'100%'} mr={2}>
       <FastImage
         source={mainDishImages[name]}
         resizeMode="cover"

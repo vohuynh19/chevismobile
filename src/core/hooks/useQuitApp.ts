@@ -26,7 +26,6 @@ export const useQuitApp = (props: {message: string}) => {
         },
       );
       return () => {
-        console.log('remove');
         return backHandler.remove();
       };
     }, [exitApp, message]),
