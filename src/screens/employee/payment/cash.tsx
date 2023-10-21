@@ -1,12 +1,13 @@
 import {StackActions} from '@react-navigation/native';
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {DeviceEventEmitter} from 'react-native';
+import {DeviceEventEmitter, ScrollView, TouchableOpacity} from 'react-native';
 import {useBack} from '~core/hooks';
+import {colors} from '~core/theme';
 import {Button, Divider, Input, Screen, Text, View} from '~core/ui';
 import {NavButton} from '~core/ui/navigation/NavButton';
 import {showErrorMessage, showSuccessMessage} from '~core/utils';
-import {useUpdateOrder} from '~modules/order';
+import {getRecommendReturnValue, useUpdateOrder} from '~modules/order';
 import {EvenListenterName} from '~modules/types';
 import {EmployeeScreenProps} from '~navigators/employee';
 
@@ -71,6 +72,36 @@ const Cash = ({
     onPress: deletePayment,
   });
 
+  const RecommendListComp = useMemo(() => {
+    const recommendValues = getRecommendReturnValue(total || 0);
+    return (
+      <View mb={4}>
+        <ScrollView horizontal>
+          <View flexDirection="row" mb={2}>
+            {recommendValues.map(recommended => {
+              return (
+                <TouchableOpacity
+                  onPress={() => setValue(recommended.toString())}
+                  key={recommended}
+                  style={{
+                    width: 80,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: colors.neutral500,
+                    marginRight: 8,
+                    padding: 6,
+                    borderRadius: 16,
+                  }}>
+                  <Text>{recommended}k</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }, [total]);
+
   return (
     <Screen topInset px={4}>
       <View flexDirection="row" alignItems="center">
@@ -95,6 +126,9 @@ const Cash = ({
       <Text mb={4} fontSize={18}>
         {t('common.receivedPrice')}
       </Text>
+
+      {RecommendListComp}
+
       <Input
         value={value}
         onChangeText={text => setValue(text)}

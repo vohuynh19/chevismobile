@@ -132,3 +132,37 @@ export const getDishNameInInvoice = (dish: MainDish) => {
     dish,
   )}`;
 };
+
+export const getRecommendReturnValue = (totalPrice: number) => {
+  // Get the nearest by 5 unit
+  const nearestBy5 = Math.ceil(totalPrice / 5) * 5;
+
+  // Get the nearest by 10 unit
+  const nearestBy10 = Math.ceil(totalPrice / 10) * 10;
+
+  // Get nearest by 50 unit
+  const nearestBy50 = Math.ceil(totalPrice / 50) * 50;
+
+  // Get the nearest with 100 unit
+  const nearestBy100 = Math.ceil(totalPrice / 100) * 100;
+
+  // Get the nearest with 200 unit
+  const nearestBy200 = Math.ceil(totalPrice / 200) * 200;
+
+  // Get the nearest with 500 unit
+  const nearestBy500 = Math.ceil(totalPrice / 500) * 500;
+
+  // 5 recommend value at most, remove duplicates
+  const recommendValues = Array.from(
+    new Set([
+      totalPrice,
+      nearestBy5,
+      nearestBy10,
+      nearestBy50,
+      nearestBy100,
+      nearestBy200,
+      nearestBy500,
+    ]),
+  ).filter((_, index) => index <= 4);
+  return recommendValues;
+};
