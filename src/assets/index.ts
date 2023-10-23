@@ -14,4 +14,5 @@ export const images = {
   momo: require('./images/momo.png'),
   cash: require('./images/cash.png'),
   momoQr: require('./images/momo-qr.jpg'),
+  mongtay: require('./images/mongtay.jpg'),
 };

@@ -21,6 +21,8 @@ export const getMainDishName = (name: MainDishName) => {
       return 'XET. Nhền Nhện';
     case 'xet_zombie':
       return 'XET. Zombie';
+    case 'xet_ac_ma':
+      return 'XET. Ác Ma';
     default:
       return 'Chưa có tên';
   }

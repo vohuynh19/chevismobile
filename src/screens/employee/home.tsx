@@ -171,40 +171,44 @@ const Home = ({navigation}: EmployeeScreenProps<'/employee/home'>) => {
 
       <View flexDirection="row" height={140} paddingHorizontal={4}>
         <ScrollView horizontal>
-          <View flexDirection="row" height={140}>
-            <MainDishItem
-              selectedState={selectedDish}
-              name="xet_truyen_thong"
-              onPress={onPressDish}
-            />
-            <MainDishItem
-              selectedState={selectedDish}
-              name="xet_tan_chay"
-              onPress={onPressDish}
-            />
-            {features?.halloween && (
-              <>
-                <MainDishItem
-                  isEvent
-                  selectedState={selectedDish}
-                  name="xet_ai_cap"
-                  onPress={onPressDish}
-                />
-                <MainDishItem
-                  isEvent
-                  selectedState={selectedDish}
-                  name="xet_zombie"
-                  onPress={onPressDish}
-                />
-                <MainDishItem
-                  isEvent
-                  selectedState={selectedDish}
-                  name="xet_nhen_nhen"
-                  onPress={onPressDish}
-                />
-              </>
-            )}
-          </View>
+          <MainDishItem
+            selectedState={selectedDish}
+            name="xet_truyen_thong"
+            onPress={onPressDish}
+          />
+          <MainDishItem
+            selectedState={selectedDish}
+            name="xet_tan_chay"
+            onPress={onPressDish}
+          />
+          {features?.halloween && (
+            <>
+              <MainDishItem
+                isEvent
+                selectedState={selectedDish}
+                name="xet_ai_cap"
+                onPress={onPressDish}
+              />
+              <MainDishItem
+                isEvent
+                selectedState={selectedDish}
+                name="xet_zombie"
+                onPress={onPressDish}
+              />
+              <MainDishItem
+                isEvent
+                selectedState={selectedDish}
+                name="xet_nhen_nhen"
+                onPress={onPressDish}
+              />
+              <MainDishItem
+                isEvent
+                selectedState={selectedDish}
+                name="xet_ac_ma"
+                onPress={onPressDish}
+              />
+            </>
+          )}
         </ScrollView>
       </View>
 

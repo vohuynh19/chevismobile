@@ -11,7 +11,11 @@ export type MainDishName =
   | 'none'
   | EventDish;
 
-export type EventDish = 'xet_ai_cap' | 'xet_nhen_nhen' | 'xet_zombie';
+export type EventDish =
+  | 'xet_ai_cap'
+  | 'xet_nhen_nhen'
+  | 'xet_zombie'
+  | 'xet_ac_ma';
 
 export type MainDishSize = 'M' | 'L';
 

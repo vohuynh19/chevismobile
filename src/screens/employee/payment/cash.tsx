@@ -77,26 +77,25 @@ const Cash = ({
     return (
       <View mb={4}>
         <ScrollView horizontal>
-          <View flexDirection="row" mb={2}>
-            {recommendValues.map(recommended => {
-              return (
-                <TouchableOpacity
-                  onPress={() => setValue(recommended.toString())}
-                  key={recommended}
-                  style={{
-                    width: 80,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: colors.neutral500,
-                    marginRight: 8,
-                    padding: 6,
-                    borderRadius: 16,
-                  }}>
-                  <Text>{recommended}k</Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+          {recommendValues.map(recommended => {
+            return (
+              <TouchableOpacity
+                onPress={() => setValue(recommended.toString())}
+                key={recommended}
+                style={{
+                  width: 80,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: colors.neutral500,
+                  marginRight: 8,
+                  padding: 6,
+                  borderRadius: 16,
+                  marginBottom: 8,
+                }}>
+                <Text>{recommended}k</Text>
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
       </View>
     );

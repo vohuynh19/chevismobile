@@ -27,6 +27,7 @@ export const eventDishImages: Record<EventDish, any> = {
   xet_ai_cap: images.xetAiCap,
   xet_nhen_nhen: images.xetNhenNhen,
   xet_zombie: images.xetZombie,
+  xet_ac_ma: images.mongtay,
 };
 
 export const mainDishImages: Record<MainDishName, any> = {
@@ -85,6 +86,10 @@ export const eventDishPriceTable: Record<
   xet_nhen_nhen: {
     M: 39,
     L: 39,
+  },
+  xet_ac_ma: {
+    M: 25,
+    L: 25,
   },
 };
 
